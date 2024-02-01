@@ -26,14 +26,48 @@ interface Category {
   subCategories: SubCategory[];
 }
 
+const mainCategories: Category[] = [
+  {
+    id:1,
+    name:"Print",
+    subCategories:[{
+      id:2,
+      name:"Talae3"
+
+    }]
+  },
+{
+  id:3,
+  name:"Design",
+  subCategories:[{
+    id:4,
+    name:"sdofm"
+  }]
+}]
+
+const test =  {
+  id:1,
+  name:"Print",
+  subCategories:[{
+    id:2,
+    name:"Talae3"
+
+  }]
+}
+
+test.subCategories[0].id
+test["subCategories"][0].name
+
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
 
-  const [open, setOpen] = useState({});
+  const [open, setOpen] = useState<{[name:string|number]:boolean}>({});
 
+
+ 
   // Function to toggle open state for a category
   const toggleOpen = (id: number) => {
     setOpen((prevOpen) => ({
@@ -41,6 +75,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       [id]: !prevOpen[id as keyof typeof prevOpen],
     }));
   };
+  
+
+  const isopen ={
+    1:true,
+    2:false
+    }
 
   const [categories, setCategories] = useState<Category[]>([]);
 
@@ -148,15 +188,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Dashboard --> */}
-              <SidebarLinkGroup
+              {/* <SidebarLinkGroup
                 activeCondition={
                   pathname === "/" || pathname.includes("dashboard")
                 }
               >
-                {(handleClick, open) => {
-                  return (
+                {(handleClick, open) => { */}
+                  
                     <React.Fragment>
-                      {categories.map((category) => {
+                      {mainCategories.map((category_) => {
                         return (
                           <div className={`${notoBody.className}`}>
                             <Link
@@ -169,9 +209,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 // sidebarExpanded
-                                //   ? handleClick()
+                                //   ? toggleOpen(category_.id)
                                 //   : setSidebarExpanded(true);
-                                toggleOpen(category.id);
+                                toggleOpen(category_.id);
                               }}
                             >
                               <svg
@@ -200,10 +240,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 />
                               </svg>
                               {/* Dashboard */}
-                              {category.name}
+                              {category_.name}
                               <svg
                                 className={`absolute left-4 top-1/2 -translate-y-1/2 fill-current ${
-                                  open && "rotate-180"
+                                  open[category_.id] && "rotate-180"
                                 }`}
                                 width="20"
                                 height="20"
@@ -222,11 +262,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             {/* <!-- Dropdown Menu Start --> */}
                             <div
                               className={`translate transform overflow-hidden ${
-                                !open && "hidden"
+                                !open[category_.id] && "hidden"
                               }`}
                             >
                               <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pr-6">
-                                {category.subCategories.map((subCategory) => {
+                                {category_.subCategories.map((subCategory) => {
                                   return (
                                     <li>
                                       <Link
@@ -248,9 +288,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         );
                       })}
                     </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
+                  
+                {/* }}
+              </SidebarLinkGroup> */}
             </ul>
           </div>
 

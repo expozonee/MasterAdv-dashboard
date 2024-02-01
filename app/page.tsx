@@ -1,16 +1,55 @@
-import ECommerce from "@/components/Dashboard/E-commerce";
-import { Metadata } from "next";
+// import ECommerce from "@/components/Dashboard/E-commerce";
+// import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "TailAdmin | Next.js E-commerce Dashboard Template",
-  description: "This is Home Blog page for TailAdmin Next.js",
-  // other metadata
-};
+// export const metadata: Metadata = {
+//   title: "TailAdmin | Next.js E-commerce Dashboard Template",
+//   description: "This is Home Blog page for TailAdmin Next.js",
+//   // other metadata
+// };
+
+// export default function Home() {
+//   return (
+//     <>
+//       <ECommerce />
+//     </>
+//   );
+// }
+
+
+"use client";
+import Sections from "@/components/Section";
+import LogoBanner from "@/components/LogoBanner";
+import Footer from "@/components/Footer";
+import { useEffect, useState } from "react";
+import HomeLogoBanner from "@/components/HomeLogoBanner";
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width <= 460) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <ECommerce />
+      <HomeLogoBanner isMobile={isMobile} />
+      <Sections isMobile={isMobile} />
+      <Footer isMobile={isMobile} />
     </>
   );
 }
