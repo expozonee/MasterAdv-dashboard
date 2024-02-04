@@ -3,15 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import BurgerMenu from "./BurgerMenu";
 
-const LogoBanner = () => {
+const LogoBanner = ({ isMobile }) => {
   return (
-    <header className="bg-neutral-900 px-8 py-2 flex items-center justify-between md:content-center md:justify-center ">
+    <header className="bg-black px-8 py-6 flex items-center justify-between md:content-center md:justify-center ">
       <div className="md:hidden flex justify-center content-center">
         <BurgerMenu />
       </div>
-      <Link href="/" className="m-0 p-0 h-[60px]">
+      <Link href="/" className="m-0 p-0">
         <Image
-          src={"/Logo.svg"}
+          src={"/images/logo/MasterAdvLogo.svg"}
           alt="MasterAdv Logo"
           width={150}
           height={60}

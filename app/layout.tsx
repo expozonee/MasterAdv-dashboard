@@ -63,12 +63,10 @@
 //   );
 // }
 
-
 import "./globals.css";
 import { Noto_Kufi_Arabic, Marhey } from "next/font/google";
 import design from "./page.module.css";
-import bgImage from "@/public/images/blackBrickWallBackground.webp"
-const rubik = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
+const noto = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
 const marhey = Marhey({ subsets: ["arabic"], weight: ["600"] });
 
 export const metadata = {
@@ -76,28 +74,29 @@ export const metadata = {
   description: "Master Adv portfolio website",
 };
 
-export default function RootLayout({ children }:{children: React.ReactNode;}) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
       dir="rtl"
-
       className={
-        "bg-no-repeat bg-cover md:bg-contain"
+        `bg-no-repeat md:bg-contain ${noto.className} relative`
         //  +
         // " " +
         // design["gradient-animation-body"]
         // design.brickWallBg
       }
       // style={{backgroundImage:`url(${bgImage.src})`}}
-
-      
     >
-            <body 
-            suppressHydrationWarning={true} 
-            className={`${rubik.className} ${design.brickWallBg}`} 
-            >
-{/* 
+      <body
+        suppressHydrationWarning={true}
+        // className={`${rubik.className} ${design.brickWallBg}`}
+      >
+        {/* 
       <body
         // style={{
         //   background:

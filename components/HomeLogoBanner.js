@@ -9,17 +9,22 @@ import {
   faSquareInstagram,
   faSquareWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
+import { Noto_Kufi_Arabic, Marhey } from "next/font/google";
 
-const HomeLogoBanner = ({isMobile}) => {
+const noto = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
+
+const HomeLogoBanner = ({ isMobile }) => {
   return (
-    <header className="h-[750px] content-center bg-bottom bg-yellow min-h-80 px-4 flex flex-wrap items-center justify-between md:content-start pt-4">
+    <header
+      className={`h-[750px] content-center min-h-80 px-4 flex bg-black flex-wrap items-center justify-between md:content-start pt-4 ${noto.className}`}
+    >
       <div className="flex justify-center w-full gap-2">
         <div className="">
           <Link href="/">
             <Image
-              src={"/Logo.svg"}
+              src={"/images/logoPart.svg"}
               alt="MasterAdv Logo"
-              width={150}
+              width={80}
               height={80}
               priority
             />

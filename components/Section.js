@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CategoryButton from "./CategoryButton";
 import { faGlobe, faPrint } from "@fortawesome/free-solid-svg-icons";
 import Slider from "./Slider";
 import ContactUs from "./ContactUs";
-import graphicDesignIcon from "@/public/images/graphic-design-icon.svg";
-import bgImage from "@/public/images/blackBrickWallBackground.webp"
+import graphicDesignIcon from "@/public/images/graphicDesignIcon.svg";
+import bgImage from "@/public/images/blackBrickWallBackground.webp";
+import { getCategories } from "@/app/api/route";
 
 const Sections = ({ isMobile }) => {
   useEffect(() => {
@@ -24,11 +25,22 @@ const Sections = ({ isMobile }) => {
     };
   }, []);
 
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const [print, digital] = await getCategories();
+      console.log(digital.name, print.name);
+      setCategories([digital, print]);
+    }
+    fetchData();
+  }, []);
+
   const portfolioSections = [
     {
       id: 1,
       title: "تصميم",
-      href: "/dashboard/design",
+      href: "/dashboard",
       background: "bg-gradient-to-r from-[#00ADB5] to-[#1A7D82]",
       section: "design",
       icon: graphicDesignIcon,
@@ -36,12 +48,16 @@ const Sections = ({ isMobile }) => {
     {
       id: 2,
       title: "طباعة",
-      href: "/dashboard/print",
+      href: "/dashboard",
       section: "print",
       background: "bg-gradient-to-r from-purple via-reddish to-yellow",
       icon: faPrint,
     },
   ];
+
+  const style = {
+    backgroundImage: bgImage.src,
+  };
 
   // <motion.div
   //   animate={{
@@ -56,8 +72,14 @@ const Sections = ({ isMobile }) => {
   // />;
 
   return (
-    <main style={{backgroundImage:{bgImage}}}>
-      <div className="flex justify-center">
+    <main
+      className="bg-cover pb-16"
+      style={{
+        // backgroundImage: `url(${bgImage.src})`,
+        backgroundRepeat: "repeat",
+      }}
+    >
+      <div className="flex justify-center py-3">
         <div className="flex flex-wrap justify-center md:max-w-7xl pt-12 md:pt-24 gap-16 md:gap-24 pb-16 shrink">
           {portfolioSections.map((section) => {
             return (
@@ -75,9 +97,9 @@ const Sections = ({ isMobile }) => {
           })}
         </div>
       </div>
-      <div>
+      {/* <div>
         <Slider />
-      </div>
+      </div> */}
       <div className="flex justify-center">
         <ContactUs />
       </div>

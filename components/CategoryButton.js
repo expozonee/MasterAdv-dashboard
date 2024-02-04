@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Noto_Kufi_Arabic } from "next/font/google";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import {graphic-design-icon} from "../public/images/graphic-design-icon.svg";
+// import graphicDesignIcon from "@/public/images/graphic-design-icon.svg";
 import Image from "next/image";
 
 const rubik = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
@@ -17,6 +17,7 @@ const CategoryButton = ({
   section,
 }) => {
   const blendMode = isSubCategory ? "" : "mix-blend-difference";
+  const graphicDesignIcon = "@/public/images/graphic-design-icon.svg";
 
   // const settings = {
   //   digital: {
@@ -54,7 +55,7 @@ const CategoryButton = ({
         className="flex items-center justify-center w-full h-full m-0 p-0"
       >
         <div>
-          {section === "digital" ? (
+          {section === "design" ? (
             <Image src={icon} alt="icon" width={70} height={70} />
           ) : (
             <FontAwesomeIcon
@@ -64,7 +65,7 @@ const CategoryButton = ({
               color="white"
             />
           )}
-          <h1 className="text-lg sm:text-3xl">{title}</h1>
+          <h1 className="text-lg text-white sm:text-3xl">{title}</h1>
         </div>
       </Link>
     </motion.button>

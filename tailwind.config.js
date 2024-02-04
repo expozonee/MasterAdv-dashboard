@@ -211,6 +211,7 @@ module.exports = {
       },
       backgroundImage: {
         video: "url('../images/video/video.png')",
+        brickWallpaper: "url('/images/blackBrickWallBackground.webp')",
       },
       content: {
         "icon-copy": 'url("../images/icon/icon-copy-alt.svg")',
@@ -251,6 +252,11 @@ module.exports = {
         "spin-1.5": "spin 1.5s linear infinite",
         "spin-2": "spin 2s linear infinite",
         "spin-3": "spin 3s linear infinite",
+      },
+      colors: {
+        purple: "#3d1149",
+        reddish: "#d13534",
+        yellow: "#f7c948",
       },
     },
   },

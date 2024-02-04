@@ -15,13 +15,13 @@
 //   );
 // }
 
-
 "use client";
 import Sections from "@/components/Section";
 import LogoBanner from "@/components/LogoBanner";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import HomeLogoBanner from "@/components/HomeLogoBanner";
+import HomeBanner from "@/components/HomeBanner";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -46,10 +46,20 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <HomeLogoBanner isMobile={isMobile} />
+    <main
+      style={{
+        boxSizing: "border-box",
+        margin: 0,
+        padding: 0,
+        // position: "relative",
+        height: "100vh",
+      }}
+      className="bg-brickWallpaper bg-contain"
+    >
+      <LogoBanner isMobile={isMobile} />
+      <HomeBanner />
       <Sections isMobile={isMobile} />
       <Footer isMobile={isMobile} />
-    </>
+    </main>
   );
 }
