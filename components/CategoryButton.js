@@ -39,6 +39,7 @@ const CategoryButton = ({
   //     break;
   // }
 
+  // w-[150px] h-[150px] min-[300px]:w-[180px] min-[300px]:h-[180px] min-[700px]:w-[300px] min-[700px]:h-[300px]
   return (
     <motion.button
       initial={{ scale: 0 }}
@@ -48,7 +49,7 @@ const CategoryButton = ({
         animation: "pulse 1s ease-in-out infinite",
       }}
       id="section-btn"
-      className={`w-[150px] h-[150px] min-[300px]:w-[180px] min-[300px]:h-[180px] min-[700px]:w-[300px] min-[700px]:h-[300px] md:w-80 md:h-80 rounded-2xl border-transparent btn leading-normal ${background} ${rubik.className} ${blendMode}`}
+      className={` md:w-[540px] md:h-80 rounded-2xl border-transparent btn leading-normal grid col-span-2 lg:col-span-1 ${background} ${rubik.className} ${blendMode}`}
     >
       <Link
         href={pathUrl}

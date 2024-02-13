@@ -2,7 +2,7 @@
 import "../globals.css";
 import "../data-tables-css.css";
 import "../satoshi.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Loader from "@/components/common/Loader";
 
 import Sidebar from "@/components/Sidebar";
@@ -18,47 +18,53 @@ export default function RootLayout({
 
   const [loading, setLoading] = useState<boolean>(true);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [parentWidth, setParentWidth] = useState<number>(0);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setParentWidth(containerRef.current.offsetWidth);
+    }
+  }, []);
+
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
   return (
     // <html lang="en" dir="rtl">
-      // <body suppressHydrationWarning={true}>
-        <div className="dark:bg-boxdark-2 dark:text-bodydark">
-          {loading ? (
-            <Loader />
-          ) : (
-            <div className="flex h-screen overflow-hidden">
-              {/* <!-- ===== Sidebar Start ===== --> */}
-              <Sidebar
-                sidebarOpen={sidebarOpen}
-                setSidebarOpen={setSidebarOpen}
-              />
-              {/* <!-- ===== Sidebar End ===== --> */}
+    // <body suppressHydrationWarning={true}>
+    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="flex h-screen overflow-hidden">
+          {/* <!-- ===== Sidebar Start ===== --> */}
+          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          {/* <!-- ===== Sidebar End ===== --> */}
 
-              {/* <!-- ===== Content Area Start ===== --> */}
-              <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-                {/* <!-- ===== Header Start ===== --> */}
-                <Header
-                  sidebarOpen={sidebarOpen}
-                  setSidebarOpen={setSidebarOpen}
-                />
-                {/* <!-- ===== Header End ===== --> */}
+          {/* <!-- ===== Content Area Start ===== --> */}
+          <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+            {/* <!-- ===== Header Start ===== --> */}
+            <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            {/* <!-- ===== Header End ===== --> */}
 
-                {/* <!-- ===== Main Content Start ===== --> */}
-                <main>
-                  <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-                    {children}
-                  </div>
-                </main>
-                {/* <!-- ===== Main Content End ===== --> */}
+            {/* <!-- ===== Main Content Start ===== --> */}
+            <main>
+              <div
+                ref={containerRef}
+                className="mx-auto max-w-screen-3xl p-4 md:p-6 2xl:p-6"
+              >
+                {children}
               </div>
-              {/* <!-- ===== Content Area End ===== --> */}
-            </div>
-          )}
+            </main>
+            {/* <!-- ===== Main Content End ===== --> */}
+          </div>
+          {/* <!-- ===== Content Area End ===== --> */}
         </div>
-      // </body>
+      )}
+    </div>
+    // </body>
     //</html>
   );
 }

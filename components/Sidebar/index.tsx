@@ -15,15 +15,21 @@ interface SidebarProps {
   setSidebarOpen: (arg: boolean) => void;
 }
 
-interface SubCategory {
-  subCategoryId: number;
-  name: string;
-}
-
 interface Category {
   mainCategoryId: number;
   name: string;
+  sections: Sections[];
+}
+
+interface Sections {
+  sectionId: number;
+  name: string;
   subCategories: SubCategory[];
+}
+
+interface SubCategory {
+  subCategoryId: number;
+  name: string;
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
@@ -96,8 +102,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+      className={`absolute right-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+        sidebarOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
@@ -172,9 +178,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         onClick={(e) => {
                           e.preventDefault();
                           // sidebarExpanded
-                          //   ? toggleOpen(category_.id)
+                          //   ? toggleOpen(category_.mainCategoryId)
                           //   : setSidebarExpanded(true);
-                          console.log(category_.mainCategoryId);
+                          // console.log(category_.mainCategoryId);
 
                           toggleOpen(category_.mainCategoryId);
                         }}
@@ -230,10 +236,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           !open[category_.mainCategoryId] && "hidden"
                         }`}
                       >
-                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pr-6">
-                          {category_.subCategories.map((subCategory) => {
+                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pr-6 relative">
+                          {category_.sections.map((section) => {
                             return (
-                              <li key={subCategory.subCategoryId}>
+                              <li key={section.sectionId}>
                                 <Link
                                   href="/"
                                   className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
@@ -241,8 +247,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                   } `}
                                 >
                                   {/* eCommerce */}
-                                  {subCategory.name}
+                                  {section.name}
                                 </Link>
+                                <div className="absolute right-1">
+                                  {section.subCategories.map((subCategory) => {
+                                    return (
+                                      <li
+                                        key={subCategory.subCategoryId}
+                                        className="flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                      >
+                                        {subCategory.name}
+                                      </li>
+                                    );
+                                  })}
+                                </div>
                               </li>
                             );
                           })}

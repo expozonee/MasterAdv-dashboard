@@ -50,6 +50,9 @@ module.exports = {
       warning: "#FFA70B",
     },
     screens: {
+      fixedSize: "450px",
+      "cols-3": "1580px",
+      "cols-2": "1160px",
       "2xsm": "375px",
       xsm: "425px",
       "3xl": "2000px",

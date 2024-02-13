@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ChartOne from "../Charts/ChartOne";
 import ChartThree from "../Charts/ChartThree";
 import ChartTwo from "../Charts/ChartTwo";
 import ChatCard from "../Chat/ChatCard";
 import TableOne from "../Tables/TableOne";
 import CardDataStats from "../CardDataStats";
+// import Images from "../Images";
+import { getPortfolioSections } from "@/app/api/route";
+import Modal from "@mui/joy/Modal";
+import Image from "next/image";
 // import Map from "../Maps/TestMap";
+import { PortfolioImage } from "../PortfolioImage";
 
 // without this the component renders on server and throws an error
 import dynamic from "next/dynamic";
@@ -14,11 +19,42 @@ const MapOne = dynamic(() => import("../Maps/MapOne"), {
   ssr: false,
 });
 
-const ECommerce: React.FC = () => {
-  return (
-    <>
+interface PortfolioData {
+  id: number;
+  title: string;
+  imageUrl: string;
+}
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+const ECommerce: React.FC = () => {
+  const data: PortfolioData[] = getPortfolioSections();
+
+  // <>
+  return (
+    <div className="w-full justify-items-center grid grid-cols-1 3xl:grid-cols-4 cols-2:grid-cols-2 cols-3:grid-cols-3 gap-8 md:mt-8">
+      {data.map((item, index) => (
+        <div
+          key={index}
+          className={`w-11/12 flex items-center justify-center fixedSize:w-[400px] cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
+        >
+          <PortfolioImage
+            className="rounded-t-lg w-4/5 fixedSize:w-[400px] h-[400px]"
+            image={item.imageUrl}
+            alt={item.title}
+            objectCover="object-cover"
+          />
+          {/* <div className="p-5"></div> */}
+        </div>
+      ))}
+    </div>
+
+    // <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+    //   {data.map((d) => {
+    //     return <Images key={d.id} title={d.title} imageUrl={d.imageUrl} />;
+    //   })}
+    // </div>
+  );
+  {
+    /* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
@@ -114,9 +150,9 @@ const ECommerce: React.FC = () => {
           <TableOne />
         </div>
         <ChatCard />
-      </div>
-    </>
-  );
+      </div> */
+  }
+  // </>
 };
 
 export default ECommerce;

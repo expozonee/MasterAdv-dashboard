@@ -15,7 +15,7 @@ const Footer = ({ isMobile }) => {
         bottom: 0,
         width: "100%",
       }}
-      className={`flex justify-center p-4 text-neutral-content  ${notoFooter.className} bg-black`}
+      className={`flex justify-center p-4 text-neutral-content  ${notoFooter.className} bg-transparent`}
     >
       <aside className="flex justify-center items-center content-center grid-flow-col py-4">
         <p className="text-white">
