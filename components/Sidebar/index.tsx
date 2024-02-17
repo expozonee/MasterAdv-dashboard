@@ -5,9 +5,10 @@ import SidebarLinkGroup from "./SidebarLinkGroup";
 import Image from "next/image";
 import { Noto_Kufi_Arabic } from "next/font/google";
 import { getCategories } from "@/app/api/route";
+import Menu from "./Menu";
 
 const notoHeader = Noto_Kufi_Arabic({ weight: "700", subsets: ["arabic"] });
-3;
+const notoSubHeader = Noto_Kufi_Arabic({ weight: "500", subsets: ["arabic"] });
 const notoBody = Noto_Kufi_Arabic({ weight: "400", subsets: ["arabic"] });
 
 interface SidebarProps {
@@ -23,6 +24,12 @@ interface Category {
 
 interface Sections {
   sectionId: number;
+  name: string;
+  subSections: SubSection[];
+}
+
+interface SubSection {
+  subSectionId: number;
   name: string;
   subCategories: SubCategory[];
 }
@@ -162,11 +169,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {(handleClick, open) => { */}
 
               <React.Fragment>
-                {categories.map((category_) => {
+                {categories.map((category) => {
                   return (
                     <div
                       className={`${notoBody.className}`}
-                      key={category_.mainCategoryId}
+                      key={category.mainCategoryId}
                     >
                       <Link
                         href="#"
@@ -182,7 +189,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           //   : setSidebarExpanded(true);
                           // console.log(category_.mainCategoryId);
 
-                          toggleOpen(category_.mainCategoryId);
+                          toggleOpen(category.mainCategoryId);
                         }}
                       >
                         <svg
@@ -211,10 +218,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           />
                         </svg>
                         {/* Dashboard */}
-                        {category_.name}
+                        {category.name}
                         <svg
                           className={`absolute left-4 top-1/2 -translate-y-1/2 fill-current ${
-                            open[category_.mainCategoryId] && "rotate-180"
+                            open[category.mainCategoryId] && "rotate-180"
                           }`}
                           width="20"
                           height="20"
@@ -233,30 +240,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
-                          !open[category_.mainCategoryId] && "hidden"
+                          !open[category.mainCategoryId] && "hidden"
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pr-6 relative">
-                          {category_.sections.map((section) => {
+                          {category.sections.map((section) => {
                             return (
                               <li key={section.sectionId}>
                                 <Link
                                   href="/"
                                   className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
                                     pathname === "/" && "text-white"
-                                  } `}
+                                  } ${notoSubHeader.className} `}
                                 >
                                   {/* eCommerce */}
-                                  {section.name}
+                                  <h3>{section.name}</h3>
                                 </Link>
                                 <div className="absolute right-1">
-                                  {section.subCategories.map((subCategory) => {
+                                  {section.subSections.map((subSection) => {
                                     return (
                                       <li
-                                        key={subCategory.subCategoryId}
+                                        key={subSection.subSectionId}
                                         className="flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                       >
-                                        {subCategory.name}
+                                        {subSection.name}
                                       </li>
                                     );
                                   })}
@@ -281,6 +288,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </nav>
         {/* <!-- Sidebar Menu --> */}
       </div>
+      <Menu />
     </aside>
   );
 };
