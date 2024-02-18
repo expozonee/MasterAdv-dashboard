@@ -1,15 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import SidebarLinkGroup from "./SidebarLinkGroup";
-import Image from "next/image";
-import { Noto_Kufi_Arabic, Rubik } from "next/font/google";
+import { Rubik } from "next/font/google";
 import { getCategories } from "@/app/api/route";
 import Type from "./Types";
-
-const notoHeader = Noto_Kufi_Arabic({ weight: "700", subsets: ["arabic"] });
-const notoSubHeader = Noto_Kufi_Arabic({ weight: "500", subsets: ["arabic"] });
-const notoBody = Noto_Kufi_Arabic({ weight: "400", subsets: ["arabic"] });
+import MenuSection from "./MenuSection";
 
 const rubikHeader = Rubik({ weight: "800", subsets: ["hebrew"] });
 const rubikSubHeader = Rubik({ weight: "500", subsets: ["hebrew"] });
@@ -52,30 +47,10 @@ interface OpenStateConfig {
 const Menu = () => {
   const pathname = usePathname();
 
-  //   const [open, setOpen] = useState<{ [name: string | number]: boolean }>({});
   const [open, setOpen] = useState<OpenStateConfig>({});
   const [selected, setSelected] = useState(false);
 
-  // Function to toggle open state for a category
-  //   const toggleOpen = (id: number) => {
-  //     setOpen((prevOpen) => ({
-  //       ...prevOpen,
-  //       [id]: !prevOpen[id as keyof typeof prevOpen],
-  //     }));
-  //     console.log(open);
-  //   };
-
-  //   const newToggleOpen = (type: string, id: number) => {
-  //     setNewOpen((prevOpen) => ({
-  //       ...prevOpen,
-  //       [type]: {
-  //         ...prevOpen[type],
-  //         [id]: !(prevOpen[type] ? prevOpen[type][id] : false),
-  //       },
-  //     }));
-  //   };
-
-  const ToggleOpen = (type: string, id: number) => {
+  const ToggleOpen = (type: string, id: number | string) => {
     setOpen((prevOpen) => {
       // Copy the previous state
       const newState = { ...prevOpen };
@@ -125,12 +100,12 @@ const Menu = () => {
               {categories.map((category) => {
                 return (
                   <div
-                    className={`${notoBody.className}`}
+                    className={`${rubikBody.className}`}
                     key={category.mainCategoryId}
                   >
                     <Link
                       href="#"
-                      className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                         (pathname === "/" || pathname.includes("dashboard")) &&
                         "bg-graydark dark:bg-meta-4"
                       }`}
@@ -201,124 +176,38 @@ const Menu = () => {
                         ) && "hidden"
                       }`}
                     >
-                      <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pr-6 relative">
+                      <ul className="py-3 mb-5.5 flex flex-col gap-2.5 pr-4 relative">
                         {category.sections.map((section) => {
                           return (
                             <li key={section.sectionId}>
-                              {/* <Link
-                                href="/"
-                                className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                  pathname === "/" && "text-white"
-                                } ${notoSubHeader.className} `}
-                              >
-                                {section.name}
-                              </Link> */}
-                              <Link
-                                href="#"
-                                className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                                  open[Type.section.name] &&
-                                  open[Type.section.name][section.sectionId] &&
-                                  "bg-graydark dark:bg-meta-4"
-                                }`}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  ToggleOpen(
-                                    Type.section.name,
-                                    section.sectionId
-                                  );
-                                }}
-                              >
-                                <h4
-                                  className={`${rubikSubHeader.className} text-lg`}
-                                >
-                                  {section.name}
-                                </h4>
-                                <svg
-                                  className={`absolute left-4 top-1/2 -translate-y-1/2 fill-current ${
-                                    open[Type.section.name] &&
-                                    open[Type.section.name][
-                                      section.sectionId
-                                    ] &&
-                                    "rotate-180"
-                                  }`}
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 20 20"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </Link>
+                              <MenuSection
+                                id={section.sectionId}
+                                title={section.name}
+                                type={Type.section.name}
+                                ToggleOpen={ToggleOpen}
+                                open={open}
+                              />
                               <div
-                                className={`py-2 translate transform overflow-hidden ${
+                                className={`py-3 translate transform overflow-hidden ${
                                   !(
                                     open[Type.section.name] &&
                                     open[Type.section.name][section.sectionId]
                                   ) && "hidden"
                                 }`}
                               >
-                                <ul className="flex flex-col gap-2.5 pr-6 relative">
+                                <ul className="mb-5.5 flex flex-col gap-2.5 pr-5 relative">
                                   {section.subSections.map((subSection) => {
                                     return (
-                                      // <li
-                                      //   key={subSection.subSectionId}
-                                      //   className="py-1 items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                                      // >
-                                      //   {subSection.name}
-                                      // </li>
-                                      <li key={subSection.subSectionId}>
-                                        <Link
-                                          href="#"
-                                          className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                                            open[Type.subSection.name] &&
-                                            open[Type.subSection.name][
-                                              subSection.subSectionId
-                                            ] &&
-                                            "bg-graydark dark:bg-meta-4"
-                                          }`}
-                                          onClick={(e) => {
-                                            e.preventDefault();
-                                            ToggleOpen(
-                                              Type.subSection.name,
-                                              subSection.subSectionId
-                                            );
-                                          }}
-                                        >
-                                          <h4
-                                            className={`${rubikSubHeader.className} text-md`}
-                                          >
-                                            {subSection.name}
-                                          </h4>
-                                          <svg
-                                            className={`absolute left-4 top-1/2 -translate-y-1/2 fill-current ${
-                                              open[Type.subSection.name] &&
-                                              open[Type.subSection.name][
-                                                subSection.subSectionId
-                                              ] &&
-                                              "rotate-180"
-                                            }`}
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 20 20"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              fillRule="evenodd"
-                                              clipRule="evenodd"
-                                              d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                                              fill=""
-                                            />
-                                          </svg>
-                                        </Link>
+                                      <li>
+                                        <MenuSection
+                                          id={subSection.subSectionId}
+                                          title={subSection.name}
+                                          type={Type.subSection.name}
+                                          ToggleOpen={ToggleOpen}
+                                          open={open}
+                                        />
                                         <div
-                                          className={`py-2 translate transform overflow-hidden ${
+                                          className={`py-3 translate transform overflow-hidden ${
                                             !(
                                               open[Type.subSection.name] &&
                                               open[Type.subSection.name][
@@ -327,19 +216,14 @@ const Menu = () => {
                                             ) && "hidden"
                                           }`}
                                         >
-                                          {/* subCategory section */}
-                                          <ul className=" right-1">
+                                          <ul className="flex flex-col gap-1.5 pr-3 relative">
                                             {subSection.subCategories.map(
                                               (subCategory) => {
                                                 return (
-                                                  <li
-                                                    key={
-                                                      subCategory.subCategoryId
-                                                    }
-                                                  >
+                                                  <li>
                                                     <Link
-                                                      href={`${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
-                                                      className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                                      href={`/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
+                                                      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                                         open[
                                                           Type.subCategory.name
                                                         ] &&
@@ -350,12 +234,12 @@ const Menu = () => {
                                                             .subCategoryId
                                                         ] &&
                                                         "bg-graydark dark:bg-meta-4"
-                                                      } ${rubikBody.className}`}
+                                                      }`}
                                                       onClick={(e) => {
                                                         e.preventDefault();
                                                         ToggleOpen(
-                                                          Type.subCategory.name,
-                                                          subCategory.subCategoryId
+                                                          Type.subSection.name,
+                                                          subSection.subSectionId
                                                         );
                                                       }}
                                                     >

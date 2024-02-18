@@ -8,6 +8,9 @@ const Type = {
   subSection: {
     name: "subSection",
   },
+  subCategory: {
+    name: "subCategory",
+  },
 };
 
 export default Type;
