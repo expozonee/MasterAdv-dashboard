@@ -103,9 +103,8 @@ const Menu = () => {
                     className={`${rubikBody.className}`}
                     key={category.mainCategoryId}
                   >
-                    <Link
-                      href="#"
-                      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    <div
+                      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 cursor-pointer font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                         (pathname === "/" || pathname.includes("dashboard")) &&
                         "bg-graydark dark:bg-meta-4"
                       }`}
@@ -166,7 +165,7 @@ const Menu = () => {
                           fill=""
                         />
                       </svg>
-                    </Link>
+                    </div>
                     {/* <!-- Dropdown Menu Start --> */}
                     <div
                       className={`translate transform overflow-hidden ${

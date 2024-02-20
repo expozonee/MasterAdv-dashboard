@@ -33,7 +33,7 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
       <Card
         // className="px-10"
         component="div"
-        sx={{ width: "100%", height: 400 }}
+        sx={{ width: "100%", height: 400, border: "none" }}
         onClick={() => {
           setOpen(true);
         }}
@@ -56,6 +56,7 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
             alignItems: "center",
             justifyContent: "center",
             paddingInline: 3,
+            width: 600,
           }}
           onClose={() => {
             setOpen(false);
@@ -64,8 +65,8 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
           <Sheet
             variant="plain"
             sx={{
-              maxWidth: 750,
-              //   height: 700,
+              width: 600,
+              height: 1000,
               borderRadius: "md",
               boxShadow: "lg",
             }}
@@ -76,8 +77,8 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
               className="rounded-lg"
               src={image}
               alt={alt}
-              width={1920}
-              height={1080}
+              width={600}
+              height={1000}
             />
           </Sheet>
         </Modal>

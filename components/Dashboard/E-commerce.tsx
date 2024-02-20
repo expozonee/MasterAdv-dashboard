@@ -30,7 +30,8 @@ const ECommerce: React.FC = () => {
 
   // <>
   return (
-    <div className="w-full justify-items-center grid grid-cols-1 3xl:grid-cols-4 cols-2:grid-cols-2 cols-3:grid-cols-3 gap-8 md:mt-8">
+    // <div className="w-full justify-items-center grid grid-cols-1 3xl:grid-cols-4 cols-2:grid-cols-2 cols-3:grid-cols-3 gap-8 md:mt-8">
+    <div className="flex flex-wrap gap-5 justify-center">
       {data.map((item, index) => (
         <div
           key={index}
@@ -45,6 +46,7 @@ const ECommerce: React.FC = () => {
           {/* <div className="p-5"></div> */}
         </div>
       ))}
+      {/* </div> */}
     </div>
 
     // <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
