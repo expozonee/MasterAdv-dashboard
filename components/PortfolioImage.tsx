@@ -4,7 +4,8 @@ import Sheet from "@mui/joy/Sheet";
 import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
 import { AspectRatio } from "@mui/joy";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import mainRef from "@/app/dashboard/mainRef";
 
 type ImageOwnProps<T extends React.ElementType> = {
   className: string;
@@ -28,12 +29,19 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
   const Component = as || "div";
   const [open, setOpen] = useState(false);
 
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    console.log(windowWidth);
+  }, [window.innerWidth]);
+
   return (
     <Component className={className} {...rest}>
       <Card
         // className="px-10"
         component="div"
-        sx={{ width: "100%", height: 400, border: "none" }}
+        sx={{ width: "100%", height: "100%", border: "none" }}
         onClick={() => {
           setOpen(true);
         }}
@@ -51,13 +59,19 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
         <Modal
           open={open}
           aria-labelledby="image-modal"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingInline: 3,
-            width: 600,
-          }}
+          // component={mainRef.current}
+          sx={
+            {
+              // position: "absolute",
+              // display: "flex",
+              // inset: "50% 50% 50% 50%",
+              // alignItems: "center",
+              // justifyContent: "center",
+              // paddingInline: 3,
+              // width: 1080,
+              // aspectRatio: "1/1",
+            }
+          }
           onClose={() => {
             setOpen(false);
           }}
@@ -65,20 +79,26 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
           <Sheet
             variant="plain"
             sx={{
+              position: "absolute",
+              top: "50%",
+              left: "40%",
+              marginInline: "auto",
+              transform: "translate(-50%, -50%)",
               width: 600,
-              height: 1000,
+              height: 750,
               borderRadius: "md",
               boxShadow: "lg",
+              backgroundColor: "black",
             }}
           >
             {/* <ModalClose variant="plain" sx={{ m: 1 }} /> */}
 
             <Image
-              className="rounded-lg"
+              className="rounded-t-lg aspect-square"
               src={image}
               alt={alt}
               width={600}
-              height={1000}
+              height={600}
             />
           </Sheet>
         </Modal>

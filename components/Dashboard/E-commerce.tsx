@@ -31,22 +31,36 @@ const ECommerce: React.FC = () => {
   // <>
   return (
     // <div className="w-full justify-items-center grid grid-cols-1 3xl:grid-cols-4 cols-2:grid-cols-2 cols-3:grid-cols-3 gap-8 md:mt-8">
-    <div className="flex flex-wrap gap-5 justify-center">
-      {data.map((item, index) => (
-        <div
-          key={index}
-          className={`w-11/12 flex items-center justify-center fixedSize:w-[400px] cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
-        >
-          <PortfolioImage
-            className="rounded-t-lg w-4/5 fixedSize:w-[400px] h-[400px]"
-            image={item.imageUrl}
-            alt={item.title}
-            objectCover="object-cover"
-          />
-          {/* <div className="p-5"></div> */}
-        </div>
-      ))}
-      {/* </div> */}
+    <div>
+      <div>
+        <h1 className="text-3xl pb-6">Title</h1>
+      </div>
+      <div
+        style={{
+          display: "grid",
+          gridAutoFlow: "dense",
+          gap: "1rem",
+          gridTemplateColumns:
+            "repeat(auto-fill, minmax(min(100%, 400px), 1fr))",
+        }}
+        className="justify-items-center justify-center"
+      >
+        {data.map((item, index) => (
+          <div
+            key={index}
+            className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
+          >
+            <PortfolioImage
+              className="rounded-t-lg w-full h-full aspect-square"
+              image={item.imageUrl}
+              alt={item.title}
+              // objectCover="object-cover"
+            />
+            {/* <div className="p-5"></div> */}
+          </div>
+        ))}
+        {/* </div> */}
+      </div>
     </div>
 
     // <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">

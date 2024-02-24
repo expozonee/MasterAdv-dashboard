@@ -87,11 +87,13 @@ const Menu = () => {
       <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
         {/* <!-- Menu Group --> */}
         <div>
-          <h2
-            className={`mb-4 ml-4 text-3xl font-semibold text-bodydark2 ${rubikHeader.className}`}
-          >
-            ראשי
-          </h2>
+          <Link href={`/dashboard`}>
+            <h2
+              className={`mb-4 ml-4 text-3xl font-semibold text-bodydark2 hover:text-white transition ease-in ${rubikHeader.className}`}
+            >
+              ראשי
+            </h2>
+          </Link>
 
           <ul className="mb-6 flex flex-col gap-1.5">
             {/* <!-- Menu Item Dashboard --> */}

@@ -31,6 +31,7 @@ export default function RootLayout({
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
+  const mainRef = useRef(null);
   return (
     // <html lang="en" dir="rtl">
     // <body suppressHydrationWarning={true}>
@@ -50,7 +51,7 @@ export default function RootLayout({
             {/* <!-- ===== Header End ===== --> */}
 
             {/* <!-- ===== Main Content Start ===== --> */}
-            <main>
+            <main className="relative">
               <div
                 ref={containerRef}
                 className="mx-auto max-w-screen-3xl p-4 md:p-6 2xl:p-6"
