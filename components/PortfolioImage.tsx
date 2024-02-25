@@ -3,9 +3,9 @@ import Modal from "@mui/joy/Modal";
 import Sheet from "@mui/joy/Sheet";
 import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
-import { AspectRatio } from "@mui/joy";
 import { useEffect, useState } from "react";
-import mainRef from "@/app/dashboard/mainRef";
+import useMainRef from "@/app/dashboard/mainRef";
+import ModalClose from "@mui/joy/ModalClose";
 
 type ImageOwnProps<T extends React.ElementType> = {
   className: string;
@@ -31,10 +31,56 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
 
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
+  // useEffect(() => {
+  //   window.innerWidth <= 620
+  //     ? setWindowWidth(window.innerWidth)
+  //     : setWindowWidth(650);
+  // }, []);
+
+  // function handleResize() {
+  //   const handleSize = () => {
+  //     if (windowWidth <= 650) {
+  //       setWindowWidth(window.innerWidth);
+  //     }
+  //   };
+
+  //   window.addEventListener("resize", handleSize);
+  //   const sheetWidth = windowWidth < 650 ? windowWidth * 0.8 : 600;
+  //   // window.removeEventListener("resize", handleSize);
+
+  //   return sheetWidth;
+  // }
+
   useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    console.log(windowWidth);
-  }, [window.innerWidth]);
+    const handleSize = () => {
+      if (window.innerWidth <= 650) {
+        setWindowWidth(window.innerWidth);
+      } else {
+        setWindowWidth(650);
+      }
+    };
+
+    // Set initial width
+    handleSize();
+
+    // Listen for window resize events
+    window.addEventListener("resize", handleSize);
+
+    // Clean up event listener on unmount
+    return () => {
+      window.removeEventListener("resize", handleSize);
+    };
+  }, []);
+
+  function handleResize() {
+    const sheetWidth = windowWidth < 650 ? windowWidth * 0.8 : 600;
+    return sheetWidth;
+  }
+
+  const sheetSize = {
+    width: handleResize(),
+    height: String(handleResize() + 150) + "px",
+  };
 
   return (
     <Component className={className} {...rest}>
@@ -57,41 +103,38 @@ export const PortfolioImage = <T extends React.ElementType = "div">({
           />
         </CardCover>
         <Modal
+          disablePortal={false}
+          disableEscapeKeyDown={false}
+          disableScrollLock={false}
+          disableEnforceFocus={false}
+          hideBackdrop={false}
+          container={document.getElementsByTagName("main")[0]}
           open={open}
           aria-labelledby="image-modal"
-          // component={mainRef.current}
-          sx={
-            {
-              // position: "absolute",
-              // display: "flex",
-              // inset: "50% 50% 50% 50%",
-              // alignItems: "center",
-              // justifyContent: "center",
-              // paddingInline: 3,
-              // width: 1080,
-              // aspectRatio: "1/1",
+          sx={{
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClose={(event, reason) => {
+            if (reason === "backdropClick" || reason === "escapeKeyDown") {
+              setOpen(false);
             }
-          }
-          onClose={() => {
-            setOpen(false);
           }}
         >
           <Sheet
             variant="plain"
             sx={{
               position: "absolute",
-              top: "50%",
-              left: "40%",
-              marginInline: "auto",
-              transform: "translate(-50%, -50%)",
-              width: 600,
-              height: 750,
+              width: sheetSize.width,
+              height: sheetSize.height,
               borderRadius: "md",
               boxShadow: "lg",
               backgroundColor: "black",
             }}
           >
-            {/* <ModalClose variant="plain" sx={{ m: 1 }} /> */}
+            <ModalClose variant="plain" sx={{ m: 1, color: "white" }} />
 
             <Image
               className="rounded-t-lg aspect-square"

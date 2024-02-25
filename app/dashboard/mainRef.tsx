@@ -1,8 +1,8 @@
 import { useRef } from "react";
 
 const useMainRef = () => {
-  const mainRef = useRef(null);
-  return mainRef;
+  const useMainRef = useRef(null);
+  return useMainRef;
 };
 
 export default useMainRef;

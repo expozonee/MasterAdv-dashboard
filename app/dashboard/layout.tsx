@@ -4,10 +4,10 @@ import "../data-tables-css.css";
 import "../satoshi.css";
 import { useState, useEffect, useRef } from "react";
 import Loader from "@/components/common/Loader";
-
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { Noto_Kufi_Arabic } from "next/font/google";
+import useMainRef from "@/app/dashboard/mainRef";
 
 export default function RootLayout({
   children,
@@ -27,11 +27,17 @@ export default function RootLayout({
     }
   }, []);
 
+  const mainRef = useMainRef();
+
+  useEffect(() => {
+    console.log(mainRef.current);
+  });
+
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  const mainRef = useRef(null);
+  // const mainRef = useRef(null);
   return (
     // <html lang="en" dir="rtl">
     // <body suppressHydrationWarning={true}>
@@ -51,7 +57,7 @@ export default function RootLayout({
             {/* <!-- ===== Header End ===== --> */}
 
             {/* <!-- ===== Main Content Start ===== --> */}
-            <main className="relative">
+            <main className="relative" ref={mainRef.current}>
               <div
                 ref={containerRef}
                 className="mx-auto max-w-screen-3xl p-4 md:p-6 2xl:p-6"
