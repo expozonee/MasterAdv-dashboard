@@ -9,6 +9,17 @@ export async function getCategories() {
   return data;
 }
 
+export async function getTitles(slug) {
+  const response = await fetch(`http://localhost:4000/titles?slug=${slug}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data;
+}
+
 export function getPortfolioSections() {
   return [
     {
