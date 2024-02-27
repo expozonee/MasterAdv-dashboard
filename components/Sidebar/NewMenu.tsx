@@ -223,7 +223,7 @@ const Menu = () => {
                                                 return (
                                                   <li>
                                                     <Link
-                                                      href={`/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
+                                                      href={`/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
                                                       className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                                         open[
                                                           Type.subCategory.name
@@ -236,13 +236,13 @@ const Menu = () => {
                                                         ] &&
                                                         "bg-graydark dark:bg-meta-4"
                                                       }`}
-                                                      onClick={(e) => {
-                                                        e.preventDefault();
-                                                        ToggleOpen(
-                                                          Type.subSection.name,
-                                                          subSection.subSectionId
-                                                        );
-                                                      }}
+                                                      // onClick={(e) => {
+                                                      //   e.preventDefault();
+                                                      //   ToggleOpen(
+                                                      //     Type.subSection.name,
+                                                      //     subSection.subSectionId
+                                                      //   );
+                                                      // }}
                                                     >
                                                       <h4
                                                         className={`${rubikBody.className} text-md`}
