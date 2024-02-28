@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Rubik } from "next/font/google";
 import { getTitles } from "@/app/api/route";
+import { usePathname } from "next/navigation";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -16,6 +18,7 @@ const SubCategory = ({
   };
 }) => {
   const [title, setTitle] = useState<{ name: string }>({ name: "" });
+  const pathname = usePathname();
 
   useEffect(() => {
     async function getTitle() {
@@ -30,6 +33,7 @@ const SubCategory = ({
   return (
     <div>
       <h1 className={`${titleRubik.className} text-4xl`}>{title.name}</h1>
+      <Breadcrumb pageName={pathname} />
     </div>
   );
 };

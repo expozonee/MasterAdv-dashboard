@@ -197,68 +197,72 @@ const Menu = () => {
                                 }`}
                               >
                                 <ul className="mb-5.5 flex flex-col gap-2.5 pr-5 relative">
-                                  {section.subSections.map((subSection) => {
-                                    return (
-                                      <li>
-                                        <MenuSection
-                                          id={subSection.subSectionId}
-                                          title={subSection.name}
-                                          type={Type.subSection.name}
-                                          ToggleOpen={ToggleOpen}
-                                          open={open}
-                                        />
-                                        <div
-                                          className={`py-3 translate transform overflow-hidden ${
-                                            !(
-                                              open[Type.subSection.name] &&
-                                              open[Type.subSection.name][
-                                                subSection.subSectionId
-                                              ]
-                                            ) && "hidden"
-                                          }`}
-                                        >
-                                          <ul className="flex flex-col gap-1.5 pr-3 relative">
-                                            {subSection.subCategories.map(
-                                              (subCategory) => {
-                                                return (
-                                                  <li>
-                                                    <Link
-                                                      href={`/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
-                                                      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                                                        open[
-                                                          Type.subCategory.name
-                                                        ] &&
-                                                        open[
-                                                          Type.subCategory.name
-                                                        ][
-                                                          subCategory
-                                                            .subCategoryId
-                                                        ] &&
-                                                        "bg-graydark dark:bg-meta-4"
-                                                      }`}
-                                                      // onClick={(e) => {
-                                                      //   e.preventDefault();
-                                                      //   ToggleOpen(
-                                                      //     Type.subSection.name,
-                                                      //     subSection.subSectionId
-                                                      //   );
-                                                      // }}
-                                                    >
-                                                      <h4
-                                                        className={`${rubikBody.className} text-md`}
+                                  {section.subSections.map(
+                                    (subSection, index) => {
+                                      return (
+                                        <li key={index}>
+                                          <MenuSection
+                                            id={subSection.subSectionId}
+                                            title={subSection.name}
+                                            type={Type.subSection.name}
+                                            ToggleOpen={ToggleOpen}
+                                            open={open}
+                                          />
+                                          <div
+                                            className={`py-3 translate transform overflow-hidden ${
+                                              !(
+                                                open[Type.subSection.name] &&
+                                                open[Type.subSection.name][
+                                                  subSection.subSectionId
+                                                ]
+                                              ) && "hidden"
+                                            }`}
+                                          >
+                                            <ul className="flex flex-col gap-1.5 pr-3 relative">
+                                              {subSection.subCategories.map(
+                                                (subCategory, index) => {
+                                                  return (
+                                                    <li key={index}>
+                                                      <Link
+                                                        href={`/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
+                                                        className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                                          open[
+                                                            Type.subCategory
+                                                              .name
+                                                          ] &&
+                                                          open[
+                                                            Type.subCategory
+                                                              .name
+                                                          ][
+                                                            subCategory
+                                                              .subCategoryId
+                                                          ] &&
+                                                          "bg-graydark dark:bg-meta-4"
+                                                        }`}
+                                                        // onClick={(e) => {
+                                                        //   e.preventDefault();
+                                                        //   ToggleOpen(
+                                                        //     Type.subSection.name,
+                                                        //     subSection.subSectionId
+                                                        //   );
+                                                        // }}
                                                       >
-                                                        {subCategory.name}
-                                                      </h4>
-                                                    </Link>
-                                                  </li>
-                                                );
-                                              }
-                                            )}
-                                          </ul>
-                                        </div>
-                                      </li>
-                                    );
-                                  })}
+                                                        <h4
+                                                          className={`${rubikBody.className} text-md`}
+                                                        >
+                                                          {subCategory.name}
+                                                        </h4>
+                                                      </Link>
+                                                    </li>
+                                                  );
+                                                }
+                                              )}
+                                            </ul>
+                                          </div>
+                                        </li>
+                                      );
+                                    }
+                                  )}
                                 </ul>
                               </div>
                             </li>
