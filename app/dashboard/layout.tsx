@@ -30,10 +30,6 @@ export default function RootLayout({
   const mainRef = useMainRef();
 
   useEffect(() => {
-    console.log(mainRef.current);
-  });
-
-  useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 

@@ -1,26 +1,40 @@
 import Link from "next/link";
-interface BreadcrumbProps {
-  pageName: string;
-}
-const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
-  const sections = pageName.split("/");
-  const test = sections.slice(2);
-  console.log(test);
 
+interface BreadcrumbProps {
+  names: [{ name: string }];
+  urls: string[];
+}
+
+const Breadcrumb = ({ pageData }: { pageData: BreadcrumbProps }) => {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       {/* <h2 className="text-title-md2 font-semibold text-black dark:text-white">
-        {pageName}
+        {pageData}
       </h2> */}
 
       <nav>
         <ol className="flex items-center gap-2">
           <li>
-            <Link className="font-medium" href="/">
+            <Link className="font-medium" href="/dashboard">
               ראשי /
             </Link>
           </li>
-          <li className="font-medium text-primary">{pageName}</li>
+          {pageData.names.map((name, index) => {
+            return (
+              index < pageData.names.length - 1 && (
+                <li key={index}>
+                  <Link className="font-medium" href={pageData.urls[index]}>
+                    {`${name.name} /`}
+                  </Link>
+                </li>
+              )
+            );
+          })}
+
+          <li className="font-medium text-primary">
+            {pageData.names[pageData.names.length - 1] &&
+              pageData.names[pageData.names.length - 1].name}
+          </li>
         </ol>
       </nav>
     </div>

@@ -9,13 +9,17 @@ export async function getCategories() {
   return data;
 }
 
-export async function getTitles(slug) {
-  const response = await fetch(`http://localhost:4000/titles?slug=${slug}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export async function getTitles(slugs) {
+  const stringSlugs = JSON.stringify(slugs);
+  const response = await fetch(
+    `http://localhost:4000/getTitles?slugs=${stringSlugs}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const data = await response.json();
   return data;
 }
