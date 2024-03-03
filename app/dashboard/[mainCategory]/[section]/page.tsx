@@ -2,6 +2,10 @@
 import React from "react";
 import { getPortfolioSections } from "@/app/api/route";
 import { PortfolioImage } from "@/components/PortfolioImage";
+import { usePathname } from "next/navigation";
+import PageData from "@/app/dashboard/PageData";
+import { Rubik } from "next/font/google";
+import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 
 interface PortfolioData {
   id: number;
@@ -9,13 +13,19 @@ interface PortfolioData {
   imageUrl: string;
 }
 
+const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
+
 const Section = () => {
   const data: PortfolioData[] = getPortfolioSections();
+  const pathname = usePathname();
+  const [titleData, breadcrumbsData] = PageData(pathname);
+  const title = titleData;
 
   return (
     <div>
       <div>
-        <h1 className="text-3xl py-6">Title</h1>
+        <h1 className={`text-3xl ${titleRubik.className}`}>{title}</h1>
+        <BreadCrumbs pageData={breadcrumbsData} />
       </div>
       <div
         style={{
