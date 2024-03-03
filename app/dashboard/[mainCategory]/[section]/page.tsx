@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import { Rubik } from "next/font/google";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
+import NewPortfolioImage from "@/components/newPortfolioImage";
 
 interface PortfolioData {
   id: number;
@@ -42,7 +43,8 @@ const Section = () => {
             key={index}
             className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
           >
-            <PortfolioImage
+            {/* <TransitionsModal image={item.imageUrl} alt={item.title} /> */}
+            <NewPortfolioImage
               className="rounded-t-lg w-full h-full aspect-square"
               image={item.imageUrl}
               alt={item.title}
