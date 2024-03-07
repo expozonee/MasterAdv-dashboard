@@ -53,7 +53,7 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
     // };
 
     function handleResize() {
-      if (window.innerWidth < 1350) {
+      if (window.innerWidth < 1180) {
         setIsMobile(true);
       } else {
         setIsMobile(false);
@@ -66,25 +66,13 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
         const mobileDesiredWidth = String(windowWidth * 0.8) + "px";
         setDesiredWidth("80%");
         setImageHeight(mobileDesiredWidth);
+        setImageHeight(String(window.innerWidth * 0.8 + "px"));
       } else {
         // setDesiredWidth("80%");
         const boxSize = String(windowWidth * 0.8 * 0.6) + "px";
         setDesiredHeight(boxSize);
         setDesiredWidth(boxSize);
       }
-
-      //   if (!isMobile) {
-      //     const desiredHeight = String(height * 0.6) + "px";
-      //     setDesiredWidth("80%");
-      //     setDesiredHeight(desiredHeight);
-      //   } else {
-      //     const desiredW = "80%";
-      //     const desiredH = String(window.innerWidth * 0.8) + "px";
-      //     console.log(desiredH, desiredW);
-
-      //     // setDesiredWidth(desiredW);
-      //     setDesiredHeight(desiredH);
-      //   }
     }
 
     // Set initial width
@@ -149,18 +137,24 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
                 // position: "absolute",
                 width: `80%`,
                 maxWidth: "1600px",
-                height: `${isMobile ? "70%" : desiredHeight}`,
-                maxHeight: "960px",
+                height: `${isMobile ? "min-content" : desiredHeight}`,
+                // maxHeight: "960px",
                 borderRadius: "md",
                 boxShadow: "lg",
-                backgroundColor: "white",
+                backgroundColor: "#212121",
                 outline: "none",
               }}
             >
               {/* <ModalClose variant="plain" sx={{ m: 1, color: "white" }} /> */}
-              <div className={`flex w-full h-full ${isMobile && "flex-col"}`}>
+              <div
+                className={`flex w-full h-full overflow-auto ${
+                  isMobile && "flex-col"
+                }`}
+              >
                 <div
-                  className={`${isMobile ? "w-full" : "w-3/5"} h-full m-0 p-0`}
+                  className={`${
+                    isMobile ? `w-full aspect-square` : "w-3/5 h-full"
+                  }  m-0 p-0`}
                 >
                   <Image
                     className="rounded-r-md aspect-square"
@@ -170,15 +164,25 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
                     height={600}
                     style={{
                       width: `${isMobile ? "100%" : desiredWidth}`,
-                      height: "100%",
+                      // height: `${isMobile ? "663px" : desiredHeight}`,
                       objectFit: "contain",
                     }}
                   />
                 </div>
                 <div
-                  className={`${isMobile ? "w-full h-2/5" : "w-2/5 h-full"}`}
+                  className={`${
+                    isMobile ? "w-full h-[150px]" : "w-2/5 h-full"
+                  }`}
                 >
-                  <h1>Test</h1>
+                  <h1 className="text-white">Test</h1>
+                  <h1 className="text-white">Test</h1>
+                  <h1 className="text-white">Test</h1>
+                  <h1 className="text-white">Test</h1>
+                  <h1 className="text-white">Test</h1>
+                  <h1 className="text-white">Test</h1>
+                  <h1 className="text-white">Test</h1>
+                  <h1 className="text-white">Test</h1>
+                  <h1 className="text-white">Test</h1>
                   <ModalClose
                     variant="plain"
                     sx={{ m: 1, color: "white" }}
