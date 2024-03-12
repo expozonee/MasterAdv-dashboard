@@ -24,7 +24,7 @@ const PageData = (currentPathname: string): [string, Data] => {
       setBreadcrumbsData(data);
     }
     getTitle();
-  });
+  }, []);
 
   return [titleData, breadcrumbsData];
 };

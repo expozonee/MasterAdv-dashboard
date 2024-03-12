@@ -5,13 +5,14 @@ import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
 import { useEffect, useState } from "react";
 import ModalClose from "@mui/joy/ModalClose";
-//
+import { Dialog } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { DialogContent } from "@mui/joy";
 
 type ImageOwnProps<T extends React.ElementType> = {
   className: string;
@@ -24,7 +25,7 @@ type ImageOwnProps<T extends React.ElementType> = {
 type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
   Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
 
-const NewPortfolioImage = <T extends React.ElementType = "div">({
+const LatestPortfolioImage = <T extends React.ElementType = "div">({
   className,
   image,
   alt,
@@ -50,7 +51,7 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
       const windowHeight = window.innerHeight;
 
       if (isMobile) {
-        // const mobileDesiredWidth = String(windowWidth * 0.85) + "px";
+        const mobileDesiredWidth = String(windowWidth * 0.85) + "px";
         setDesiredWidth("85%");
       } else {
         const boxSize = String(windowWidth * 0.85 * 0.6) + "px";
@@ -72,99 +73,48 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
   }, []);
 
   return (
-    <Component className={className} {...rest}>
-      <Card
+    <div className={className} {...rest}>
+      {/* <Card
         component="div"
         sx={{ width: "100%", height: "100%", border: "none" }}
-        // onClick={() => {
-        //   setOpen(true);
-        // }}
+        onClick={() => {
+          setOpen(true);
+        }}
+      > */}
+      <CardCover sx={{ border: "none" }}>
+        <Image
+          onClick={() => setOpen(true)}
+          src={image}
+          alt={alt}
+          height={400}
+          width={400}
+        />
+      </CardCover>
+      <Dialog
+        open={open}
+        aria-labelledby="image-modal"
+        sx={{
+          position: "absolute",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 99999,
+          width: "100%",
+        }}
+        onClose={() => {
+          setOpen(false);
+        }}
       >
-        <CardCover sx={{ border: "none" }}>
-          <Image
-            onClick={() => setOpen(true)}
-            src={image}
-            alt={alt}
-            height={400}
-            width={400}
-          />
-        </CardCover>
-        <Modal
-          disableEscapeKeyDown={false}
-          open={open}
-          aria-labelledby="image-modal"
+        <DialogContent
           sx={{
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 99999,
-          }}
-          onClose={() => {
-            setOpen(false);
+            width: "80%",
           }}
         >
-          <Fade in={open}>
-            <Sheet
-              variant="plain"
-              sx={{
-                // position: "absolute",
-                width: `85%`,
-                maxWidth: "1600px",
-                height: `${isMobile ? "min-content" : desiredHeight}`,
-                // maxHeight: "960px",
-                borderRadius: "md",
-                boxShadow: "lg",
-                backgroundColor: "#212121",
-                outline: "none",
-              }}
-            >
-              {/* <ModalClose variant="plain" sx={{ m: 1, color: "white" }} /> */}
-              <div
-                className={`flex w-full h-full overflow-auto ${
-                  isMobile && "flex-col"
-                }`}
-              >
-                <div
-                  className={`${
-                    isMobile ? `w-full aspect-square` : "w-3/5 h-full"
-                  }  m-0 p-0`}
-                >
-                  <Image
-                    className={`${
-                      isMobile ? "rounded-t-lg" : "rounded-r-md"
-                    }  aspect-square`}
-                    src={image}
-                    alt={alt}
-                    width={600}
-                    height={600}
-                    style={{
-                      width: `${isMobile ? "100%" : desiredWidth}`,
-                      objectFit: "contain",
-                    }}
-                  />
-                </div>
-                <div
-                  className={`${
-                    isMobile ? "w-full h-[150px]" : "w-2/5 h-full"
-                  } p-6 flex flex-col justify-center items-center`}
-                >
-                  <h1 className="px-8 py-4 text-black bg-white rounded-md">
-                    Click Here
-                  </h1>
-
-                  <ModalClose
-                    variant="plain"
-                    sx={{ m: 1, color: "white" }}
-                    onClick={() => setOpen(false)}
-                  />
-                </div>
-              </div>
-            </Sheet>
-          </Fade>
-        </Modal>
-      </Card>
-    </Component>
+          <h1>Test</h1>
+        </DialogContent>
+      </Dialog>
+      {/* </Card> */}
+    </div>
   );
 };
 
@@ -231,4 +181,4 @@ export function TransitionsModal({
   );
 }
 
-export default NewPortfolioImage;
+export default LatestPortfolioImage;

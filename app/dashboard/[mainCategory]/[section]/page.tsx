@@ -7,6 +7,7 @@ import PageData from "@/app/dashboard/PageData";
 import { Rubik } from "next/font/google";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import NewPortfolioImage from "@/components/newPortfolioImage";
+import LatestPortfolioImage from "@/components/LatestPortfolioImage";
 
 interface PortfolioData {
   id: number;
@@ -50,6 +51,12 @@ const Section = () => {
               alt={item.title}
               // objectCover="object-cover"
             />
+            {/* <LatestPortfolioImage
+              className="rounded-t-lg w-full h-full aspect-square"
+              image={item.imageUrl}
+              alt={item.title}
+              // objectCover="object-cover"
+            /> */}
             {/* <div className="p-5"></div> */}
           </div>
         ))}
