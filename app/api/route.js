@@ -11,17 +11,21 @@ export async function getCategories() {
 
 export async function getTitles(slugs) {
   const stringSlugs = JSON.stringify(slugs);
-  const response = await fetch(
-    `http://localhost:4000/getTitles?slugs=${stringSlugs}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(
+      `http://localhost:4000/getTitles?slugs=${stringSlugs}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // console.log(error);
+  }
 }
 
 export function getPortfolioSections() {

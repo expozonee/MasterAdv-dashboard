@@ -13,12 +13,18 @@ export default async function middleware(request: NextRequest) {
   const slugs = pathArray.slice(1);
   // console.log(slugs);
 
+  var isInvalidUrl = false;
+
   async function getTitle() {
     const data: Data = await getTitles(slugs);
     return data;
   }
-  const { names, urls } = await getTitle();
-  const isInvalidUrl = names.some((name) => name === null);
+  try {
+    const { names, urls } = await getTitle();
+    isInvalidUrl = names.some((name) => name === null);
+  } catch (e) {
+    isInvalidUrl = true;
+  }
 
   if (isInvalidUrl) {
     const url = req.nextUrl.clone();
