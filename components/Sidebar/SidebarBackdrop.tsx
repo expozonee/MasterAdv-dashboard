@@ -9,7 +9,7 @@ const SidebarBackdrop = ({ show }: BackdropProps) => {
     <div
       className={`${
         show
-          ? "bg-[#000000] absolute inset-0 opacity-50 z-9999"
+          ? "bg-[#000000] absolute inset-0 opacity-50 z-[9998]"
           : "opacity-0 hidden"
       } transition-all duration-300 opacity-50 lg:hidden`}
     ></div>
