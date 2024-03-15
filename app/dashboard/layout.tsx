@@ -8,6 +8,7 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { Noto_Kufi_Arabic } from "next/font/google";
 import useMainRef from "@/app/dashboard/mainRef";
+import SidebarBackdrop from "@/components/Sidebar/SidebarBackdrop";
 
 export default function RootLayout({
   children,
@@ -43,6 +44,7 @@ export default function RootLayout({
       ) : (
         <div className="flex h-screen overflow-hidden">
           {/* <!-- ===== Sidebar Start ===== --> */}
+          <SidebarBackdrop show={sidebarOpen} />
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           {/* <!-- ===== Sidebar End ===== --> */}
 

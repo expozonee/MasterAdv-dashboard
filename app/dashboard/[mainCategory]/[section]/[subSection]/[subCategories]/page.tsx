@@ -1,55 +1,76 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Rubik } from "next/font/google";
-import { getTitles } from "@/app/api/route";
 import { usePathname } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import PageData from "@/app/dashboard/PageData";
+import { getPortfolioSections } from "@/app/api/route";
+import PortfolioImage from "@/components/PortfolioImage/PortfolioImage";
+import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
-interface Data {
-  names: [{ name: string }];
-  urls: string[];
+// interface Data {
+//   names: [{ name: string }];
+//   urls: string[];
+// }
+
+interface PortfolioData {
+  id: number;
+  title: string;
+  imageUrl: string;
 }
 
-const SubCategory = ({
-  params,
-}: {
-  params: {
-    mainCategory: string;
-    section: string;
-    subSection: string;
-    subCategories: string;
-  };
-}) => {
-  // const [title, setTitle] = useState<string>("");
-  // const [titles, setTitles] = useState<Data>({
-  //   names: [{ name: "" }],
-  //   urls: [""],
-  // });
+const SubCategory = () => {
   const pathname = usePathname();
-  // const sections = pathname.split("/");
-  // const slugs = sections.slice(2);
+  const data: PortfolioData[] = getPortfolioSections();
 
-  // useEffect(() => {
-  //   async function getTitle() {
-  //     const data: Data = await getTitles(slugs);
-  //     console.log(data);
-  //     setTitle(data.names[data.names.length - 1].name);
-  //     console.log(title);
-  //     setTitles(data);
-  //   }
-  //   getTitle();
-  // }, [pathname]);
   const [titleData, breadcrumbsData] = PageData(pathname);
 
   return (
     <div>
-      <h1 className={`${titleRubik.className} text-4xl`}>{titleData}</h1>
-      <Breadcrumb pageData={breadcrumbsData} />
+      <div>
+        <h1 className={`${titleRubik.className} text-4xl`}>{titleData}</h1>
+        <Breadcrumb pageData={breadcrumbsData} />
+      </div>
+      {/* <div
+        style={{
+          display: "grid",
+          gridAutoFlow: "dense",
+          gap: "1rem",
+          gridTemplateColumns:
+            "repeat(auto-fill, minmax(min(100%, 400px), 1fr))",
+        }}
+        className="justify-items-center justify-center"
+      > */}
+      <ImagesGrid>
+        {data.map((item, index) => (
+          <div
+            key={index}
+            className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
+          >
+            <PortfolioImage
+              className="rounded-t-lg w-full h-full aspect-square"
+              image={item.imageUrl}
+              alt={item.title}
+            />
+          </div>
+        ))}
+      </ImagesGrid>
+      {/* </div> */}
     </div>
   );
 };
 
 export default SubCategory;
+
+// {
+//   params,
+// }: {
+//   params: {
+//     mainCategory: string;
+//     section: string;
+//     subSection: string;
+//     subCategories: string;
+//   };
+// }

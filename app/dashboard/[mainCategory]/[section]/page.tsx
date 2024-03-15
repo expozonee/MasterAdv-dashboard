@@ -27,7 +27,7 @@ const Section = () => {
         <h1 className={`text-3xl ${titleRubik.className}`}>{title}</h1>
         <BreadCrumbs pageData={breadcrumbsData} />
       </div>
-      <div
+      {/* <div
         style={{
           display: "grid",
           gridAutoFlow: "dense",
@@ -42,26 +42,35 @@ const Section = () => {
             key={index}
             className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
           >
-            {/* <TransitionsModal image={item.imageUrl} alt={item.title} /> */}
             <PortfolioImage
               className="rounded-t-lg w-full h-full aspect-square"
               image={item.imageUrl}
               alt={item.title}
-              // objectCover="object-cover"
             />
-            {/* <LatestPortfolioImage
-              className="rounded-t-lg w-full h-full aspect-square"
-              image={item.imageUrl}
-              alt={item.title}
-              // objectCover="object-cover"
-            /> */}
-            {/* <div className="p-5"></div> */}
           </div>
         ))}
-        {/* </div> */}
-      </div>
+      </div> */}
     </div>
   );
 };
 
 export default Section;
+
+{
+  /* <TransitionsModal image={item.imageUrl} alt={item.title} /> */
+}
+
+{
+  /* <LatestPortfolioImage
+              className="rounded-t-lg w-full h-full aspect-square"
+              image={item.imageUrl}
+              alt={item.title}
+              // objectCover="object-cover"
+            /> */
+}
+{
+  /* <div className="p-5"></div> */
+}
+{
+  /* </div> */
+}

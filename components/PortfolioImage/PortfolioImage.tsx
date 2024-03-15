@@ -112,7 +112,7 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
                 width: `85%`,
                 maxWidth: "1600px",
                 height: `${isMobile ? "min-content" : desiredHeight}`,
-                // maxHeight: "960px",
+                maxHeight: "960px",
                 borderRadius: "md",
                 boxShadow: "lg",
                 backgroundColor: "#212121",
@@ -180,55 +180,55 @@ const style = {
   p: 4,
 };
 
-export function TransitionsModal({
-  image,
-  alt,
-}: {
-  image: string;
-  alt: string;
-}) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+// export function TransitionsModal({
+//   image,
+//   alt,
+// }: {
+//   image: string;
+//   alt: string;
+// }) {
+//   const [open, setOpen] = useState(false);
+//   const handleOpen = () => setOpen(true);
+//   const handleClose = () => setOpen(false);
 
-  return (
-    <Card
-      onClick={() => {
-        handleOpen();
-      }}
-      sx={{ width: "100%", height: "100%", border: "none" }}
-    >
-      <Button onClick={handleOpen}>
-        <CardCover sx={{ border: "none" }}>
-          <Image src={image} alt={alt} height={400} width={400} />
-        </CardCover>
-      </Button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-          </Box>
-        </Fade>
-      </Modal>
-    </Card>
-  );
-}
+//   return (
+//     <Card
+//       onClick={() => {
+//         handleOpen();
+//       }}
+//       sx={{ width: "100%", height: "100%", border: "none" }}
+//     >
+//       <Button onClick={handleOpen}>
+//         <CardCover sx={{ border: "none" }}>
+//           <Image src={image} alt={alt} height={400} width={400} />
+//         </CardCover>
+//       </Button>
+//       <Modal
+//         aria-labelledby="transition-modal-title"
+//         aria-describedby="transition-modal-description"
+//         open={open}
+//         onClose={handleClose}
+//         closeAfterTransition
+//         slots={{ backdrop: Backdrop }}
+//         slotProps={{
+//           backdrop: {
+//             timeout: 500,
+//           },
+//         }}
+//       >
+//         <Fade in={open}>
+//           <Box sx={style}>
+//             <Typography id="transition-modal-title" variant="h6" component="h2">
+//               Text in a modal
+//             </Typography>
+//             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+//               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+//             </Typography>
+//           </Box>
+//         </Fade>
+//       </Modal>
+//     </Card>
+//   );
+// }
 
 export default NewPortfolioImage;
