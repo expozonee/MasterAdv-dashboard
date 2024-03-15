@@ -1,13 +1,11 @@
 "use client";
 import React from "react";
 import { getPortfolioSections } from "@/app/api/route";
-import { PortfolioImage } from "@/components/PortfolioImage";
 import { usePathname } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import { Rubik } from "next/font/google";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
-import NewPortfolioImage from "@/components/newPortfolioImage";
-import LatestPortfolioImage from "@/components/LatestPortfolioImage";
+import PortfolioImage from "@/components/PortfolioImage/PortfolioImage";
 
 interface PortfolioData {
   id: number;
@@ -45,7 +43,7 @@ const Section = () => {
             className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
           >
             {/* <TransitionsModal image={item.imageUrl} alt={item.title} /> */}
-            <NewPortfolioImage
+            <PortfolioImage
               className="rounded-t-lg w-full h-full aspect-square"
               image={item.imageUrl}
               alt={item.title}

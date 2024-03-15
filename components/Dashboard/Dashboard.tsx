@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { getPortfolioSections } from "@/app/api/route";
-import { PortfolioImage } from "../PortfolioImage";
+import { PortfolioImage } from "../OlderPortfolioImage";
 import { CardBody, CardContainer, CardItem } from "@/app/ui/3d-card";
 
 // without this the component renders on server and throws an error

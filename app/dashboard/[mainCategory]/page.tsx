@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { getPortfolioSections } from "@/app/api/route";
-import { PortfolioImage } from "@/components/PortfolioImage";
+import { PortfolioImage } from "@/components/OlderPortfolioImage";
 import { usePathname } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
