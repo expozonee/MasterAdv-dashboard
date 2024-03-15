@@ -5,14 +5,10 @@ interface BackdropProps {
 }
 
 const SidebarBackdrop = ({ show }: BackdropProps) => {
+  if (!show) return null;
+
   return (
-    <div
-      className={`${
-        show
-          ? "bg-[#000000] absolute inset-0 opacity-50 z-[9998]"
-          : "opacity-0 hidden"
-      } transition-all duration-300 opacity-50 lg:hidden`}
-    ></div>
+    <div className="bg-[#000000] absolute inset-0 opacity-50 z-[9998] transition-all duration-300 lg:hidden"></div>
   );
 };
 
