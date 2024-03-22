@@ -58,14 +58,17 @@ const MenuSection = ({
     setting: typeSettings[type],
   };
 
+  // this was in the div class name at the end.
+  // ${
+  //   open[activeSettings.setting.type] &&
+  //   open[activeSettings.setting.type][id] &&
+  //   "bg-graydark dark:bg-meta-4"
+  // }
+
   return (
     <div
       style={{ cursor: "pointer" }}
-      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-        open[activeSettings.setting.type] &&
-        open[activeSettings.setting.type][id] &&
-        "bg-graydark dark:bg-meta-4"
-      }`}
+      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 `}
       onClick={(e) => {
         e.preventDefault();
         ToggleOpen(activeSettings.setting.type, id);

@@ -5,6 +5,7 @@ import { Rubik } from "next/font/google";
 import { getCategories } from "@/app/api/route";
 import Type from "./Types";
 import MenuSection from "./MenuSection";
+import SubCategoryItem from "./SubCategoryItem";
 
 const rubikHeader = Rubik({ weight: "800", subsets: ["hebrew"] });
 const rubikSubHeader = Rubik({ weight: "500", subsets: ["hebrew"] });
@@ -81,12 +82,18 @@ const Menu = () => {
     fetchCategories();
   });
 
+  // this was in the class name of the main category div at line 114
+  // ${
+  //   (pathname === "/" || pathname.includes("dashboard")) &&
+  //   "bg-graydark dark:bg-meta-4"
+  // }
+
   return (
     <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
       {/* <!-- Sidebar Menu --> */}
       <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
         {/* <!-- Menu Group --> */}
-        <div>
+        <ul>
           <Link href={`/dashboard`}>
             <h2
               className={`mb-4 ml-4 text-3xl font-semibold text-bodydark2 hover:text-white transition ease-in ${rubikHeader.className}`}
@@ -95,21 +102,18 @@ const Menu = () => {
             </h2>
           </Link>
 
-          <ul className="mb-6 flex flex-col gap-1.5">
+          <ul className="menu mb-6 flex flex-col gap-1.5">
             {/* <!-- Menu Item Dashboard --> */}
 
             <React.Fragment>
               {categories.map((category) => {
                 return (
-                  <div
+                  <li
                     className={`${rubikBody.className}`}
                     key={category.mainCategoryId}
                   >
                     <div
-                      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 cursor-pointer font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                        (pathname === "/" || pathname.includes("dashboard")) &&
-                        "bg-graydark dark:bg-meta-4"
-                      }`}
+                      className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 cursor-pointer font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 `}
                       onClick={(e) => {
                         e.preventDefault();
                         ToggleOpen(
@@ -177,7 +181,10 @@ const Menu = () => {
                         ) && "hidden"
                       }`}
                     >
-                      <ul className="py-3 mb-5.5 flex flex-col gap-2.5 pr-4 relative">
+                      <ul
+                        id="sections"
+                        className="py-3 mb-5.5 flex flex-col gap-2.5 pr-4 relative"
+                      >
                         {category.sections.map((section) => {
                           return (
                             <li key={section.sectionId}>
@@ -196,7 +203,10 @@ const Menu = () => {
                                   ) && "hidden"
                                 }`}
                               >
-                                <ul className="mb-5.5 flex flex-col gap-2.5 pr-5 relative">
+                                <ul
+                                  id="sub-sections"
+                                  className="mb-5.5 flex flex-col gap-2.5 pr-5 relative"
+                                >
                                   {section.subSections.map(
                                     (subSection, index) => {
                                       return (
@@ -218,42 +228,64 @@ const Menu = () => {
                                               ) && "hidden"
                                             }`}
                                           >
-                                            <ul className="flex flex-col gap-1.5 pr-3 relative">
+                                            <ul
+                                              id="sub-category"
+                                              className="flex flex-col gap-1.5 pr-3 relative"
+                                            >
                                               {subSection.subCategories.map(
                                                 (subCategory, index) => {
                                                   return (
-                                                    <li key={index}>
-                                                      <Link
-                                                        href={`/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
-                                                        className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                                                          open[
-                                                            Type.subCategory
-                                                              .name
-                                                          ] &&
-                                                          open[
-                                                            Type.subCategory
-                                                              .name
-                                                          ][
-                                                            subCategory
-                                                              .subCategoryId
-                                                          ] &&
-                                                          "bg-graydark dark:bg-meta-4"
-                                                        }`}
-                                                        // onClick={(e) => {
-                                                        //   e.preventDefault();
-                                                        //   ToggleOpen(
-                                                        //     Type.subSection.name,
-                                                        //     subSection.subSectionId
-                                                        //   );
-                                                        // }}
-                                                      >
-                                                        <h4
-                                                          className={`${rubikBody.className} text-md`}
-                                                        >
-                                                          {subCategory.name}
-                                                        </h4>
-                                                      </Link>
-                                                    </li>
+                                                    // <li key={index}>
+                                                    //   <Link
+                                                    //     href={`/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
+                                                    //     className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                                    //       open[
+                                                    //         Type.subCategory
+                                                    //           .name
+                                                    //       ] &&
+                                                    //       open[
+                                                    //         Type.subCategory
+                                                    //           .name
+                                                    //       ][
+                                                    //         subCategory
+                                                    //           .subCategoryId
+                                                    //       ] &&
+                                                    //       "bg-graydark dark:bg-meta-4"
+                                                    //     }`}
+                                                    //     // onClick={(e) => {
+                                                    //     //   e.preventDefault();
+                                                    //     //   ToggleOpen(
+                                                    //     //     Type.subSection.name,
+                                                    //     //     subSection.subSectionId
+                                                    //     //   );
+                                                    //     // }}
+                                                    //   >
+                                                    //     <h4
+                                                    //       className={`${rubikBody.className} text-md`}
+                                                    //     >
+                                                    //       {subCategory.name}
+                                                    //     </h4>
+                                                    //   </Link>
+                                                    // </li>
+                                                    <SubCategoryItem
+                                                      key={index}
+                                                      href={`/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
+                                                      open={
+                                                        open[
+                                                          Type.subCategory.name
+                                                        ] &&
+                                                        open[
+                                                          Type.subCategory.name
+                                                        ][
+                                                          subCategory
+                                                            .subCategoryId
+                                                        ]
+                                                      }
+                                                      title={subCategory.name}
+                                                      id={
+                                                        subCategory.subCategoryId
+                                                      }
+                                                    />
                                                   );
                                                 }
                                               )}
@@ -271,7 +303,7 @@ const Menu = () => {
                       </ul>
                     </div>
                     {/* <!-- Dropdown Menu End --> */}
-                  </div>
+                  </li>
                 );
               })}
             </React.Fragment>
@@ -279,7 +311,7 @@ const Menu = () => {
             {/* }}
               </SidebarLinkGroup> */}
           </ul>
-        </div>
+        </ul>
 
         {/* <!-- Others Group --> */}
       </nav>
