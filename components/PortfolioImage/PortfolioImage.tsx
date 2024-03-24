@@ -112,11 +112,12 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
                 width: `85%`,
                 maxWidth: "1600px",
                 height: `${isMobile ? "min-content" : desiredHeight}`,
-                maxHeight: "960px",
+                // maxHeight: `${!isMobile ? "960px" : ""}`,
                 borderRadius: "md",
                 boxShadow: "lg",
                 backgroundColor: "#212121",
                 outline: "none",
+                ...(isMobile ? {} : { maxHeight: "960px" }),
               }}
             >
               {/* <ModalClose variant="plain" sx={{ m: 1, color: "white" }} /> */}

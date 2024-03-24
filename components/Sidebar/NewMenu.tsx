@@ -6,6 +6,7 @@ import { getCategories } from "@/app/api/route";
 import Type from "./Types";
 import MenuSection from "./MenuSection";
 import SubCategoryItem from "./SubCategoryItem";
+import { initializeOpenState } from "./SideBarConfig";
 
 const rubikHeader = Rubik({ weight: "800", subsets: ["hebrew"] });
 const rubikSubHeader = Rubik({ weight: "500", subsets: ["hebrew"] });
@@ -49,7 +50,30 @@ const Menu = () => {
   const pathname = usePathname();
 
   const [open, setOpen] = useState<OpenStateConfig>({});
+
+  useEffect(() => {
+    const openStateInitializeData = async () => {
+      const result = await initializeOpenState();
+      setOpen(result);
+    };
+
+    openStateInitializeData();
+  }, []);
+
+  const [activeItem, setActiveItem] = useState<string | undefined>(() => {
+    const savedActiveItem = sessionStorage.getItem("activeItem");
+    return savedActiveItem !== null ? savedActiveItem : undefined;
+  });
   const [selected, setSelected] = useState(false);
+
+  useEffect(() => {
+    handleItemClick(pathname);
+  }, [pathname]);
+
+  const handleItemClick = (url: string) => {
+    sessionStorage.setItem("activeItem", url);
+    setActiveItem(url);
+  };
 
   const ToggleOpen = (type: string, id: number | string) => {
     setOpen((prevOpen) => {
@@ -80,7 +104,7 @@ const Menu = () => {
       setCategories(categories);
     }
     fetchCategories();
-  });
+  }, []);
 
   // this was in the class name of the main category div at line 114
   // ${
@@ -270,21 +294,12 @@ const Menu = () => {
                                                     <SubCategoryItem
                                                       key={index}
                                                       href={`/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
-                                                      open={
-                                                        open[
-                                                          Type.subCategory.name
-                                                        ] &&
-                                                        open[
-                                                          Type.subCategory.name
-                                                        ][
-                                                          subCategory
-                                                            .subCategoryId
-                                                        ]
+                                                      isActive={
+                                                        activeItem ===
+                                                        `/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`
                                                       }
+                                                      onClick={handleItemClick}
                                                       title={subCategory.name}
-                                                      id={
-                                                        subCategory.subCategoryId
-                                                      }
                                                     />
                                                   );
                                                 }

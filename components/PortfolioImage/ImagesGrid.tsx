@@ -11,7 +11,7 @@ const ImagesGrid = ({ children }: ImagesGridProps) => {
         display: "grid",
         gridAutoFlow: "dense",
         gap: "1rem",
-        gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 400px), 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 400px), 1fr))",
       }}
       className="justify-items-center justify-center"
     >
@@ -21,3 +21,4 @@ const ImagesGrid = ({ children }: ImagesGridProps) => {
 };
 
 export default ImagesGrid;
+// gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 400px), 1fr))",

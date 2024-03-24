@@ -70,7 +70,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       setCategories(categories);
     }
     fetchCategories();
-  });
+  }, []);
 
   // close on click outside
   useEffect(() => {

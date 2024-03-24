@@ -104,7 +104,7 @@ const Menu = () => {
       setCategories(categories);
     }
     fetchCategories();
-  });
+  }, []);
 
   return (
     <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
