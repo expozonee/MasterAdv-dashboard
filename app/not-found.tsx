@@ -13,7 +13,9 @@ export default function NotFound() {
       </div>
 
       <div className="m-0">
-        <h1 className="text-7xl text-white m-0 mb-6">Page Not Found</h1>
+        <h1 className="text-7xl text-white m-0 mb-6 text-center">
+          Page Not Found
+        </h1>
       </div>
       <div className="text-center m-0">
         {/* <h3 className="text-2xl my-4">Could not find requested resource</h3> */}
