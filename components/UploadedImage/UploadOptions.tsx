@@ -5,10 +5,10 @@ type OptionsProps = {
 };
 
 const TYPE = {
-  MAIN_CATEGORY: "main",
-  SECTION: "sub",
-  SUB_SECTION: "sub-sub",
-  SUB_CATEGORY: "sub-category",
+  MAIN_CATEGORY: "Main Category",
+  SECTION: "Section",
+  SUB_SECTION: "Sub Section",
+  SUB_CATEGORY: "Sub Category",
 };
 
 const Options = ({ type }: OptionsProps) => {
@@ -23,7 +23,9 @@ const Options = ({ type }: OptionsProps) => {
         name="main-category"
         id="main-category"
       >
-        <option value="1">-- Choose Main Category --</option>
+        <option value="1">{`-- Choose ${
+          TYPE[type as keyof typeof TYPE]
+        } --`}</option>
         <option value="1">Category 1</option>
         <option value="2">Category 2</option>
         <option value="3">Category 3</option>

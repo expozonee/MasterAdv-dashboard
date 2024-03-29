@@ -8,6 +8,10 @@ type UploadedImagesProps = {
   imageUrl: string;
 };
 
+const handleRemove = () => {
+  console.log("Remove Image");
+};
+
 const UploadedImage = ({ name, imageUrl }: UploadedImagesProps) => {
   const fixedName = name.split(".")[0];
 
@@ -36,6 +40,7 @@ const UploadedImage = ({ name, imageUrl }: UploadedImagesProps) => {
           color="error"
           className="w-11/12"
           sx={{ marginInline: "auto", marginTop: "1rem" }}
+          onClick={handleRemove}
         >
           Remove
         </Button>
