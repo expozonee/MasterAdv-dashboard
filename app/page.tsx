@@ -22,6 +22,7 @@ import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import HomeLogoBanner from "@/components/HomeLogoBanner";
 import HomeBanner from "@/components/HomeBanner";
+import design from "./page.module.css";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -54,7 +55,8 @@ export default function Home() {
         // position: "relative",
         height: "100vh",
       }}
-      className="bg-brickWallpaper bg-contain"
+      // className="bg-brickWallpaper bg-contain"
+      className={`${design.gradientWrapper}`}
     >
       <LogoBanner isMobile={isMobile} />
       <HomeBanner />

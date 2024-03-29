@@ -4,7 +4,6 @@ import { faGlobe, faPrint } from "@fortawesome/free-solid-svg-icons";
 import Slider from "./Slider";
 import ContactUs from "./ContactUs";
 import graphicDesignIcon from "@/public/images/graphicDesignIcon.svg";
-import bgImage from "@/public/images/blackBrickWallBackground.webp";
 import { getCategories } from "@/app/api/route";
 
 const Sections = ({ isMobile }) => {
@@ -55,32 +54,10 @@ const Sections = ({ isMobile }) => {
     },
   ];
 
-  const style = {
-    backgroundImage: bgImage.src,
-  };
-
-  // <motion.div
-  //   animate={{
-  //     x: 0,
-  //     backgroundColor: "#000",
-  //     boxShadow: "10px 10px 0 rgba(0, 0, 0, 0.2)",
-  //     position: "fixed",
-  //     transitionEnd: {
-  //       display: "none",
-  //     },
-  //   }}
-  // />;
-
   return (
-    <main
-      className="bg-cover pb-16"
-      style={{
-        // backgroundImage: `url(${bgImage.src})`,
-        backgroundRepeat: "repeat",
-      }}
-    >
-      <div className="flex justify-center py-3">
-        <div className="flex flex-wrap justify-center md:max-w-7xl pt-12 md:pt-24 gap-16 md:gap-24 pb-16 shrink">
+    <div className="bg-cover pb-16">
+      <div className="grid justify-center content-center">
+        <div className="grid grid-cols-2 gap-10 justify-center pt-10 pb-10 w-[1080px] max-w-[1080px]">
           {portfolioSections.map((section) => {
             return (
               <CategoryButton
@@ -103,7 +80,7 @@ const Sections = ({ isMobile }) => {
       <div className="flex justify-center">
         <ContactUs />
       </div>
-    </main>
+    </div>
   );
 };
 

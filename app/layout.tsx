@@ -84,13 +84,14 @@ export default function RootLayout({
       lang="en"
       dir="rtl"
       className={
-        `bg-no-repeat md:bg-contain ${noto.className} relative`
+        `bg-no-repeat md:bg-contain ${noto.className} `
         //  +
         // " " +
         // design["gradient-animation-body"]
         // design.brickWallBg
       }
       // style={{backgroundImage:`url(${bgImage.src})`}}
+      style={{}}
     >
       <body
         suppressHydrationWarning={true}

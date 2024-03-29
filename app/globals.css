@@ -185,3 +185,24 @@ span.flatpickr-weekday,
 footer {
   margin-top: auto;
 }
+
+/* latest added */
+
+.menu :where(li ul) {
+  position: relative;
+  white-space: nowrap;
+  margin-inline-start: 1rem;
+  padding-inline-start: 0.5rem;
+}
+
+.menu :where(li ul)::before {
+  position: absolute;
+  bottom: 0.75rem;
+  inset-inline-start: 0;
+  top: 0.75rem;
+  width: 1px;
+  --tw-bg-opacity: 1;
+  background-color: white;
+  opacity: 0.1;
+  content: "";
+}

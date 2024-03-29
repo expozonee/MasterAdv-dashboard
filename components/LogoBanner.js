@@ -5,7 +5,7 @@ import BurgerMenu from "./BurgerMenu";
 
 const LogoBanner = ({ isMobile }) => {
   return (
-    <header className="bg-black px-8 py-6 flex items-center justify-between md:content-center md:justify-center ">
+    <header className="bg-transparent px-8 py-6 flex items-center justify-between md:content-center md:justify-center ">
       <div className="md:hidden flex justify-center content-center">
         <BurgerMenu />
       </div>
