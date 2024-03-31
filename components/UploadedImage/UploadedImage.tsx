@@ -6,13 +6,14 @@ import Options from "./UploadOptions";
 type UploadedImagesProps = {
   name: string;
   imageUrl: string;
+  handleRemove: (name: string) => void;
 };
 
-const handleRemove = () => {
-  console.log("Remove Image");
-};
-
-const UploadedImage = ({ name, imageUrl }: UploadedImagesProps) => {
+const UploadedImage = ({
+  name,
+  imageUrl,
+  handleRemove,
+}: UploadedImagesProps) => {
   const fixedName = name.split(".")[0];
 
   return (
@@ -40,7 +41,9 @@ const UploadedImage = ({ name, imageUrl }: UploadedImagesProps) => {
           color="error"
           className="w-11/12"
           sx={{ marginInline: "auto", marginTop: "1rem" }}
-          onClick={handleRemove}
+          onClick={() => {
+            handleRemove(name);
+          }}
         >
           Remove
         </Button>
@@ -49,4 +52,4 @@ const UploadedImage = ({ name, imageUrl }: UploadedImagesProps) => {
   );
 };
 
-export default UploadedImage;
+export default React.memo(UploadedImage);

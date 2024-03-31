@@ -1,7 +1,7 @@
 "use client";
-import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import UploadedImage from "@/components/UploadedImage/UploadedImage";
+import { Alert } from "@mui/material";
 
 type UploadedImages = {
   name: string;
@@ -14,19 +14,69 @@ type UploadedImages = {
 
 const AdminPage = () => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [isError, setIsError] = useState(false);
+  // console.log(uploadedImages);
 
   function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const images = e.target.files;
+    const acceptedImageTypes = "image/webp";
+    const maxHeight = 1200;
+    const maxWidth = 1200;
+    const acceptedImages: File[] = [];
+    const newImage = new Image();
+    // console.log(images);
+
     if (images) {
-      console.log(Array.from(images));
-      setUploadedImages(Array.from(images));
-      // console.log(uploadedImages);
+      let loadedImagesCount = 0;
+      const totalImagesCount = images.length;
+
+      new Promise((resolve, reject) => {
+        Array.from(images).forEach((image) => {
+          if (image.type === acceptedImageTypes) {
+            const newImage = new Image();
+            newImage.src = URL.createObjectURL(image);
+            newImage.onload = () => {
+              if (newImage.width <= maxWidth && newImage.height <= maxHeight) {
+                acceptedImages.push(image);
+                loadedImagesCount++;
+                if (loadedImagesCount === totalImagesCount) {
+                  resolve(null);
+                }
+              } else {
+                reject(new Error("Image must be 1200 X 1200px or less"));
+                setIsError(true);
+              }
+            };
+          } else {
+            reject(new Error("Image must be a WEBP file"));
+            setIsError(true);
+          }
+        });
+      })
+        .then(() => {
+          if (uploadedImages.length !== 0) {
+            setUploadedImages((prevImages) =>
+              [...prevImages, ...acceptedImages].reverse()
+            );
+          } else {
+            setUploadedImages(acceptedImages.reverse());
+          }
+        })
+        .catch((error) => console.error(error));
     }
   }
 
+  const handleRemove = (imageName: string) => {
+    setUploadedImages((prevImages) => {
+      return prevImages.filter((image) => image.name !== imageName);
+    });
+  };
+
   return (
     <>
-      <div className="text-center my-3 text-4xl font-black">Admin Page</div>
+      <div className="text-center my-3 text-4xl font-black">
+        Admin Dashboard
+      </div>
 
       <form action="#">
         <div
@@ -93,18 +143,30 @@ const AdminPage = () => {
           </button>
         </div>
         <div className="mt-12">
-          <h2 className="text-3xl pb-6">Recently Uploaded</h2>
+          {/* <h2 className="text-3xl pb-6">Recently Uploaded</h2> */}
+          <h2 className="text-3xl pb-6">
+            Images to upload {`(${uploadedImages.length})`}
+          </h2>
           <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
             {uploadedImages.map((image, index) => (
               <UploadedImage
                 key={index}
                 name={image.name}
                 imageUrl={URL.createObjectURL(image)}
+                handleRemove={handleRemove}
               />
             ))}
           </div>
         </div>
       </form>
+      {isError && (
+        <Alert
+          sx={{ position: "fixed", bottom: "1.5rem", left: "1.5rem" }}
+          severity="error"
+        >
+          Here is a gentle confirmation that your action was successful.
+        </Alert>
+      )}
     </>
   );
 };
