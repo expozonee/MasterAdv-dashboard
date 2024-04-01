@@ -2,6 +2,7 @@
 import React, { useState, useTransition } from "react";
 import UploadedImage from "@/components/UploadedImage/UploadedImage";
 import { Alert } from "@mui/material";
+import ErrorAlert from "./ErrorAlert";
 
 type UploadedImages = {
   name: string;
@@ -14,8 +15,8 @@ type UploadedImages = {
 
 const AdminPage = () => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [alerts, setAlerts] = useState<string[]>([]);
   const [isError, setIsError] = useState(false);
-  // console.log(uploadedImages);
 
   function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const images = e.target.files;
@@ -29,6 +30,7 @@ const AdminPage = () => {
     if (images) {
       let loadedImagesCount = 0;
       const totalImagesCount = images.length;
+      console.log("uploading images");
 
       new Promise((resolve, reject) => {
         Array.from(images).forEach((image) => {
@@ -45,11 +47,19 @@ const AdminPage = () => {
               } else {
                 reject(new Error("Image must be 1200 X 1200px or less"));
                 setIsError(true);
+                setAlerts((prevAlerts) => [
+                  ...prevAlerts,
+                  "Image must be 1200 X 1200px or less",
+                ]);
               }
             };
           } else {
             reject(new Error("Image must be a WEBP file"));
             setIsError(true);
+            setAlerts((prevAlerts) => [
+              ...prevAlerts,
+              "Image must be a WEBP file",
+            ]);
           }
         });
       })
@@ -64,6 +74,7 @@ const AdminPage = () => {
         })
         .catch((error) => console.error(error));
     }
+    e.target.value = "";
   }
 
   const handleRemove = (imageName: string) => {
@@ -148,24 +159,32 @@ const AdminPage = () => {
             Images to upload {`(${uploadedImages.length})`}
           </h2>
           <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-            {uploadedImages.map((image, index) => (
-              <UploadedImage
-                key={index}
-                name={image.name}
-                imageUrl={URL.createObjectURL(image)}
-                handleRemove={handleRemove}
-              />
-            ))}
+            {!isError &&
+              uploadedImages.map((image, index) => (
+                <UploadedImage
+                  key={index}
+                  name={image.name}
+                  imageUrl={URL.createObjectURL(image)}
+                  handleRemove={handleRemove}
+                />
+              ))}
           </div>
         </div>
       </form>
       {isError && (
-        <Alert
-          sx={{ position: "fixed", bottom: "1.5rem", left: "1.5rem" }}
-          severity="error"
-        >
-          Here is a gentle confirmation that your action was successful.
-        </Alert>
+        // <Alert
+        //   sx={{ position: "fixed", bottom: "1.5rem", left: "1.5rem" }}
+        //   severity="error"
+        // >
+        //   Here is a gentle confirmation that your action was successful.
+        // </Alert>
+        <>
+          <ErrorAlert alerts={alerts} />
+          {setTimeout(() => {
+            setAlerts([]);
+            setIsError(false);
+          }, 3000)}
+        </>
       )}
     </>
   );
