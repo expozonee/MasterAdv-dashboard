@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect } from "react";
 import UploadedImage from "@/components/UploadedImage/UploadedImage";
 import { Alert } from "@mui/material";
 import ErrorAlert from "./ErrorAlert";
@@ -17,15 +17,15 @@ const AdminPage = () => {
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [alerts, setAlerts] = useState<string[]>([]);
   const [isError, setIsError] = useState(false);
+  const maxHeight = 1500;
+  const maxWidth = 1500;
 
   function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const images = e.target.files;
     const acceptedImageTypes = "image/webp";
-    const maxHeight = 1200;
-    const maxWidth = 1200;
     const acceptedImages: File[] = [];
-    const newImage = new Image();
-    // console.log(images);
+    const sizeError = `Image must be ${maxHeight} X ${maxWidth}px or less`;
+    const typeError = "Image must be a WEBP file";
 
     if (images) {
       let loadedImagesCount = 0;
@@ -47,19 +47,13 @@ const AdminPage = () => {
               } else {
                 reject(new Error("Image must be 1200 X 1200px or less"));
                 setIsError(true);
-                setAlerts((prevAlerts) => [
-                  ...prevAlerts,
-                  "Image must be 1200 X 1200px or less",
-                ]);
+                setAlerts((prevAlerts) => [...prevAlerts, sizeError]);
               }
             };
           } else {
             reject(new Error("Image must be a WEBP file"));
             setIsError(true);
-            setAlerts((prevAlerts) => [
-              ...prevAlerts,
-              "Image must be a WEBP file",
-            ]);
+            setAlerts((prevAlerts) => [...prevAlerts, typeError]);
           }
         });
       })
@@ -76,6 +70,18 @@ const AdminPage = () => {
     }
     e.target.value = "";
   }
+
+  useEffect(() => {
+    if (alerts.length > 0) {
+      const timer = setTimeout(() => {
+        setAlerts([]);
+        setIsError(false);
+      }, 3000);
+
+      // Clear the timer when the component unmounts or when alerts change
+      return () => clearTimeout(timer);
+    }
+  }, [alerts]);
 
   const handleRemove = (imageName: string) => {
     setUploadedImages((prevImages) => {
@@ -135,7 +141,9 @@ const AdminPage = () => {
               drop
             </p>
             <p className="mt-1.5">WEBP Only</p>
-            <p>(max, 800 X 800px)</p>
+            <p>
+              (max, {maxHeight} X {maxWidth}px)
+            </p>
           </div>
         </div>
 
@@ -169,21 +177,16 @@ const AdminPage = () => {
                 />
               ))}
           </div>
+          {uploadedImages.length === 0 && (
+            <h4 className="text-center mt-12">
+              Uploaded images will appear here
+            </h4>
+          )}
         </div>
       </form>
       {isError && (
-        // <Alert
-        //   sx={{ position: "fixed", bottom: "1.5rem", left: "1.5rem" }}
-        //   severity="error"
-        // >
-        //   Here is a gentle confirmation that your action was successful.
-        // </Alert>
         <>
-          <ErrorAlert alerts={alerts} />
-          {setTimeout(() => {
-            setAlerts([]);
-            setIsError(false);
-          }, 3000)}
+          <ErrorAlert key={Math.floor(Math.random() * 100)} alerts={alerts} />
         </>
       )}
     </>

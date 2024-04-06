@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { Alert } from "@mui/material";
+import { Alert, makeStyles } from "@mui/material";
 import animation from "./errorsAlerts.module.css";
 
 type ErrorAlertProps = {
   alerts: string[];
+};
+
+const iconStyle = {
+  "& .MuiAlert-icon": {
+    margin: "0",
+  },
 };
 
 const ErrorAlert = ({ alerts }: ErrorAlertProps) => {
@@ -22,7 +28,11 @@ const ErrorAlert = ({ alerts }: ErrorAlertProps) => {
           className={`transition-all duration-300 ease-in-out ${animation[animationClass]}`}
           key={index}
           severity="error"
-          sx={{ minWidth: "350px" }}
+          sx={{
+            minWidth: "350px",
+            gap: ".5rem",
+            ...iconStyle,
+          }}
           onAnimationEnd={handleAnimationEnd}
         >
           {alert}
