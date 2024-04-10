@@ -50,6 +50,7 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
@@ -70,6 +71,7 @@ export default function Login() {
     } catch (error) {
       console.error(error);
     }
+    reset();
   };
 
   return (
