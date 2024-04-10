@@ -84,7 +84,7 @@ export default function RootLayout({
       lang="en"
       dir="rtl"
       className={
-        `bg-no-repeat md:bg-contain ${noto.className} `
+        `bg-no-repeat md:bg-contain ${noto.className} h-full` // Added the 'h-full' to the html tag className on 9/4/2024
         //  +
         // " " +
         // design["gradient-animation-body"]
@@ -94,6 +94,7 @@ export default function RootLayout({
       style={{}}
     >
       <body
+        className="h-full" // Added the className to the body tag on 9/4/2024
         suppressHydrationWarning={true}
         // className={`${rubik.className} ${design.brickWallBg}`}
       >
