@@ -1,46 +1,30 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getTitles } from "@/app/api/route";
 
-interface Data {
-  names: [{ name: string }];
-  urls: string[];
+export default function middleware(req: NextRequest) {
+  const isAuthenticated = checkUserAuthentication(req);
+
+  // If the current page is the login page or the user is authenticated, continue to the requested page
+  if (req.nextUrl.pathname === "/moatasem-login" && isAuthenticated) {
+    return NextResponse.redirect(new URL("/dashboard/admin", req.url));
+  }
+
+  // If the current page starts with '/dashboard/admin' and the user is not authenticated, redirect to the login page
+  if (!isAuthenticated && req.nextUrl.pathname.startsWith("/dashboard/admin")) {
+    return NextResponse.redirect(new URL("/moatasem-login", req.url));
+  }
+
+  // For all other pages, continue to the requested page
+  return NextResponse.next();
 }
 
-export default async function middleware(request: NextRequest) {
-  // const req = request;
-  // const path = req.url.split("http://localhost:3000/")[1];
-  // const pathArray = path.split("/");
-  // const slugs = pathArray.slice(1);
-  // console.log(slugs);
-  // // Skip middleware for /dashboard/admin/... paths
-  // // if (req.url.includes("admin")) {
-  // //   return NextResponse.next();
-  // // }
-  // var isInvalidUrl = false;
-  // async function getTitle() {
-  //   const data: Data = await getTitles(slugs);
-  //   console.log(data);
-  //   return data;
-  // }
-  // try {
-  //   const { names, urls } = await getTitle();
-  //   if (names.some((name) => name === null)) {
-  //     isInvalidUrl = true;
-  //   }
-  //   // isInvalidUrl = names.some((name) => name === null);
-  //   console.log(isInvalidUrl);
-  // } catch (e) {
-  //   isInvalidUrl = true;
-  // }
-  // if (isInvalidUrl) {
-  //   const url = req.nextUrl.clone();
-  //   url.pathname = "/dashboard";
-  //   return NextResponse.redirect(url);
-  // } else {
-  //   return NextResponse.next();
-  // }
+function checkUserAuthentication(req: NextRequest) {
+  const user = req.cookies.get("user")?.value;
+  if (!user) {
+    return false;
+  }
+  return true;
 }
 
 export const config = {
-  matcher: "/dashboard/:path*",
+  matcher: "/:path*",
 };
