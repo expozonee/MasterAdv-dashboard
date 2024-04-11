@@ -13,7 +13,8 @@ const passwordLength = 20;
 const loginSchema = z.object({
   email: z
     .string()
-    .email()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Invalid email" })
     .refine(
       (email) =>
         validator.isEmail(email, {
@@ -23,7 +24,12 @@ const loginSchema = z.object({
         message: "Email must end with @masteradv.vip",
       }
     ),
-  password: z.string().min(passwordLength),
+  password: z
+    .string()
+    .min(1, { message: "Password is required" })
+    .min(passwordLength, {
+      message: "Password must be at least 20 characters long",
+    }),
 });
 
 type LoginSchema = z.infer<typeof loginSchema>;
@@ -119,9 +125,11 @@ export default function Login() {
                   {...register("email")}
                   id="email"
                   name="email"
-                  type="email"
+                  // type="email"
+                  type="text"
                   autoComplete="email"
-                  required
+                  spellCheck="false"
+                  // required
                   className="block w-full text-black rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 {errors.email && (
@@ -156,13 +164,13 @@ export default function Login() {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  required
+                  // required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 {errors.password && (
                   <div className="bg-red-300 rounded-md h-[2.2rem] mt-1 flex items-center">
                     <p className="text-red-600 mr-2">
-                      Password must be at least {passwordLength} character(s)
+                      {errors.password.message}
                     </p>
                   </div>
                 )}

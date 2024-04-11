@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 export default function middleware(req: NextRequest) {
   const isAuthenticated = checkUserAuthentication(req);
 
-  // If the current page is the login page or the user is authenticated, continue to the requested page
+  // If the current page is the login page and the user is authenticated, continue to the requested page
   if (req.nextUrl.pathname === "/moatasem-login" && isAuthenticated) {
     return NextResponse.redirect(new URL("/dashboard/admin", req.url));
   }
