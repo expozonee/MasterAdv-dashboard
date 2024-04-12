@@ -62,10 +62,19 @@ export default function Login() {
   });
 
   const onSubmit = async (data: LoginSchema) => {
-    console.log(data);
+    // console.log(data);
 
     try {
-      const response = await fetch("http://localhost:4000/checkUser", {
+      // const response = await fetch("http://localhost:4000/checkUser", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // });
+      // const result = await response.json();
+      // console.log(result);
+      const response = await fetch("http://localhost:3000/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +82,7 @@ export default function Login() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      console.log(result);
+      console.error(result);
     } catch (error) {
       console.error(error);
     }
