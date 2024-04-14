@@ -1,3 +1,12 @@
+import jwt from "jsonwebtoken";
+
+type User = {
+  email: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
+
 export async function POST(request: Request) {
   const contentType = request.headers.get("Content-Type");
   const url = new URL(request.url);
@@ -30,11 +39,52 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
+      credentials: "include",
     });
-    const result = await response.json();
-    console.log(result);
 
-    return Response.json({ result });
+    if (response.ok) {
+      const cookie = response.headers.get("set-cookie");
+      try {
+        if (cookie) {
+          const token = cookie.split(";")[0].split("=")[1];
+          const user: User = await new Promise((resolve, reject) => {
+            jwt.verify(token, process.env.JWT_SECRET!, (err, decoded) => {
+              if (err) reject(err);
+              else resolve(decoded as User);
+            });
+          });
+
+          // const newResponse = new Response(JSON.stringify(user), {
+          //   status: 200,
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          // });
+
+          return Response.json(user, {
+            status: 200,
+            headers: {
+              "Content-Type": "application/json",
+              "Set-cookie": `${cookie} path=/;`,
+            },
+          });
+        }
+      } catch (error) {
+        return Response.json(JSON.stringify(error), {
+          status: 502,
+        });
+      }
+    } else {
+      return Response.json(
+        { message: "Invalid email or password" },
+        {
+          status: 401,
+        }
+      );
+    }
   }
-  return Response.json({ message: "You are not authenticated" });
+  return Response.json(
+    { message: "You are not authenticated" },
+    { status: 401 }
+  );
 }

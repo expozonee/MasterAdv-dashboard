@@ -1,6 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 
 export default function middleware(req: NextRequest) {
+  // Check if the user is authenticated
+
+  console.log(req.headers);
+
   const isAuthenticated = checkUserAuthentication(req);
 
   // If the current page is the login page and the user is authenticated, continue to the requested page
@@ -17,12 +21,8 @@ export default function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-function checkUserAuthentication(req: NextRequest) {
-  const user = req.cookies.get("user")?.value;
-  if (!user) {
-    return false;
-  }
-  return true;
+function checkUserAuthentication(req: NextRequest): boolean {
+  return false;
 }
 
 export const config = {

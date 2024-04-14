@@ -7,6 +7,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import validator from "validator";
+import { useRouter } from "next/navigation";
+
+type User = {
+  email: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
 
 const passwordLength = 20;
 
@@ -52,6 +60,7 @@ const notoTitle = Noto_Sans_Hebrew({ subsets: ["hebrew"], weight: ["700"] });
 const notoformBody = Noto_Sans_Hebrew({ subsets: ["hebrew"], weight: ["600"] });
 
 export default function Login() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -62,18 +71,7 @@ export default function Login() {
   });
 
   const onSubmit = async (data: LoginSchema) => {
-    // console.log(data);
-
     try {
-      // const response = await fetch("http://localhost:4000/checkUser", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(data),
-      // });
-      // const result = await response.json();
-      // console.log(result);
       const response = await fetch("http://localhost:3000/api/users", {
         method: "POST",
         headers: {
@@ -81,8 +79,8 @@ export default function Login() {
         },
         body: JSON.stringify(data),
       });
-      const result = await response.json();
-      console.error(result);
+      const result: User = await response.json();
+      // console.log(result.role);
     } catch (error) {
       console.error(error);
     }
