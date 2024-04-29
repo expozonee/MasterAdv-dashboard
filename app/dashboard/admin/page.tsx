@@ -3,6 +3,7 @@ import React, { useState, useTransition, useEffect } from "react";
 import UploadedImage from "@/components/UploadedImage/UploadedImage";
 import { Alert } from "@mui/material";
 import ErrorAlert from "./ErrorAlert";
+import { useSession } from "next-auth/react";
 
 type UploadedImages = {
   name: string;
@@ -14,6 +15,9 @@ type UploadedImages = {
 };
 
 const AdminPage = () => {
+  const { data: session, status } = useSession();
+  console.log("session", session);
+
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [alerts, setAlerts] = useState<string[]>([]);
   const [isError, setIsError] = useState(false);
@@ -93,6 +97,7 @@ const AdminPage = () => {
     <>
       <div className="text-center my-3 text-4xl font-black">
         Admin Dashboard
+        <h1>{`welcome ${session?.user?.email}`}</h1>
       </div>
 
       <form action="#">

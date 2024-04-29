@@ -8,13 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import validator from "validator";
 import { useRouter } from "next/navigation";
-
-type User = {
-  email: string;
-  role: string;
-  iat: number;
-  exp: number;
-};
+import type { LoginSchema } from "@/types/loginSchema";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 const passwordLength = 20;
 
@@ -40,7 +36,7 @@ const loginSchema = z.object({
     }),
 });
 
-type LoginSchema = z.infer<typeof loginSchema>;
+// type LoginSchema = z.infer<typeof loginSchema>;
 /*
   This example requires some changes to your config:
   
@@ -60,6 +56,11 @@ const notoTitle = Noto_Sans_Hebrew({ subsets: ["hebrew"], weight: ["700"] });
 const notoformBody = Noto_Sans_Hebrew({ subsets: ["hebrew"], weight: ["600"] });
 
 export default function Login() {
+  const urlError = useSearchParams().get("error");
+  const [submitError, setSubmitError] = React.useState({
+    isError: urlError ? true : false,
+    message: urlError ? urlError : "",
+  });
   const router = useRouter();
   const {
     register,
@@ -72,18 +73,20 @@ export default function Login() {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      const response = await fetch("http://localhost:3000/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+      await signIn("credentials", {
+        ...data,
+        redirect: true,
+        callbackUrl: "/dashboard/admin",
       });
-      const result: User = await response.json();
-      // console.log(result.role);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.log(error);
+
+      setSubmitError({
+        isError: true,
+        message: error.message,
+      });
     }
+
     reset();
   };
 
@@ -132,11 +135,9 @@ export default function Login() {
                   {...register("email")}
                   id="email"
                   name="email"
-                  // type="email"
                   type="text"
                   autoComplete="email"
                   spellCheck="false"
-                  // required
                   className="block w-full text-black rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 {errors.email && (
@@ -193,6 +194,11 @@ export default function Login() {
               </button>
             </div>
           </form>
+          {submitError.isError && (
+            <div className="bg-red-300 rounded-md h-[2.2rem] flex items-center my-4">
+              <p className="text-red-600 mr-2">{submitError.message}</p>
+            </div>
+          )}
 
           {/* <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}
