@@ -1,9 +1,17 @@
 "use client";
 import React, { useState, useTransition, useEffect } from "react";
 import UploadedImage from "@/components/UploadedImage/UploadedImage";
-import { Alert } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 import ErrorAlert from "./ErrorAlert";
 import { useSession } from "next-auth/react";
+import Card from "@mui/material/Card";
 
 type UploadedImages = {
   name: string;
@@ -93,6 +101,11 @@ const AdminPage = () => {
     });
   };
 
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(e);
+  };
+
   return (
     <>
       <div className="text-center my-3 text-4xl font-black">
@@ -100,7 +113,7 @@ const AdminPage = () => {
         <h1>{`welcome ${session?.user?.email}`}</h1>
       </div>
 
-      <form action="#">
+      <form onSubmit={onSubmit}>
         <div
           id="FileUpload"
           className="relative mb-5.5 block w-1/2 mx-auto max-w-[1200px] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
@@ -171,7 +184,7 @@ const AdminPage = () => {
           <h2 className="text-3xl pb-6">
             Images to upload {`(${uploadedImages.length})`}
           </h2>
-          <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
             {!isError &&
               uploadedImages.map((image, index) => (
                 <UploadedImage
