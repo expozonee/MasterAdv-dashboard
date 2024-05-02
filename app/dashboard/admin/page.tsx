@@ -1,17 +1,9 @@
 "use client";
 import React, { useState, useTransition, useEffect } from "react";
 import UploadedImage from "@/components/UploadedImage/UploadedImage";
-import {
-  Alert,
-  Button,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
 import ErrorAlert from "./ErrorAlert";
 import { useSession } from "next-auth/react";
-import Card from "@mui/material/Card";
+import { OptionsType } from "@/components/UploadedImage/UploadOptions";
 
 type UploadedImages = {
   name: string;
@@ -22,10 +14,20 @@ type UploadedImages = {
   webkitRelativePath: string;
 };
 
+export type ImageData = {
+  imageFile: File;
+  imageName: string;
+  mainCategory: string;
+  section: string;
+  subSection: string;
+  subCategory: string;
+};
+
 const AdminPage = () => {
   const { data: session, status } = useSession();
   console.log("session", session);
 
+  const [submittedImages, setSubmittedImages] = useState<ImageData[]>([]);
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [alerts, setAlerts] = useState<string[]>([]);
   const [isError, setIsError] = useState(false);
@@ -103,17 +105,51 @@ const AdminPage = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
+    const form = e.target as HTMLFormElement;
+    let imageDataToSubmit: ImageData[] = [];
+    for (let image of uploadedImages) {
+      const data = {
+        imageFile: image,
+        imageName: image.name,
+        mainCategory: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.MAIN_CATEGORY}`
+          ) as HTMLSelectElement
+        ).value,
+        section: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.SECTION}`
+          ) as HTMLSelectElement
+        ).value,
+        subSection: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.SUB_SECTION}`
+          ) as HTMLSelectElement
+        ).value,
+        subCategory: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.SUB_CATEGORY}`
+          ) as HTMLSelectElement
+        ).value,
+      };
+      imageDataToSubmit.push(data);
+    }
+    setSubmittedImages(imageDataToSubmit);
+    const uploadImages = await fetch("/api/upload-images", {
+      method: "POST",
+      body: JSON.stringify(submittedImages),
+    });
+    console.log("submittedImages", submittedImages);
   };
 
   return (
     <>
       <div className="text-center my-3 text-4xl font-black">
         Admin Dashboard
-        <h1>{`welcome ${session?.user?.email}`}</h1>
+        <h1>{`welcome ${session?.user?.email?.split("@")[0]}`}</h1>
       </div>
 
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} encType="multipart/form-data">
         <div
           id="FileUpload"
           className="relative mb-5.5 block w-1/2 mx-auto max-w-[1200px] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
@@ -188,7 +224,7 @@ const AdminPage = () => {
             {!isError &&
               uploadedImages.map((image, index) => (
                 <UploadedImage
-                  key={index}
+                  key={image.name}
                   name={image.name}
                   imageUrl={URL.createObjectURL(image)}
                   handleRemove={handleRemove}

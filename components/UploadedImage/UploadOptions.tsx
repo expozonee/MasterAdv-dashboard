@@ -3,7 +3,8 @@ import getAllCategories from "@/lib/getAllCategories";
 import type { Categories } from "@/lib/getAllCategories";
 
 type OptionsProps = {
-  type: string;
+  imageName: string;
+  type: keyof typeof OptionsType;
   onChange: React.Dispatch<React.SetStateAction<string>>;
   value: string | null;
   mainCategory?: string | null;
@@ -12,7 +13,7 @@ type OptionsProps = {
   subCategoryName?: string | null;
 };
 
-const OptionsType = {
+export const OptionsType = {
   MAIN_CATEGORY: "Main Category",
   SECTION: "Section",
   SUB_SECTION: "Sub Section",
@@ -20,6 +21,7 @@ const OptionsType = {
 };
 
 const Options = ({
+  imageName,
   type,
   onChange,
   value,
@@ -87,10 +89,11 @@ const Options = ({
 
       <select
         className="w-11/12 mx-auto p-3 border-2 border-gray-300 rounded-md mt-2"
-        name={type}
-        id={type}
+        name={`${imageName}_${OptionsType[type as keyof typeof OptionsType]}`}
+        id={`${imageName}_${OptionsType[type as keyof typeof OptionsType]}`}
         value={value || ""}
         onChange={handleChange}
+        required
       >
         <option value="null">{`-- Choose ${
           OptionsType[type as keyof typeof OptionsType]

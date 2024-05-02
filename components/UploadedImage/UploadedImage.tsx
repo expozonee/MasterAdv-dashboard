@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@mui/material";
-import Options from "./UploadOptions";
-import getAllCategories, { Categories } from "@/lib/getAllCategories";
+import Options, { OptionsType } from "./UploadOptions";
 
 type UploadedImagesProps = {
   name: string;
@@ -22,10 +21,10 @@ const UploadedImage = ({
   const [subSection, setSubSection] = useState<string>("");
   const [subCategory, setSubCategory] = useState<string>("");
 
-  console.log("test the main category", mainCategory);
   return (
     <div className="bg-boxdark pb-4 rounded-md drop-shadow-md">
       <Image
+        key={name}
         className="w-full rounded-t-md"
         src={imageUrl}
         width={350}
@@ -35,7 +34,8 @@ const UploadedImage = ({
       <h3 className="text-white font-black text-center py-2">{title}</h3>
       <div className="grid">
         <Options
-          key={Math.floor(Math.random() * 100)}
+          imageName={name}
+          key={`${name}_${OptionsType.MAIN_CATEGORY}`}
           type="MAIN_CATEGORY"
           onChange={setMainCategory}
           value={mainCategory}
@@ -43,7 +43,8 @@ const UploadedImage = ({
 
         {mainCategory && (
           <Options
-            key={Math.floor(Math.random() * 100)}
+            imageName={name}
+            key={`${name}_${OptionsType.SECTION}`}
             type="SECTION"
             onChange={setSection}
             value={section}
@@ -52,7 +53,8 @@ const UploadedImage = ({
         )}
         {section && (
           <Options
-            key={Math.floor(Math.random() * 100)}
+            imageName={name}
+            key={`${name}_${OptionsType.SUB_SECTION}`}
             type="SUB_SECTION"
             onChange={setSubSection}
             value={subSection}
@@ -62,7 +64,8 @@ const UploadedImage = ({
         )}
         {subSection && (
           <Options
-            key={Math.floor(Math.random() * 100)}
+            imageName={name}
+            key={`${name}_${OptionsType.SUB_CATEGORY}`}
             type="SUB_CATEGORY"
             onChange={setSubCategory}
             value={subCategory}
@@ -88,4 +91,4 @@ const UploadedImage = ({
   );
 };
 
-export default React.memo(UploadedImage);
+export default UploadedImage;
