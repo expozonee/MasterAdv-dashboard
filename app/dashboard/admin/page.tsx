@@ -25,6 +25,7 @@ export type ImageData = {
 
 const AdminPage = () => {
   const { data: session, status } = useSession();
+
   console.log("session", session);
 
   const [submittedImages, setSubmittedImages] = useState<ImageData[]>([]);
@@ -135,11 +136,23 @@ const AdminPage = () => {
       imageDataToSubmit.push(data);
     }
     setSubmittedImages(imageDataToSubmit);
+
+    const formData = new FormData();
+    submittedImages.forEach((item, index) => {
+      formData.append(`${item.imageName}`, item.imageFile, item.imageFile.name);
+      formData.append(`images[${index}][imageName]`, item.imageName);
+      formData.append(`images[${index}][mainCategory]`, item.mainCategory);
+      formData.append(`images[${index}][section]`, item.section);
+      formData.append(`images[${index}][subSection]`, item.subSection);
+      formData.append(`images[${index}][subCategory]`, item.subCategory);
+    });
+    console.log("formData", formData);
+
     const uploadImages = await fetch("/api/upload-images", {
       method: "POST",
-      body: JSON.stringify(submittedImages),
+      body: formData,
     });
-    console.log("submittedImages", submittedImages);
+    // console.log("submittedImages", submittedImages);
   };
 
   return (
