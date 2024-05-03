@@ -6,6 +6,7 @@ import { User as NextAuthUser } from "next-auth";
 
 interface User extends NextAuthUser {
   role: string;
+  accessToken: string;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -70,6 +71,7 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           role: (user as User).role,
+          accessToken: (user as User).accessToken,
         };
       }
       return token;
