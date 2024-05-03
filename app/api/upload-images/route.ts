@@ -1,24 +1,27 @@
-import type { ImageData } from "@/app/dashboard/admin/page";
+import { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
+import type { JWTWithToken } from "@/types/next-auth/jwtWithToken";
 
-export async function POST(req: Request) {
-  const body: ImageData[] = await req.json();
-  //   console.log("FROM THE POST METHOD", body);
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
-  const formData = new FormData();
-  //   formData.append("files", body);
-  body.forEach((item, index) => {
-    formData.append(`images[imageFile]`, item.imageFile);
-    formData.append(`images[${index}][imageName]`, item.imageName);
-    formData.append(`images[${index}][mainCategory]`, item.mainCategory);
-    formData.append(`images[${index}][section]`, item.section);
-    formData.append(`images[${index}][subSection]`, item.subSection);
-    formData.append(`images[${index}][subCategory]`, item.subCategory);
-  });
+export async function POST(req: NextRequest) {
+  const token = (await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+  })) as JWTWithToken;
+
+  const formData = await req.formData();
 
   const response = await fetch("http://localhost:4000/upload", {
     method: "POST",
-
     body: formData,
+    headers: {
+      Authorization: `Bearer ${token.accessToken}`,
+    },
   });
 
   return new Response("ok", {
