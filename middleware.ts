@@ -1,22 +1,18 @@
 import { NextResponse, NextRequest } from "next/server";
 import { withAuth } from "next-auth/middleware";
 import { getToken } from "next-auth/jwt";
-import type { JWT } from "next-auth/jwt";
+import { TokenWithRole } from "@/types/next-auth/jwtWithRole";
 
 // export default withAuth({
 //   secret: process.env.AUTH_SECRET,
 // });
-
-interface tokenRole extends JWT {
-  role: string;
-}
 
 export default async function middleware(req: NextRequest) {
   const { nextUrl } = req;
   const token = (await getToken({
     req,
     secret: process.env.AUTH_SECRET,
-  })) as tokenRole;
+  })) as TokenWithRole;
 
   if (nextUrl.pathname.startsWith("/dashboard/admin")) {
     if (!token) {
