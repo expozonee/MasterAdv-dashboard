@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -257,11 +258,13 @@ module.exports = {
         "spin-3": "spin 3s linear infinite",
       },
       colors: {
+        // ...colors,
+        red: colors.red,
         purple: "#3d1149",
         reddish: "#d13534",
         yellow: "#f7c948",
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };

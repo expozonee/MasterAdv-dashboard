@@ -1,3 +1,60 @@
+import "./globals.css";
+import { Noto_Kufi_Arabic, Marhey } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+import Provider from "@/components/Providers/Providers";
+import design from "./page.module.css";
+
+const noto = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
+const marhey = Marhey({ subsets: ["arabic"], weight: ["600"] });
+
+export const metadata = {
+  title: "Master Adv",
+  description: "Master Adv portfolio website",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html
+      lang="en"
+      dir="rtl"
+      className={
+        `bg-no-repeat md:bg-contain ${noto.className} h-full` // Added the 'h-full' to the html tag className on 9/4/2024
+        //  +
+        // " " +
+        // design["gradient-animation-body"]
+        // design.brickWallBg
+      }
+      // style={{backgroundImage:`url(${bgImage.src})`}}
+      style={{}}
+    >
+      <Provider>
+        <body
+          className="h-full" // Added the className to the body tag on 9/4/2024
+          suppressHydrationWarning={true}
+          // className={`${rubik.className} ${design.brickWallBg}`}
+        >
+          {/* 
+      <body
+        // style={{
+        //   background:
+        //     "linear-gradient(-45deg, #303030, #000000, #152b33, #0c3974)",
+        //   backgroundSize: "400% 400%",
+        //   WebkitAnimation: "Gradient 15s ease infinite",
+        //   animation: "Gradient 15s ease infinite",
+        // }}
+        className={`${rubik.className}`}
+      > */}
+          {children}
+        </body>
+      </Provider>
+    </html>
+  );
+}
+
 // "use client";
 // import "./globals.css";
 // import "./data-tables-css.css";
@@ -62,54 +119,3 @@
 //     </html>
 //   );
 // }
-
-import "./globals.css";
-import { Noto_Kufi_Arabic, Marhey } from "next/font/google";
-import design from "./page.module.css";
-const noto = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
-const marhey = Marhey({ subsets: ["arabic"], weight: ["600"] });
-
-export const metadata = {
-  title: "Master Adv",
-  description: "Master Adv portfolio website",
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html
-      lang="en"
-      dir="rtl"
-      className={
-        `bg-no-repeat md:bg-contain ${noto.className} `
-        //  +
-        // " " +
-        // design["gradient-animation-body"]
-        // design.brickWallBg
-      }
-      // style={{backgroundImage:`url(${bgImage.src})`}}
-      style={{}}
-    >
-      <body
-        suppressHydrationWarning={true}
-        // className={`${rubik.className} ${design.brickWallBg}`}
-      >
-        {/* 
-      <body
-        // style={{
-        //   background:
-        //     "linear-gradient(-45deg, #303030, #000000, #152b33, #0c3974)",
-        //   backgroundSize: "400% 400%",
-        //   WebkitAnimation: "Gradient 15s ease infinite",
-        //   animation: "Gradient 15s ease infinite",
-        // }}
-        className={`${rubik.className}`}
-      > */}
-        {children}
-      </body>
-    </html>
-  );
-}

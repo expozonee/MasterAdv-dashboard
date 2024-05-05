@@ -1,34 +1,168 @@
 "use client";
-import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useTransition, useEffect } from "react";
 import UploadedImage from "@/components/UploadedImage/UploadedImage";
+import ErrorAlert from "./ErrorAlert";
+import { useSession } from "next-auth/react";
+import { OptionsType } from "@/components/UploadedImage/UploadOptions";
 
-type UploadedImages = {
-  name: string;
-  size: number;
-  type: string;
-  lastModified: number;
-  lastModifiedDate: Date;
-  webkitRelativePath: string;
+// type UploadedImages = {
+//   name: string;
+//   size: number;
+//   type: string;
+//   lastModified: number;
+//   lastModifiedDate: Date;
+//   webkitRelativePath: string;
+// };
+
+export type ImageData = {
+  imageFile: File;
+  imageName: string;
+  mainCategory: string;
+  section: string;
+  subSection: string;
+  subCategory: string;
 };
 
 const AdminPage = () => {
+  const { data: session, status } = useSession();
+
+  console.log("session", session);
+
+  const [submittedImages, setSubmittedImages] = useState<ImageData[]>([]);
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
+  const [alerts, setAlerts] = useState<string[]>([]);
+  const [isError, setIsError] = useState(false);
+  const maxHeight = 1500;
+  const maxWidth = 1500;
 
   function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const images = e.target.files;
+    const acceptedImageTypes = "image/webp";
+    const acceptedImages: File[] = [];
+    const sizeError = `Image must be ${maxHeight} X ${maxWidth}px or less`;
+    const typeError = "Image must be a WEBP file";
+
     if (images) {
-      console.log(Array.from(images));
-      setUploadedImages(Array.from(images));
-      // console.log(uploadedImages);
+      let loadedImagesCount = 0;
+      const totalImagesCount = images.length;
+      console.log("uploading images");
+
+      new Promise((resolve, reject) => {
+        Array.from(images).forEach((image) => {
+          if (image.type === acceptedImageTypes) {
+            const newImage = new Image();
+            newImage.src = URL.createObjectURL(image);
+            newImage.onload = () => {
+              if (newImage.width <= maxWidth && newImage.height <= maxHeight) {
+                acceptedImages.push(image);
+                loadedImagesCount++;
+                if (loadedImagesCount === totalImagesCount) {
+                  resolve(null);
+                }
+              } else {
+                reject(new Error("Image must be 1200 X 1200px or less"));
+                setIsError(true);
+                setAlerts((prevAlerts) => [...prevAlerts, sizeError]);
+              }
+            };
+          } else {
+            reject(new Error("Image must be a WEBP file"));
+            setIsError(true);
+            setAlerts((prevAlerts) => [...prevAlerts, typeError]);
+          }
+        });
+      })
+        .then(() => {
+          if (uploadedImages.length !== 0) {
+            setUploadedImages((prevImages) =>
+              [...prevImages, ...acceptedImages].reverse()
+            );
+          } else {
+            setUploadedImages(acceptedImages.reverse());
+          }
+        })
+        .catch((error) => console.error(error));
     }
+    e.target.value = "";
   }
+
+  useEffect(() => {
+    if (alerts.length > 0) {
+      const timer = setTimeout(() => {
+        setAlerts([]);
+        setIsError(false);
+      }, 3000);
+
+      // Clear the timer when the component unmounts or when alerts change
+      return () => clearTimeout(timer);
+    }
+  }, [alerts]);
+
+  const handleRemove = (imageName: string) => {
+    setUploadedImages((prevImages) => {
+      return prevImages.filter((image) => image.name !== imageName);
+    });
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    let imageDataToSubmit: ImageData[] = [];
+    for (let image of uploadedImages) {
+      const data = {
+        imageFile: image,
+        imageName: image.name,
+        mainCategory: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.MAIN_CATEGORY}`
+          ) as HTMLSelectElement
+        ).value,
+        section: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.SECTION}`
+          ) as HTMLSelectElement
+        ).value,
+        subSection: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.SUB_SECTION}`
+          ) as HTMLSelectElement
+        ).value,
+        subCategory: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.SUB_CATEGORY}`
+          ) as HTMLSelectElement
+        ).value,
+      };
+      imageDataToSubmit.push(data);
+    }
+    setSubmittedImages(imageDataToSubmit);
+
+    const formData = new FormData();
+    submittedImages.forEach((item, index) => {
+      formData.append(`${item.imageName}`, item.imageFile, item.imageFile.name);
+      formData.append(`images[${index}][imageName]`, item.imageName);
+      formData.append(`images[${index}][mainCategory]`, item.mainCategory);
+      formData.append(`images[${index}][section]`, item.section);
+      formData.append(`images[${index}][subSection]`, item.subSection);
+      formData.append(`images[${index}][subCategory]`, item.subCategory);
+    });
+    console.log("formData", formData);
+
+    const uploadImages = await fetch("/api/upload-images", {
+      method: "POST",
+      body: formData,
+    });
+    // console.log("submittedImages", submittedImages);
+  };
 
   return (
     <>
-      <div className="text-center my-3 text-4xl font-black">Admin Page</div>
+      <div className="text-center my-3 text-4xl font-black">
+        Admin Dashboard
+        <h1>{`welcome ${session?.user?.email?.split("@")[0]}`}</h1>
+      </div>
 
-      <form action="#">
+      <form onSubmit={onSubmit} encType="multipart/form-data">
         <div
           id="FileUpload"
           className="relative mb-5.5 block w-1/2 mx-auto max-w-[1200px] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
@@ -74,7 +208,9 @@ const AdminPage = () => {
               drop
             </p>
             <p className="mt-1.5">WEBP Only</p>
-            <p>(max, 800 X 800px)</p>
+            <p>
+              (max, {maxHeight} X {maxWidth}px)
+            </p>
           </div>
         </div>
 
@@ -93,18 +229,33 @@ const AdminPage = () => {
           </button>
         </div>
         <div className="mt-12">
-          <h2 className="text-3xl pb-6">Recently Uploaded</h2>
-          <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-            {uploadedImages.map((image, index) => (
-              <UploadedImage
-                key={index}
-                name={image.name}
-                imageUrl={URL.createObjectURL(image)}
-              />
-            ))}
+          {/* <h2 className="text-3xl pb-6">Recently Uploaded</h2> */}
+          <h2 className="text-3xl pb-6">
+            Images to upload {`(${uploadedImages.length})`}
+          </h2>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
+            {!isError &&
+              uploadedImages.map((image, index) => (
+                <UploadedImage
+                  key={image.name}
+                  name={image.name}
+                  imageUrl={URL.createObjectURL(image)}
+                  handleRemove={handleRemove}
+                />
+              ))}
           </div>
+          {uploadedImages.length === 0 && (
+            <h4 className="text-center mt-12">
+              Uploaded images will appear here
+            </h4>
+          )}
         </div>
       </form>
+      {isError && (
+        <>
+          <ErrorAlert key={Math.floor(Math.random() * 100)} alerts={alerts} />
+        </>
+      )}
     </>
   );
 };
