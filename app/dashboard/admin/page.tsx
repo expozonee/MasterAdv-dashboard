@@ -5,14 +5,14 @@ import ErrorAlert from "./ErrorAlert";
 import { useSession } from "next-auth/react";
 import { OptionsType } from "@/components/UploadedImage/UploadOptions";
 
-type UploadedImages = {
-  name: string;
-  size: number;
-  type: string;
-  lastModified: number;
-  lastModifiedDate: Date;
-  webkitRelativePath: string;
-};
+// type UploadedImages = {
+//   name: string;
+//   size: number;
+//   type: string;
+//   lastModified: number;
+//   lastModifiedDate: Date;
+//   webkitRelativePath: string;
+// };
 
 export type ImageData = {
   imageFile: File;
