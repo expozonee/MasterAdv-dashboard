@@ -3,15 +3,17 @@ import Image from "next/image";
 import Sheet from "@mui/joy/Sheet";
 import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import ModalClose from "@mui/joy/ModalClose";
-//
+import type { CoverImageProps } from "@/types/portfolio-image/coverImage";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type ImageOwnProps<T extends React.ElementType> = {
   className: string;
@@ -181,6 +183,39 @@ const style = {
   p: 4,
 };
 
+// export default NewPortfolioImage;
+
+export default function CoverImage({
+  setOpen,
+  image,
+  alt,
+  open,
+  id,
+  className,
+}: CoverImageProps) {
+  const pathName = usePathname();
+
+  console.log(pathName);
+
+  return (
+    // <div className={className}>
+    <CardCover sx={{ border: "none" }}>
+      <Link href={`${pathName}/project/${id}`}>
+        <Image
+          key={id}
+          style={{ borderRadius: "1rem" }}
+          // onClick={() => setOpen(true)}
+          src={image}
+          alt={alt}
+          height={400}
+          width={400}
+        />
+      </Link>
+    </CardCover>
+    // </div>
+  );
+}
+
 // export function TransitionsModal({
 //   image,
 //   alt,
@@ -231,5 +266,3 @@ const style = {
 //     </Card>
 //   );
 // }
-
-export default NewPortfolioImage;

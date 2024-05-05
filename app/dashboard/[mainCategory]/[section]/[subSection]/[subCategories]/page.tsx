@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { Rubik } from "next/font/google";
 import { usePathname } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
@@ -49,11 +51,24 @@ const SubCategory = () => {
             key={index}
             className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
           >
-            <PortfolioImage
+            {/* <PortfolioImage
+              id="1"
               className="rounded-t-lg w-full h-full aspect-square"
               image={item.imageUrl}
               alt={item.title}
-            />
+            /> */}
+            <Link
+              href={`${pathname}/project/${item.id}`}
+              className="w-full h-full"
+            >
+              <Image
+                src={item.imageUrl}
+                alt={item.title}
+                width={400}
+                height={400}
+                className="rounded-lg w-full h-full"
+              />
+            </Link>
           </div>
         ))}
       </ImagesGrid>
