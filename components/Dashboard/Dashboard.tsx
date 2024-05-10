@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { getPortfolioSections } from "@/app/api/route";
-import { PortfolioImage } from "../OlderPortfolioImage";
 import { CardBody, CardContainer, CardItem } from "@/app/ui/3d-card";
+import type { Categories } from "@/types/categories";
+import DashboardCard from "./DashboardCard";
 
 // without this the component renders on server and throws an error
 import dynamic from "next/dynamic";
@@ -19,10 +20,36 @@ interface PortfolioData {
 
 const Dashboard: React.FC = () => {
   const data: PortfolioData[] = getPortfolioSections();
+  const [categories, setCategories] = useState<Categories[]>([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const categoriesData = await fetch(
+        "http://localhost:3000/api/categories",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const { data: categories } = await categoriesData.json();
+      setCategories(categories);
+    }
+    fetchCategories();
+  }, []);
+
+  const designSections = categories
+    .find((category) => category.name === "עיצוב")
+    ?.sections.map((section) => section.name);
 
   return (
-    <div className="grid justify-center">
-      <CardContainer className="inter-var">
+    <div className="grid gap-3">
+      {designSections?.map((section) => {
+        return <DashboardCard key={section} sectionTitle={section} />;
+      })}
+      {/* <DashboardCard /> */}
+      {/* <CardContainer className="inter-var">
         <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
           <CardItem
             translateZ="50"
@@ -63,33 +90,7 @@ const Dashboard: React.FC = () => {
             </CardItem>
           </div>
         </CardBody>
-      </CardContainer>
-      {/* <div>
-        <h1 className="text-3xl pb-6">Title</h1>
-      </div>
-      <div
-        style={{
-          display: "grid",
-          gridAutoFlow: "dense",
-          gap: "1rem",
-          gridTemplateColumns:
-            "repeat(auto-fill, minmax(min(100%, 400px), 1fr))",
-        }}
-        className="justify-items-center justify-center"
-      >
-        {data.map((item, index) => (
-          <div
-            key={index}
-            className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
-          >
-            <PortfolioImage
-              className="rounded-t-lg w-full h-full aspect-square"
-              image={item.imageUrl}
-              alt={item.title}
-            />
-          </div>
-        ))}
-      </div> */}
+      </CardContainer> */}
     </div>
   );
 };
