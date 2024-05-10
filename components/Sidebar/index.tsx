@@ -7,7 +7,7 @@ import { Noto_Kufi_Arabic } from "next/font/google";
 import { getCategories } from "@/app/api/route";
 import Menu from "./Menu";
 import NewMenu from "./NewMenu";
-
+import Logo from "@/assets/masterAdv-Logo.svg";
 const notoHeader = Noto_Kufi_Arabic({ weight: "700", subsets: ["arabic"] });
 const notoSubHeader = Noto_Kufi_Arabic({ weight: "500", subsets: ["arabic"] });
 const notoBody = Noto_Kufi_Arabic({ weight: "400", subsets: ["arabic"] });
@@ -118,10 +118,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <Link href="/">
           <Image
-            width={176}
-            height={32}
-            src={"/images/logo/MasterAdvLogo.svg"}
+            // width={176}
+            // height={32}
+            src={Logo}
             alt="Logo"
+            priority
           />
         </Link>
 

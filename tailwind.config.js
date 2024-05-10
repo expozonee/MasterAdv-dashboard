@@ -14,6 +14,7 @@ module.exports = {
       satoshi: ["Satoshi", "sans-serif"],
     },
     colors: {
+      main: "#080E2D",
       current: "currentColor",
       transparent: "transparent",
       white: "#FFFFFF",
