@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import BurgerMenu from "./BurgerMenu";
+import Logo from "@/assets/masterAdv-Logo.svg";
 
 const LogoBanner = ({ isMobile }) => {
   return (
@@ -10,13 +11,7 @@ const LogoBanner = ({ isMobile }) => {
         <BurgerMenu />
       </div>
       <Link href="/" className="m-0 p-0">
-        <Image
-          src={"/images/logo/MasterAdvLogo.svg"}
-          alt="MasterAdv Logo"
-          width={150}
-          height={60}
-          priority
-        />
+        <Image src={Logo} alt="MasterAdv Logo" priority />
       </Link>
     </header>
   );
