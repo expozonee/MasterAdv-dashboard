@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
-import { getPortfolioSections } from "@/app/api/route";
-import { PortfolioImage } from "@/components/OlderPortfolioImage";
-import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { usePathname, useParams } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
+import DashboardCard from "@/components/Dashboard/DashboardCard";
+import getDashboardCategories from "@/components/Dashboard/DashboardCategories";
 import { Rubik } from "next/font/google";
+import type { Categories } from "@/types/categories";
 
 interface PortfolioData {
   id: number;
@@ -16,8 +17,18 @@ interface PortfolioData {
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 const Section = () => {
-  const data: PortfolioData[] = getPortfolioSections();
+  const [categories, setCategories] = useState<Categories[]>([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const categoriesData: Categories[] = await getDashboardCategories();
+      setCategories(categoriesData);
+    }
+    fetchCategories();
+  }, []);
+
   const pathname = usePathname();
+  const { mainCategory } = useParams();
   const [titleData, breadcrumbsData] = PageData(pathname);
   const title = titleData;
 
@@ -27,7 +38,7 @@ const Section = () => {
         <h1 className={`text-3xl ${titleRubik.className}`}>{title}</h1>
         <BreadCrumbs pageData={breadcrumbsData} />
       </div>
-      <div
+      {/* <div
         style={{
           display: "grid",
           gridAutoFlow: "dense",
@@ -36,22 +47,20 @@ const Section = () => {
             "repeat(auto-fill, minmax(min(100%, 400px), 1fr))",
         }}
         className="justify-items-center justify-center"
-      >
-        {data.map((item, index) => (
-          <div
-            key={index}
-            className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
-          >
-            <PortfolioImage
-              className="rounded-t-lg w-full h-full aspect-square"
-              image={item.imageUrl}
-              alt={item.title}
-              // objectCover="object-cover"
-            />
-            {/* <div className="p-5"></div> */}
-          </div>
-        ))}
-        {/* </div> */}
+      ></div> */}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+        {categories?.map((mainCategory) => {
+          return mainCategory.sections.map((section) => {
+            return (
+              <DashboardCard
+                key={section.name}
+                section={section}
+                mainCategory={mainCategory.slug}
+              />
+            );
+          });
+        })}
       </div>
     </div>
   );
