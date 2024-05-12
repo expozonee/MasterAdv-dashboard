@@ -22,7 +22,7 @@ const UploadedImage = ({
   const [subCategory, setSubCategory] = useState<string>("");
 
   return (
-    <div className="bg-boxdark pb-4 rounded-md drop-shadow-md">
+    <div className="bg-gray pb-4 rounded-md drop-shadow-md">
       <Image
         key={name}
         className="w-full rounded-t-md"
@@ -31,7 +31,7 @@ const UploadedImage = ({
         height={350}
         alt={name}
       />
-      <h3 className="text-white font-black text-center py-2">{title}</h3>
+      <h3 className="text-main font-black text-center py-2">{title}</h3>
       <div className="grid">
         <Options
           imageName={name}

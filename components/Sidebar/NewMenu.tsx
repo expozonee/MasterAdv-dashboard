@@ -326,8 +326,8 @@ const Menu = () => {
             {/* }}
               </SidebarLinkGroup> */}
           </ul>
+          <div className="bg-main2 w-full pointer-events-none sticky bottom-0 flex h-40 z-9999 [mask-image:linear-gradient(transparent,#000000)]"></div>
         </ul>
-
         {/* <!-- Others Group --> */}
       </nav>
       {/* <!-- Sidebar Menu --> */}
