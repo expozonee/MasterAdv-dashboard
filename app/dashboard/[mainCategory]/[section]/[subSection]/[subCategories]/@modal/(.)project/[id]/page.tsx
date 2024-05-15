@@ -6,6 +6,12 @@ import ModalClose from "@mui/joy/ModalClose";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { useRouter } from "next/navigation";
+import WhatsappButton from "@/assets/WhatsAppButtonGreenLarge.svg";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Divider from "@mui/material/Divider";
+
+const BASE_URL = "http:localhost:3000";
 
 type ImageOwnProps<T extends React.ElementType> = {
   className: string;
@@ -21,6 +27,7 @@ type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
 const ProjectModal = () => {
   // const Component = as || "div";
   const router = useRouter();
+  const pathname = usePathname();
 
   const onDismiss = useCallback(() => {
     router.back();
@@ -103,7 +110,7 @@ const ProjectModal = () => {
             // maxHeight: `${!isMobile ? "960px" : ""}`,
             borderRadius: "md",
             boxShadow: "lg",
-            backgroundColor: "#212121",
+            backgroundColor: "#02061D",
             outline: "none",
             ...(isMobile ? {} : { maxHeight: "960px" }),
           }}
@@ -136,19 +143,74 @@ const ProjectModal = () => {
             </div>
             <div
               className={`${
-                isMobile ? "w-full h-[150px]" : "w-2/5 h-full"
-              } p-6 flex flex-col justify-center items-center`}
+                isMobile ? "w-full h-[200px] overflow-auto" : "w-2/5 h-full"
+              } p-3 flex flex-col justify-start relative`}
             >
-              <h1 className="px-8 py-4 text-black bg-white rounded-md">
-                Click Here
-              </h1>
-
-              <ModalClose
-                variant="plain"
-                sx={{ m: 1, color: "white" }}
-                onClick={onClick}
+              <Divider
+                variant="middle"
+                sx={{
+                  color: "#BD9B53",
+                  opacity: 1,
+                  "&.MuiDivider-root": {
+                    "&:before, &:after": {
+                      borderTop: "thin solid #BD9B53",
+                    },
+                  },
+                }}
+                className={`${isMobile ? "order-1" : "order-3"} `}
+              >
+                Contact us
+              </Divider>
+              <div
+                className={`flex justify-center py-4 ${
+                  isMobile ? "order-1 items-end" : "order-4"
+                }`}
+              >
+                <Link
+                  href={`https://wa.me/972526453088?text=${
+                    BASE_URL + pathname
+                  }`}
+                  target="_blank"
+                >
+                  <Image
+                    src={WhatsappButton}
+                    alt="Whatsapp share button"
+                    width={isMobile ? 250 : 320}
+                  />
+                </Link>
+              </div>
+              <Divider
+                component={"div"}
+                className={`${isMobile ? "order-1 pb-5" : "order-4"}`}
+                variant="middle"
+                sx={{ borderTop: "thin solid #BD9B53", marginTop: "12px" }}
               />
+              <h2 className="project-title text-gold font-black px-2 text-3xl order-1">
+                Title
+              </h2>
+              <p className="project-description text-white pb-3 px-2 order-2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                nec odio vitae odio pharetra. Integer non nunc vel odio
+                scelerisque. Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit. Donec nec odio vitae odio pharetra. Integer non nunc vel
+                odio scelerisque. Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Donec nec odio vitae odio pharetra. Integer non
+                nunc vel odio scelerisque. Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Donec nec odio vitae odio pharetra.
+                Integer non nunc vel odio scelerisque.
+              </p>
             </div>
+            <ModalClose
+              variant="plain"
+              sx={{
+                m: 1,
+                color: "white",
+                position: "absolute",
+                top: 0,
+                right: 0,
+              }}
+              onClick={onClick}
+            />
           </div>
         </Sheet>
       </Fade>
