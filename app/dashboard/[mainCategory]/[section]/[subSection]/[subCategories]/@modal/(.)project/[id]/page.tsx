@@ -6,12 +6,8 @@ import ModalClose from "@mui/joy/ModalClose";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import { useRouter } from "next/navigation";
-import WhatsappButton from "@/assets/WhatsAppButtonGreenLarge.svg";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Divider from "@mui/material/Divider";
-
-const BASE_URL = "http:localhost:3000";
+import WhatsappShareButton from "@/components/shareButtons/WhatsappShareButton";
 
 type ImageOwnProps<T extends React.ElementType> = {
   className: string;
@@ -146,45 +142,9 @@ const ProjectModal = () => {
                 isMobile ? "w-full h-[200px] overflow-auto" : "w-2/5 h-full"
               } p-3 flex flex-col justify-start relative`}
             >
-              <Divider
-                variant="middle"
-                sx={{
-                  color: "#BD9B53",
-                  opacity: 1,
-                  "&.MuiDivider-root": {
-                    "&:before, &:after": {
-                      borderTop: "thin solid #BD9B53",
-                    },
-                  },
-                }}
-                className={`${isMobile ? "order-1" : "order-3"} `}
-              >
-                Contact us
-              </Divider>
-              <div
-                className={`flex justify-center py-4 ${
-                  isMobile ? "order-1 items-end" : "order-4"
-                }`}
-              >
-                <Link
-                  href={`https://wa.me/972526453088?text=${
-                    BASE_URL + pathname
-                  }`}
-                  target="_blank"
-                >
-                  <Image
-                    src={WhatsappButton}
-                    alt="Whatsapp share button"
-                    width={isMobile ? 250 : 320}
-                  />
-                </Link>
+              <div className={`${isMobile ? "order-1" : "order-3"}`}>
+                <WhatsappShareButton pathname={pathname} isMobile />
               </div>
-              <Divider
-                component={"div"}
-                className={`${isMobile ? "order-1 pb-5" : "order-4"}`}
-                variant="middle"
-                sx={{ borderTop: "thin solid #BD9B53", marginTop: "12px" }}
-              />
               <h2 className="project-title text-gold font-black px-2 text-3xl order-1">
                 Title
               </h2>
