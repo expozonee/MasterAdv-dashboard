@@ -12,6 +12,7 @@ import type { LoginSchema } from "@/types/loginSchema";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Logo from "@/assets/masterAdv-Logo.svg";
+import Link from "next/link";
 const passwordLength = 20;
 
 const loginSchema = z.object({
@@ -102,8 +103,9 @@ export default function Login() {
         */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-main">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <Image className="mx-auto" src={Logo} alt="Logo" />
-          {/* Title */}
+          <Link href={"/"}>
+            <Image className="mx-auto" src={Logo} alt="Logo" />
+          </Link>
           <h2
             className={`mt-10 text-white text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ${notoTitle.className}`}
           >

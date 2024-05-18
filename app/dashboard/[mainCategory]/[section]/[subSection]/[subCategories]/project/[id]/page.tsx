@@ -1,8 +1,11 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { Arimo } from "next/font/google";
 import { getPortfolioSections } from "@/app/api/route";
-import { Style } from "@mui/icons-material";
+import { Divider } from "@mui/material";
+import { usePathname } from "next/navigation";
+import WhatsappShareButton from "@/components/shareButtons/WhatsappShareButton";
 
 type ProjectPageProps = {
   params: {
@@ -22,6 +25,7 @@ export default function ProjectPage({
 }: ProjectPageProps) {
   console.log(mainCategory, section, subSection, subCategories);
   console.log(id);
+  const pathname = usePathname();
 
   const imageData = getPortfolioSections().find((image) => image.id == id);
   console.log(imageData);
@@ -43,6 +47,7 @@ export default function ProjectPage({
           <h1 className={`text-6xl ${ArimoFontTitle.className}`}>
             {imageData.title}
           </h1>
+          <WhatsappShareButton pathname={pathname} />
         </div>
       </div>
       <p className="flex justify-center items-center my-25">"Design is Fun"</p>

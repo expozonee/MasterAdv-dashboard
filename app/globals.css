@@ -188,14 +188,14 @@ footer {
 
 /* latest added */
 
-.menu :where(li ul) {
+.menuDesign :where(li ul) {
   position: relative;
   white-space: nowrap;
   margin-inline-start: 1rem;
   padding-inline-start: 0.5rem;
 }
 
-.menu :where(li ul)::before {
+.menuDesign :where(li ul)::before {
   position: absolute;
   bottom: 0.75rem;
   inset-inline-start: 0;

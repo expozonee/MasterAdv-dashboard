@@ -15,6 +15,8 @@ module.exports = {
     },
     colors: {
       main: "#080E2D",
+      main2: "#02061D",
+      gold: "#BD9B53",
       current: "currentColor",
       transparent: "transparent",
       white: "#FFFFFF",
@@ -267,5 +269,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("daisyui")],
 };

@@ -126,7 +126,7 @@ const Menu = () => {
             </h2>
           </Link>
 
-          <ul className="menu mb-6 flex flex-col gap-1.5">
+          <ul className="menuDesign mb-6 flex flex-col gap-1.5">
             {/* <!-- Menu Item Dashboard --> */}
 
             <React.Fragment>
@@ -326,8 +326,8 @@ const Menu = () => {
             {/* }}
               </SidebarLinkGroup> */}
           </ul>
+          <div className="bg-main2 w-full pointer-events-none sticky bottom-0 flex h-40 z-9999 [mask-image:linear-gradient(transparent,#000000)]"></div>
         </ul>
-
         {/* <!-- Others Group --> */}
       </nav>
       {/* <!-- Sidebar Menu --> */}
