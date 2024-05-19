@@ -11,7 +11,12 @@ const LogoBanner = ({ isMobile }) => {
         <BurgerMenu />
       </div>
       <Link href="/" className="m-0 p-0">
-        <Image src={Logo} alt="MasterAdv Logo" priority />
+        <Image
+          src={Logo}
+          alt="MasterAdv Logo"
+          priority
+          className="max-w-[170px] lg:max-w-full"
+        />
       </Link>
     </header>
   );

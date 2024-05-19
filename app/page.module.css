@@ -330,17 +330,17 @@
   height: 100%; */
   background-image: radial-gradient(
       circle at 0 0,
-      #462b29,
+      #080e2d,
       rgba(0, 0, 0, 0) 54%
     ),
-    linear-gradient(#000, rgba(0, 0, 0, 0) 30%),
+    linear-gradient(#080e2d, rgba(0, 0, 0, 0) 30%),
     radial-gradient(
       circle farthest-side,
-      rgba(133, 81, 77, 0.25),
+      #02061d,
       rgba(0, 0, 0, 0) 70%,
       rgba(0, 0, 0, 0)
     ),
-    radial-gradient(circle at 100% 121%, #85514d, #000 37%);
+    radial-gradient(circle at 100% 121%, #02061d, #000 37%);
   /* justify-content: center; */
   /* align-items: flex-start; */
   /* font-size: 1vw; */

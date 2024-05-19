@@ -1,0 +1,14 @@
+.gradient-background {
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  background-image: linear-gradient(
+    to right,
+    #895cf2 0%,
+    #ffabf4 50%,
+    #895cf2 100%
+  );
+  transition: 0.5s;
+}
+
+.gradient-background:hover {
+  background-position: right center;
+}

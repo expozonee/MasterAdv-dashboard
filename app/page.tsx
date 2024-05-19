@@ -23,6 +23,9 @@ import { useEffect, useState } from "react";
 import HomeLogoBanner from "@/components/HomeLogoBanner";
 import HomeBanner from "@/components/HomeBanner";
 import design from "./page.module.css";
+import PortfolioButton from "@/components/HomePage/PortfolioButton";
+import AboutUs from "@/components/HomePage/AboutUs";
+import Carousel from "@/components/HomePage/Carousel";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -53,14 +56,17 @@ export default function Home() {
         margin: 0,
         padding: 0,
         // position: "relative",
-        height: "100vh",
+        // height: "100vh",
       }}
       // className="bg-brickWallpaper bg-contain"
-      className={`${design.gradientWrapper}`}
+      className={`${design.gradientWrapper} bg-main`}
     >
       <LogoBanner isMobile={isMobile} />
       <HomeBanner />
-      <Sections isMobile={isMobile} />
+      <PortfolioButton />
+      <AboutUs />
+      <Carousel />
+      {/* <Sections isMobile={isMobile} /> */}
       <Footer isMobile={isMobile} />
     </main>
   );
