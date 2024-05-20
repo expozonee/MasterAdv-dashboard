@@ -7,7 +7,7 @@ const RubikFontButton = Rubik({ subsets: ["hebrew"], weight: ["900"] });
 
 export default function PortfolioButton() {
   return (
-    <div className="w-full flex justify-center items-center mx-auto p-5 lg:p-10">
+    <section className="w-full flex justify-center items-center mx-auto px-5 lg:px-10">
       <Link
         href={"/dashboard"}
         className="w-[1500px] bg-white rounded-md h-[100px] lg:h-[150px]"
@@ -20,6 +20,6 @@ export default function PortfolioButton() {
           העבודות שלנו
         </Button>
       </Link>
-    </div>
+    </section>
   );
 }
