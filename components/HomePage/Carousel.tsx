@@ -9,7 +9,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-export default function CarouselComponent() {
+type CarouselProps = {
+  title: string;
+};
+
+export default function CarouselComponent({ title }: CarouselProps) {
   const images = [
     {
       id: 1,
@@ -57,7 +61,7 @@ export default function CarouselComponent() {
     <section className="w-full">
       <div className="flex flex-col justify-center">
         <h2 className="text-white text-5xl mx-auto max-w-[1500px] py-10">
-          our work
+          {title}
         </h2>
         <Carousel
           opts={{

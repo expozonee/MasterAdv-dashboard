@@ -25,7 +25,7 @@ import HomeBanner from "@/components/HomeBanner";
 import design from "./page.module.css";
 import PortfolioButton from "@/components/HomePage/PortfolioButton";
 import AboutUs from "@/components/HomePage/AboutUs";
-import Carousel from "@/components/HomePage/Carousel";
+import ProjectCarousel from "@/components/HomePage/Carousel";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -64,8 +64,9 @@ export default function Home() {
       <LogoBanner isMobile={isMobile} />
       <HomeBanner />
       <PortfolioButton />
+      <ProjectCarousel title="מה חדש" />
       <AboutUs />
-      <Carousel />
+      <ProjectCarousel title="עבודות נבחרות" />
       {/* <Sections isMobile={isMobile} /> */}
       <Footer isMobile={isMobile} />
     </main>
