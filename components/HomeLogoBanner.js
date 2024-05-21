@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import BurgerMenu from "./BurgerMenu";
+import BurgerMenu from "./BurgerMenu/BurgerMenu";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

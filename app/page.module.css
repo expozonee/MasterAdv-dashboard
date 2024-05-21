@@ -340,7 +340,7 @@
       rgba(0, 0, 0, 0) 70%,
       rgba(0, 0, 0, 0)
     ),
-    radial-gradient(circle at 100% 121%, #02061d, #000 37%);
+    radial-gradient(circle at 100% 121%, #02061d, #060f42 37%);
   /* justify-content: center; */
   /* align-items: flex-start; */
   /* font-size: 1vw; */

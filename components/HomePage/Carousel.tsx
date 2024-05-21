@@ -60,7 +60,7 @@ export default function CarouselComponent({ title }: CarouselProps) {
   return (
     <section className="w-full">
       <div className="flex flex-col justify-center">
-        <h2 className="text-white text-5xl mx-auto max-w-[1500px] py-10">
+        <h2 className="text-white text-5xl mx-auto max-w-[1500px] py-10 pt-0">
           {title}
         </h2>
         <Carousel
