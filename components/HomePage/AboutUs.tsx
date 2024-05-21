@@ -6,8 +6,8 @@ const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["900"] });
 export default function AboutUs() {
   return (
     <>
-      <div
-        className={`flex justify-center my-10 relative text-white p-10 lg:p-20   z-10 ${AboutUsStyles.backgroundGradient}`}
+      <section
+        className={`flex justify-center relative mt-12 text-white p-10 lg:p-20 z-10 ${AboutUsStyles.backgroundGradient}`}
       >
         <div className="flex flex-col xl:flex-row lg:items-center lg:justify-center gap-10 max-w-[1500px]">
           <h2
@@ -38,7 +38,7 @@ export default function AboutUs() {
             maiores recusandae nesciunt optio blanditiis quam
           </blockquote>
         </div>
-      </div>
+      </section>
     </>
   );
 }

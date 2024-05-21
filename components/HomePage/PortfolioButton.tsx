@@ -7,10 +7,10 @@ const RubikFontButton = Rubik({ subsets: ["hebrew"], weight: ["900"] });
 
 export default function PortfolioButton() {
   return (
-    <div className="w-full flex justify-center items-center mx-auto p-5 lg:p-10">
+    <div className="w-4/5 flex justify-center items-center mx-auto">
       <Link
         href={"/dashboard"}
-        className="w-[1500px] bg-white rounded-md h-[100px] lg:h-[150px]"
+        className="w-[1500px] bg-white rounded-md h-[80px]"
       >
         <Button
           className={`${RubikFontButton.className} text-3xl lg:text-5xl ${styles["gradient-background"]}`}

@@ -1,0 +1,23 @@
+.designer-info::before,
+.designer-info::after {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  opacity: 0.5;
+  background: url("/decoration-element.svg");
+  background-repeat: no-repeat;
+}
+
+.designer-info::before {
+  width: 500px;
+  height: 500px;
+
+  top: -20%;
+  right: 50px;
+}
+.designer-info::after {
+  width: 500px;
+  height: 500px;
+  bottom: -20%;
+  left: 50px;
+}

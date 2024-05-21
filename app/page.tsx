@@ -1,31 +1,12 @@
-// import ECommerce from "@/components/Dashboard/E-commerce";
-// import { Metadata } from "next";
-
-// export const metadata: Metadata = {
-//   title: "TailAdmin | Next.js E-commerce Dashboard Template",
-//   description: "This is Home Blog page for TailAdmin Next.js",
-//   // other metadata
-// };
-
-// export default function Home() {
-//   return (
-//     <>
-//       <ECommerce />
-//     </>
-//   );
-// }
-
 "use client";
-import Sections from "@/components/Section";
-import LogoBanner from "@/components/LogoBanner";
+import design from "./page.module.css";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
-import HomeLogoBanner from "@/components/HomeLogoBanner";
+import LogoBanner from "@/components/LogoBanner";
 import HomeBanner from "@/components/HomeBanner";
-import design from "./page.module.css";
-import PortfolioButton from "@/components/HomePage/PortfolioButton";
-import AboutUs from "@/components/HomePage/AboutUs";
+import DesignerInfo from "@/components/HomePage/DesignerInfo";
 import ProjectCarousel from "@/components/HomePage/Carousel";
+import CTASection from "@/components/HomePage/CTASection";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -55,19 +36,15 @@ export default function Home() {
         boxSizing: "border-box",
         margin: 0,
         padding: 0,
-        // position: "relative",
-        // height: "100vh",
       }}
-      // className="bg-brickWallpaper bg-contain"
       className={`${design.gradientWrapper} bg-main`}
     >
       <LogoBanner isMobile={isMobile} />
-      <HomeBanner />
-      <PortfolioButton />
+      <CTASection isMobile={isMobile} />
+      <HomeBanner isMobile={isMobile} />
       <ProjectCarousel title="מה חדש" />
-      <AboutUs />
+      <DesignerInfo />
       <ProjectCarousel title="עבודות נבחרות" />
-      {/* <Sections isMobile={isMobile} /> */}
       <Footer isMobile={isMobile} />
     </main>
   );

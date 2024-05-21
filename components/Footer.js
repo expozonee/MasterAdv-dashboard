@@ -1,5 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import Logo from "@/assets/masterAdv-Logo.svg";
 import { Noto_Kufi_Arabic } from "next/font/google";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSquareFacebook,
+  faSquareInstagram,
+  faSquareWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
 
 const notoFooter = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["400"] });
 
@@ -9,22 +18,29 @@ const Footer = ({ isMobile }) => {
 
   return (
     <footer
-      style={
-        {
-          // background: "black",
-          // position: "absolute",
-          // bottom: 0,
-          // width: "100%",
-        }
-      }
-      className={`flex justify-center p-4 text-neutral-content  ${notoFooter.className} bg-transparent`}
+      className={`flex flex-col lg:flex-row py-10 gap-5 lg:gap-10 items-center justify-between px-15 bg-main2 mt-12 text-neutral-content  ${notoFooter.className} min-h-[200px]`}
     >
-      <aside className="flex justify-center items-center content-center grid-flow-col py-4">
-        <p className="text-white">
-          جميع الحقوق محفوطة - MasterAdv © {currentYear}
+      <div>
+        <Link href={"/"}>
+          <Image src={Logo} alt="Logo" width={200} />
+        </Link>
+      </div>
+      <div>
+        <p className="text-white text-center">
+          כל הזכויות שמורות - MasterAdv © {currentYear}
         </p>
-      </aside>
-      {/* <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end"></nav> */}
+      </div>
+      <div className="flex gap-3">
+        <Link href={"/"}>
+          <FontAwesomeIcon icon={faSquareFacebook} size="3x" />
+        </Link>
+        <Link href={"/about-us"}>
+          <FontAwesomeIcon icon={faSquareInstagram} size="3x" />
+        </Link>
+        <Link href={"/dashboard"}>
+          <FontAwesomeIcon icon={faSquareWhatsapp} size="3x" />
+        </Link>
+      </div>
     </footer>
   );
 };
