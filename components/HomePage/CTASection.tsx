@@ -1,4 +1,3 @@
-import Link from "next/link";
 import PortfolioButton from "./PortfolioButton";
 import { Rubik_Spray_Paint } from "next/font/google";
 import { Rubik } from "next/font/google";
@@ -9,12 +8,8 @@ const rubikSprayTitle = Rubik_Spray_Paint({
 });
 const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["700"] });
 
-type CTASectionProps = {
-  isMobile: boolean;
-};
-
-export default function CTASection({ isMobile }: CTASectionProps) {
-  return isMobile ? (
+export default function CTASection() {
+  return (
     <div className="bg-main">
       <div className="pb-10 sm:px-6 sm:py-32">
         <div className="relative isolate overflow-hidden bg-gray-900 pt-16 sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
@@ -54,5 +49,5 @@ export default function CTASection({ isMobile }: CTASectionProps) {
         </div>
       </div>
     </div>
-  ) : null;
+  );
 }

@@ -12,7 +12,7 @@ import {
 
 const notoFooter = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["400"] });
 
-const Footer = ({ isMobile }) => {
+const Footer = () => {
   const date = new Date();
   const currentYear = date.getFullYear();
 

@@ -3,6 +3,7 @@ import { Noto_Kufi_Arabic, Marhey } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import Provider from "@/components/Providers/Providers";
 import design from "./page.module.css";
+import { MobileProvider } from "@/contexts/MobileContext";
 
 const noto = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
 const marhey = Marhey({ subsets: ["arabic"], weight: ["600"] });
@@ -23,21 +24,22 @@ export default function RootLayout({
       dir="rtl"
       className={
         `bg-no-repeat md:bg-contain ${noto.className} h-full` // Added the 'h-full' to the html tag className on 9/4/2024
-        //  +
-        // " " +
-        // design["gradient-animation-body"]
-        // design.brickWallBg
       }
-      // style={{backgroundImage:`url(${bgImage.src})`}}
-      style={{}}
     >
       <Provider>
         <body
-          className="h-full" // Added the className to the body tag on 9/4/2024
+          className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
           suppressHydrationWarning={true}
-          // className={`${rubik.className} ${design.brickWallBg}`}
         >
-          {/* 
+          <MobileProvider>{children}</MobileProvider>
+        </body>
+      </Provider>
+    </html>
+  );
+}
+
+{
+  /* 
       <body
         // style={{
         //   background:
@@ -47,12 +49,7 @@ export default function RootLayout({
         //   animation: "Gradient 15s ease infinite",
         // }}
         className={`${rubik.className}`}
-      > */}
-          {children}
-        </body>
-      </Provider>
-    </html>
-  );
+      > */
 }
 
 // "use client";
