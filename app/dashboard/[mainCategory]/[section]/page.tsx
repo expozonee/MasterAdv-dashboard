@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getPortfolioSections } from "@/app/api/route";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import { Rubik } from "next/font/google";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
-import PortfolioImage from "@/components/PortfolioImage/PortfolioImage";
+import DashboardCard from "@/components/Dashboard/DashboardCard";
+import getDashboardCategories from "@/components/Dashboard/DashboardCategories";
+import type { Categories } from "@/types/categories";
 
 interface PortfolioData {
   id: number;
@@ -16,6 +18,17 @@ interface PortfolioData {
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 const Section = () => {
+  const [categories, setCategories] = useState<Categories[]>([]);
+  const { section } = useParams();
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const categoriesData: Categories[] = await getDashboardCategories();
+      setCategories(categoriesData);
+    }
+    fetchCategories();
+  }, []);
+
   const data: PortfolioData[] = getPortfolioSections();
   const pathname = usePathname();
   const [titleData, breadcrumbsData] = PageData(pathname);
@@ -50,6 +63,21 @@ const Section = () => {
           </div>
         ))}
       </div> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+        {categories?.map((mainCategory) => {
+          const desiredSection = mainCategory.sections.find(
+            (desiredSection) => desiredSection.slug === section
+          );
+          return desiredSection?.subSections.map((subSection) => {
+            return (
+              <DashboardCard
+                key={subSection.name}
+                section={{ name: subSection.name, slug: subSection.slug }}
+              />
+            );
+          });
+        })}
+      </div>
     </div>
   );
 };

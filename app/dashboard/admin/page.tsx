@@ -153,6 +153,7 @@ const AdminPage = () => {
       body: formData,
     });
     // console.log("submittedImages", submittedImages);
+    setUploadedImages([]);
   };
 
   return (
@@ -165,7 +166,7 @@ const AdminPage = () => {
       <form onSubmit={onSubmit} encType="multipart/form-data">
         <div
           id="FileUpload"
-          className="relative mb-5.5 block w-1/2 mx-auto max-w-[1200px] cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
+          className="relative mb-5.5 block w-1/2 mx-auto max-w-[1200px] cursor-pointer appearance-none rounded border-2 border-dashed border-white bg-transparent py-4 px-4 dark:bg-meta-4 sm:py-7.5"
         >
           <input
             type="file"
@@ -204,7 +205,7 @@ const AdminPage = () => {
               </svg>
             </span>
             <p>
-              <span className="text-primary">Click to upload</span> or drag and
+              <span className="text-gold">Click to upload</span> or drag and
               drop
             </p>
             <p className="mt-1.5">WEBP Only</p>
@@ -216,13 +217,13 @@ const AdminPage = () => {
 
         <div className="flex justify-center gap-4.5">
           <button
-            className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+            className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-white hover:shadow-1 dark:border-strokedark dark:text-white"
             type="submit"
           >
             Cancel
           </button>
           <button
-            className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-95"
+            className="flex justify-center rounded bg-gold py-2 px-6 font-medium text-gray hover:bg-opacity-95"
             type="submit"
           >
             Upload

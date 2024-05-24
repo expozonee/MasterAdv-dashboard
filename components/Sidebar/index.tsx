@@ -7,7 +7,7 @@ import { Noto_Kufi_Arabic } from "next/font/google";
 import { getCategories } from "@/app/api/route";
 import Menu from "./Menu";
 import NewMenu from "./NewMenu";
-
+import Logo from "@/assets/masterAdv-Logo.svg";
 const notoHeader = Noto_Kufi_Arabic({ weight: "700", subsets: ["arabic"] });
 const notoSubHeader = Noto_Kufi_Arabic({ weight: "500", subsets: ["arabic"] });
 const notoBody = Noto_Kufi_Arabic({ weight: "400", subsets: ["arabic"] });
@@ -110,7 +110,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute right-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`absolute right-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-main2 duration-300 ease-linear dark:bg-main2 lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
@@ -118,10 +118,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <Link href="/">
           <Image
-            width={176}
-            height={32}
-            src={"/images/logo/MasterAdvLogo.svg"}
+            // width={176}
+            // height={32}
+            src={Logo}
             alt="Logo"
+            priority
           />
         </Link>
 
@@ -130,7 +131,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
-          className="block lg:hidden"
+          className="block lg:hidden mr-4"
         >
           <svg
             className="fill-current"
@@ -141,7 +142,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M19 8.175H2.98748L9.36248 1.6875C9.69998 1.35 9.69998 0.825 9.36248 0.4875C9.02498 0.15 8.49998 0.15 8.16248 0.4875L0.399976 8.3625C0.0624756 8.7 0.0624756 9.225 0.399976 9.5625L8.16248 17.4375C8.31248 17.5875 8.53748 17.7 8.76248 17.7C8.98748 17.7 9.17498 17.625 9.36248 17.475C9.69998 17.1375 9.69998 16.6125 9.36248 16.275L3.02498 9.8625H19C19.45 9.8625 19.825 9.4875 19.825 9.0375C19.825 8.55 19.45 8.175 19 8.175Z"
+              d="M1 8.175H17.01252L10.63752 1.6875C10.30002 1.35 10.30002 0.825 10.63752 0.4875C10.97502 0.15 11.50002 0.15 11.83752 0.4875L19.600024 8.3625C19.937524 8.7 19.937524 9.225 19.600024 9.5625L11.83752 17.4375C11.68752 17.5875 11.46252 17.7 11.23752 17.7C11.01252 17.7 10.82502 17.625 10.63752 17.475C10.30002 17.1375 10.30002 16.6125 10.63752 16.275L16.97502 9.8625H1C0.55 9.8625 0.175 9.4875 0.175 9.0375C0.175 8.55 0.55 8.175 1 8.175Z"
               fill=""
             />
           </svg>

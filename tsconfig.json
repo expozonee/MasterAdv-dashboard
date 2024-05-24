@@ -24,6 +24,14 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "components/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }
+
+//     "components/LogoBanner.js"

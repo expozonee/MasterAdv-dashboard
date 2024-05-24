@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import AspectRatio from "@mui/joy/AspectRatio";
 
-export default function HomeBanner() {
+type HomeBannerProps = {
+  isMobile: boolean;
+};
+
+export default function HomeBanner({ isMobile }: HomeBannerProps) {
   const [bannerWidth, setBannerWidth] = useState("w-[1080px]");
 
   useEffect(() => {
@@ -18,16 +21,16 @@ export default function HomeBanner() {
     };
   }, []);
 
-  return (
+  return isMobile ? null : (
     <div className="flex">
       <div
-        className={`flex flex-wrap p-10 justify-center max-w-[1080px] ${bannerWidth} mx-auto my-4 rounded-xl shrink aspect-video box-content`}
+        className={`flex flex-wrap p-5 lg:p-10 justify-center max-w-[1500px] mx-auto rounded-md shrink aspect-video box-content`}
       >
         <Image
-          className="rounded-xl"
-          src="/images/cover/cover-01.png"
+          className="rounded-md"
+          src="/bannerImages/modern-printing-machine.jpg"
           alt="Home Banner"
-          width={1080}
+          width={1500}
           height={500}
         />
       </div>

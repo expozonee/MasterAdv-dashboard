@@ -37,7 +37,8 @@ export default function RootLayout({
   return (
     // <html lang="en" dir="rtl">
     // <body suppressHydrationWarning={true}>
-    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+    // <div className="dark:bg-boxdark-2 dark:text-bodydark bg-main">
+    <div className="bg-main text-white">
       {loading ? (
         <Loader />
       ) : (

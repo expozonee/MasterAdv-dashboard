@@ -2,11 +2,11 @@ import { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 import type { JWTWithToken } from "@/types/next-auth/jwtWithToken";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 export async function POST(req: NextRequest) {
   const token = (await getToken({

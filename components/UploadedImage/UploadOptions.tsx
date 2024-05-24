@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import getAllCategories from "@/lib/getAllCategories";
 import type { Categories } from "@/lib/getAllCategories";
+import "./selectStyle.css";
 
 type OptionsProps = {
   imageName: string;
@@ -83,27 +84,29 @@ const Options = ({
 
   return (
     <>
-      <label className="mx-auto w-11/12">
+      <label className="mx-auto w-11/12 text-main">
         {OptionsType[type as keyof typeof OptionsType]}
       </label>
-
-      <select
-        className="w-11/12 mx-auto p-3 border-2 border-gray-300 rounded-md mt-2"
-        name={`${imageName}_${OptionsType[type as keyof typeof OptionsType]}`}
-        id={`${imageName}_${OptionsType[type as keyof typeof OptionsType]}`}
-        value={value || ""}
-        onChange={handleChange}
-        required
-      >
-        <option value="null">{`-- Choose ${
-          OptionsType[type as keyof typeof OptionsType]
-        } --`}</option>
-        {options.map((option: { name: string }) => (
-          <option key={option.name} value={option.name}>
-            {option.name}
-          </option>
-        ))}
-      </select>
+      <div className="custom-select w-11/12 mx-auto">
+        <select
+          className="w-11/12 mx-auto p-3 border-2 border-gray-300 rounded-md mt-2 bg-none"
+          name={`${imageName}_${OptionsType[type as keyof typeof OptionsType]}`}
+          id={`${imageName}_${OptionsType[type as keyof typeof OptionsType]}`}
+          value={value || ""}
+          onChange={handleChange}
+          required
+        >
+          <option value="" disabled selected>{`-- Choose ${
+            OptionsType[type as keyof typeof OptionsType]
+          } --`}</option>
+          {options.map((option: { name: string }) => (
+            <option key={option.name} value={option.name}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+        <div className="select-arrow"></div>
+      </div>
     </>
   );
 };

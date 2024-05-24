@@ -1,0 +1,27 @@
+/* .aboutText {
+  color: whitesmoke;
+  padding: 25px;
+}
+
+.aboutText::after,
+.aboutText::before {
+  color: #f0f0f0;
+  position: absolute;
+  z-index: 1;
+}
+
+.aboutText::before {
+  content: open-quote;
+  font-size: 15em;
+  vertical-align: -0.6em;
+}
+
+.aboutText::after {
+  content: close-quote;
+  font-size: 15em;
+  vertical-align: -0.6em;
+} */
+
+.backgroundGradient {
+  background-image: linear-gradient(40deg, rgb(108, 0, 162), rgb(0, 17, 82));
+}
