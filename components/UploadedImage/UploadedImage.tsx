@@ -20,6 +20,7 @@ const UploadedImage = ({
   const [section, setSection] = useState<string>("");
   const [subSection, setSubSection] = useState<string>("");
   const [subCategory, setSubCategory] = useState<string>("");
+  const [isSpecial, setIsSpecial] = useState<string>("");
 
   return (
     <div className="bg-gray pb-4 rounded-md drop-shadow-md">
@@ -32,7 +33,14 @@ const UploadedImage = ({
         alt={name}
       />
       <h3 className="text-main font-black text-center py-2">{title}</h3>
-      <div className="grid">
+      <div className="grid gap-3">
+        <Options
+          imageName={name}
+          key={`${name}_${OptionsType.MAIN_CATEGORY}`}
+          type="IS_SPECIAL"
+          onChange={setIsSpecial}
+          value={isSpecial}
+        />
         <Options
           imageName={name}
           key={`${name}_${OptionsType.MAIN_CATEGORY}`}
