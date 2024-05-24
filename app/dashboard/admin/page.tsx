@@ -4,6 +4,11 @@ import UploadedImage from "@/components/UploadedImage/UploadedImage";
 import ErrorAlert from "./ErrorAlert";
 import { useSession } from "next-auth/react";
 import { OptionsType } from "@/components/UploadedImage/UploadOptions";
+import { Rubik } from "next/font/google";
+import { Button } from "@mui/material";
+
+const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["900"] });
+const rubikText = Rubik({ subsets: ["hebrew"], weight: ["500"] });
 
 // type UploadedImages = {
 //   name: string;
@@ -21,6 +26,7 @@ export type ImageData = {
   section: string;
   subSection: string;
   subCategory: string;
+  isSpecial: string;
 };
 
 const AdminPage = () => {
@@ -132,6 +138,11 @@ const AdminPage = () => {
             `${image.name}_${OptionsType.SUB_CATEGORY}`
           ) as HTMLSelectElement
         ).value,
+        isSpecial: (
+          form.elements.namedItem(
+            `${image.name}_${OptionsType.IS_SPECIAL}`
+          ) as HTMLSelectElement
+        ).value,
       };
       imageDataToSubmit.push(data);
     }
@@ -145,6 +156,7 @@ const AdminPage = () => {
       formData.append(`images[${index}][section]`, item.section);
       formData.append(`images[${index}][subSection]`, item.subSection);
       formData.append(`images[${index}][subCategory]`, item.subCategory);
+      formData.append(`images[${index}][isSpecial]`, item.isSpecial);
     });
     console.log("formData", formData);
 
@@ -158,9 +170,11 @@ const AdminPage = () => {
 
   return (
     <>
-      <div className="text-center my-3 text-4xl font-black">
-        Admin Dashboard
-        <h1>{`welcome ${session?.user?.email?.split("@")[0]}`}</h1>
+      <div
+        className={`text-center my-3 text-4xl font-black ${rubikTitle.className}`}
+      >
+        מערכת מנהל
+        <h1 className="text-gold">{`שלום ${session?.user?.name}`}</h1>
       </div>
 
       <form onSubmit={onSubmit} encType="multipart/form-data">
@@ -175,7 +189,9 @@ const AdminPage = () => {
             className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
             multiple
           />
-          <div className="flex flex-col items-center justify-center space-y-3">
+          <div
+            className={`flex flex-col items-center justify-center space-y-3 ${rubikText.className}`}
+          >
             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
               <svg
                 width="16"
@@ -205,10 +221,9 @@ const AdminPage = () => {
               </svg>
             </span>
             <p>
-              <span className="text-gold">Click to upload</span> or drag and
-              drop
+              <span className="text-gold">לחץ כדי להעלות</span> או גרור ושחרר
             </p>
-            <p className="mt-1.5">WEBP Only</p>
+            <p className="mt-1.5">רק WEBP</p>
             <p>
               (max, {maxHeight} X {maxWidth}px)
             </p>
@@ -216,23 +231,36 @@ const AdminPage = () => {
         </div>
 
         <div className="flex justify-center gap-4.5">
+          {/* <button
+            className={`${rubikText.className} flex justify-center rounded border hover:bg-gold border-stroke py-2 px-6 font-medium text-white hover:shadow-1 dark:border-strokedark dark:text-white`}
+            // onClick={() => setUploadedImages([])}
+          > */}
+          <Button
+            variant="contained"
+            color="error"
+            sx={{
+              fontFamily: `${rubikText.style.fontFamily}`,
+              fontWeight: `${rubikText.style.fontWeight}`,
+              paddingInline: "1.5rem",
+              paddingBlock: "0.5rem",
+            }}
+            className="py-2 px-6"
+            onClick={() => setUploadedImages([])}
+          >
+            ביטול
+          </Button>
+          {/* </button> */}
           <button
-            className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-white hover:shadow-1 dark:border-strokedark dark:text-white"
+            className={`${rubikText.className} flex justify-center rounded bg-gold py-2 px-6 font-medium text-gray hover:bg-opacity-95`}
             type="submit"
           >
-            Cancel
-          </button>
-          <button
-            className="flex justify-center rounded bg-gold py-2 px-6 font-medium text-gray hover:bg-opacity-95"
-            type="submit"
-          >
-            Upload
+            העלאה
           </button>
         </div>
         <div className="mt-12">
           {/* <h2 className="text-3xl pb-6">Recently Uploaded</h2> */}
           <h2 className="text-3xl pb-6">
-            Images to upload {`(${uploadedImages.length})`}
+            תמונות להעלאה {`(${uploadedImages.length})`}
           </h2>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
             {!isError &&
@@ -246,8 +274,8 @@ const AdminPage = () => {
               ))}
           </div>
           {uploadedImages.length === 0 && (
-            <h4 className="text-center mt-12">
-              Uploaded images will appear here
+            <h4 className="text-center mt-12 text-2xl opacity-50">
+              התמונות שהועלו יופיעו כאן
             </h4>
           )}
         </div>
