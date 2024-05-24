@@ -1,11 +1,12 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useMobile } from "@/contexts/MobileContext";
+import CTASection from "./HomePage/CTASection";
 
-type HomeBannerProps = {
-  isMobile: boolean;
-};
+export default function HomeBanner() {
+  const isMobile = useMobile();
 
-export default function HomeBanner({ isMobile }: HomeBannerProps) {
   const [bannerWidth, setBannerWidth] = useState("w-[1080px]");
 
   useEffect(() => {
@@ -21,7 +22,9 @@ export default function HomeBanner({ isMobile }: HomeBannerProps) {
     };
   }, []);
 
-  return isMobile ? null : (
+  return isMobile ? (
+    <CTASection />
+  ) : (
     <div className="flex">
       <div
         className={`flex flex-wrap p-5 lg:p-10 justify-center max-w-[1500px] mx-auto rounded-md shrink aspect-video box-content`}

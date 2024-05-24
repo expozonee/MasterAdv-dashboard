@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,10 +7,13 @@ import { Button } from "@mui/material";
 import { Rubik } from "next/font/google";
 import Logo from "@/assets/masterAdv-Logo.svg";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import { usePathname } from "next/navigation";
 
 const rubikButton = Rubik({ subsets: ["hebrew"], weight: ["500"] });
 
-const LogoBanner = ({ isMobile }) => {
+const LogoBanner = () => {
+  const path = usePathname();
+  // const isDashboard = path.startsWith("/dashboard");
   return (
     <header className="bg-transparent px-8 py-6 flex items-center justify-between md:content-center md:justify-between mx-auto lg:max-w-[1500px] border-b border-gold">
       <div className="flex items-center gap-2 text-white text-2xl">
@@ -30,7 +34,12 @@ const LogoBanner = ({ isMobile }) => {
             העבודות שלנו
           </Button>
         </Link>
-        <Link className="hidden md:block mx-3" href={"/about-us"}>
+        <Link
+          className={`hidden md:block mx-3 rounded-md ${
+            path.startsWith("/about-us") ? "bg-gold" : ""
+          }`}
+          href={"/about-us"}
+        >
           <Button
             className={`hover:bg-gold text-xl text-white px-6 py-3 ${rubikButton.className}`}
           >

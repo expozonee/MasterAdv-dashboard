@@ -15,11 +15,14 @@ type OptionsProps = {
 };
 
 export const OptionsType = {
-  MAIN_CATEGORY: "Main Category",
-  SECTION: "Section",
-  SUB_SECTION: "Sub Section",
-  SUB_CATEGORY: "Sub Category",
+  MAIN_CATEGORY: "קטגוריה ראשית",
+  SECTION: "סעיף",
+  SUB_SECTION: "תת סעיף",
+  SUB_CATEGORY: "תת קטגוריה",
+  IS_SPECIAL: "מיוחד",
 };
+
+const isSpecial = [{ name: "כן" }, { name: "לא" }];
 
 const Options = ({
   imageName,
@@ -78,27 +81,32 @@ const Options = ({
           ?.subSections.find((subSection) => subSection.name === subSectionName)
           ?.subCategories || [];
       break;
+    case "IS_SPECIAL":
+      options = isSpecial;
+      break;
     default:
       options = categories;
   }
 
   return (
     <>
-      <label className="mx-auto w-11/12 text-main">
-        {OptionsType[type as keyof typeof OptionsType]}
-      </label>
       <div className="custom-select w-11/12 mx-auto">
+        <label className="mx-auto w-11/12 text-main">
+          {OptionsType[type as keyof typeof OptionsType]}
+        </label>
         <select
-          className="w-11/12 mx-auto p-3 border-2 border-gray-300 rounded-md mt-2 bg-none"
+          className="w-11/12 mx-auto p-3 border-2 border-gray-300 rounded-md bg-none"
           name={`${imageName}_${OptionsType[type as keyof typeof OptionsType]}`}
           id={`${imageName}_${OptionsType[type as keyof typeof OptionsType]}`}
           value={value || ""}
           onChange={handleChange}
           required
         >
-          <option value="" disabled selected>{`-- Choose ${
-            OptionsType[type as keyof typeof OptionsType]
-          } --`}</option>
+          <option value="" disabled selected>
+            {type === "IS_SPECIAL"
+              ? `האם מיוחד?`
+              : `-- בחר ${OptionsType[type as keyof typeof OptionsType]} --`}
+          </option>
           {options.map((option: { name: string }) => (
             <option key={option.name} value={option.name}>
               {option.name}
