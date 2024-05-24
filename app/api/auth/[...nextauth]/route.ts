@@ -5,6 +5,7 @@ import { getUserFromDb } from "@/utils/db";
 import { User as NextAuthUser } from "next-auth";
 
 interface User extends NextAuthUser {
+  name: string;
   role: string;
   accessToken: string;
 }
@@ -70,6 +71,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         return {
           ...token,
+          name: (user as User).name,
           role: (user as User).role,
           accessToken: (user as User).accessToken,
         };
@@ -81,6 +83,7 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
+          name: token.name,
           role: token.role,
         },
       };
