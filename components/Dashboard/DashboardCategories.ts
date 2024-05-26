@@ -3,6 +3,7 @@ export default async function fetchCategories() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "no-cache",
     },
   });
   const { data: categories } = await categoriesData.json();
