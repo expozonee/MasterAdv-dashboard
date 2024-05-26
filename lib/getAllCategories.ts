@@ -12,11 +12,14 @@ export type Categories = {
 };
 
 export default async function getAllCategories() {
-  const response = await fetch("http://localhost:3000/api/categories", {
-    headers: {
-      "Cache-Control": "no-cache",
-    },
-  });
+  const response = await fetch(
+    "https://masteradv-frontend-lbpx1gssl-expozone.vercel.app/api/categories",
+    {
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    }
+  );
   const { data } = await response.json();
 
   return data;
