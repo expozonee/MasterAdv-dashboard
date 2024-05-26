@@ -1,6 +1,6 @@
 export async function getUserFromDb(email: string, password: string) {
   const response = await fetch(
-    `http://localhost:3000/api/getUser?email=${email}&password=${password}`,
+    `https://masteradv-backend.vercel.app/api/getUser?email=${email}&password=${password}`,
     {
       headers: {
         "Cache-Control": "no-cache",

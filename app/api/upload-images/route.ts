@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
   const formData = await req.formData();
 
-  const response = await fetch("http://localhost:4000/upload", {
+  const response = await fetch("https://masteradv-backend.vercel.app/upload", {
     method: "POST",
     body: formData,
     headers: {

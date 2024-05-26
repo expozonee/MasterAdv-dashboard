@@ -3,7 +3,7 @@ export async function GET(req: Request, res: Response) {
   const password = new URL(req.url).searchParams.get("password");
 
   const response = await fetch(
-    `http://localhost:4000/getUser?email=${email}&password=${password}`,
+    `https://masteradv-backend.vercel.app/getUser?email=${email}&password=${password}`,
     {
       headers: {
         "Cache-Control": "no-cache",

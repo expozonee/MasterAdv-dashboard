@@ -1,11 +1,14 @@
 export async function getCategories() {
-  const response = await fetch("http://localhost:4000/categories", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache",
-    },
-  });
+  const response = await fetch(
+    "https://masteradv-backend.vercel.app/categories",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+      },
+    }
+  );
   const data = await response.json();
   return data;
 }
@@ -14,7 +17,7 @@ export async function getTitles(slugs) {
   const stringSlugs = JSON.stringify(slugs);
   try {
     const response = await fetch(
-      `http://localhost:4000/getTitles?slugs=${stringSlugs}`,
+      `https://masteradv-backend.vercel.app/getTitles?slugs=${stringSlugs}`,
       {
         method: "GET",
         headers: {
