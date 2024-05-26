@@ -23,7 +23,7 @@ export default function StandardBreadcrumbs() {
   const breadcrumbItems = segments.map((segment, index) => {
     url += `/${segment}`;
     return (
-      <Link href={`https://masteradv-frontend.vercel.app${url}`} key={index}>
+      <Link href={`https://masteradv.vip${url}`} key={index}>
         {segment == "" ? "الصفحة الرئيسية" : segment}
       </Link>
     );

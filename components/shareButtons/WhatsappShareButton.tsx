@@ -8,7 +8,7 @@ type WhatsappShareButtonProps = {
   isMobile?: boolean;
 };
 
-const BASE_URL = "https://masteradv-frontend.vercel.app/";
+const BASE_URL = "https://masteradv.vip/";
 
 export default function WhatsappShareButton({
   isMobile,
