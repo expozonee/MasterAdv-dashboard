@@ -4,11 +4,12 @@ import { SessionProvider } from "next-auth/react";
 import Provider from "@/components/Providers/Providers";
 import design from "./page.module.css";
 import { MobileProvider } from "@/contexts/MobileContext";
+import { Metadata } from "next";
 
 const noto = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
 const marhey = Marhey({ subsets: ["arabic"], weight: ["600"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Master Adv",
   description: "Master Adv portfolio website",
 };
