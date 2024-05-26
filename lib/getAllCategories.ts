@@ -13,7 +13,7 @@ export type Categories = {
 
 export default async function getAllCategories() {
   const response = await fetch(
-    "https://masteradv-frontend-lbpx1gssl-expozone.vercel.app/api/categories",
+    "https://masteradv-frontend.vercel.app/api/categories",
     {
       headers: {
         "Cache-Control": "no-cache",
