@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getPortfolioSections } from "@/app/api/route";
+import { getPortfolioSections } from "@/utils/data";
 import { usePathname, useParams } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import { Rubik } from "next/font/google";

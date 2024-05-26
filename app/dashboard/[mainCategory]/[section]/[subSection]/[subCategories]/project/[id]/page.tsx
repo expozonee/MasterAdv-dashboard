@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Arimo } from "next/font/google";
-import { getPortfolioSections } from "@/app/api/route";
+import { getPortfolioSections } from "@/utils/data";
 import { Divider } from "@mui/material";
 import { usePathname } from "next/navigation";
 import WhatsappShareButton from "@/components/shareButtons/WhatsappShareButton";
@@ -50,7 +50,7 @@ export default function ProjectPage({
           <WhatsappShareButton pathname={pathname} />
         </div>
       </div>
-      <p className="flex justify-center items-center my-25">"Design is Fun"</p>
+      <p className="flex justify-center items-center my-25">Design is Fun</p>
     </div>
   ) : (
     <div>Not found</div>

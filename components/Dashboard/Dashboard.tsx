@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { getPortfolioSections } from "@/app/api/route";
-import { CardBody, CardContainer, CardItem } from "@/app/ui/3d-card";
+import { getPortfolioSections } from "@/utils/data";
+// import { CardBody, CardContainer, CardItem } from "@/app/ui/3d-card";
 import type { Categories } from "@/types/categories";
 import DashboardCard from "./DashboardCard";
 import { usePathname } from "next/navigation";

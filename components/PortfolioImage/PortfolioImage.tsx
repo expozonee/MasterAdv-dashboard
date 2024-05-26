@@ -71,7 +71,7 @@ const NewPortfolioImage = <T extends React.ElementType = "div">({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <Component className={className} {...rest}>

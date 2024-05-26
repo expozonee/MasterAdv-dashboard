@@ -1,10 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Login from "@/components/Login/Login";
 
 export default function page() {
   return (
     <>
-      <Login />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Login />
+      </Suspense>
     </>
   );
 }

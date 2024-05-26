@@ -6,7 +6,7 @@ import { Rubik } from "next/font/google";
 import { usePathname } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import PageData from "@/app/dashboard/PageData";
-import { getPortfolioSections } from "@/app/api/route";
+import { getPortfolioSections } from "@/utils/data";
 import PortfolioImage from "@/components/PortfolioImage/PortfolioImage";
 import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
 

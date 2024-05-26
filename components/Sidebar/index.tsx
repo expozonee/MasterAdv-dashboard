@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import Image from "next/image";
 import { Noto_Kufi_Arabic } from "next/font/google";
-import { getCategories } from "@/app/api/route";
+import { getCategories } from "@/utils/data";
 import Menu from "./Menu";
 import NewMenu from "./NewMenu";
 import Logo from "@/assets/masterAdv-Logo.svg";

@@ -9,7 +9,7 @@ interface User extends NextAuthUser {
   accessToken: string;
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",

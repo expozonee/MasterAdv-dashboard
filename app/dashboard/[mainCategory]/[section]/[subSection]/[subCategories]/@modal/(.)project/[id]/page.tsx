@@ -79,7 +79,7 @@ const ProjectModal = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <Modal

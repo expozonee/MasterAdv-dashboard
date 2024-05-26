@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTitles } from "@/app/api/route";
+import { getTitles } from "@/utils/data";
 
 interface Data {
   names: [{ name: string }];
@@ -24,7 +24,7 @@ const PageData = (currentPathname: string): [string, Data] => {
       setBreadcrumbsData(data);
     }
     getTitle();
-  }, []);
+  }, [slugs]);
 
   return [titleData, breadcrumbsData];
 };

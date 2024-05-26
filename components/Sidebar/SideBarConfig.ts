@@ -1,4 +1,4 @@
-import { getCategories } from "@/app/api/route";
+import { getCategories } from "@/utils/data";
 import Type from "./Types";
 
 export interface Category {

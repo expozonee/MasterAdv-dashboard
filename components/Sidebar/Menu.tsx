@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import Image from "next/image";
 import { Noto_Kufi_Arabic, Rubik } from "next/font/google";
-import { getCategories } from "@/app/api/route";
+import { getCategories } from "@/utils/data";
 import Type from "./Types";
 
 const notoHeader = Noto_Kufi_Arabic({ weight: "700", subsets: ["arabic"] });

@@ -4,7 +4,7 @@ import { faGlobe, faPrint } from "@fortawesome/free-solid-svg-icons";
 import Slider from "./Slider";
 import ContactUs from "./ContactUs";
 import graphicDesignIcon from "@/public/images/graphicDesignIcon.svg";
-import { getCategories } from "@/app/api/route";
+import { getCategories } from "@/utils/data";
 
 const Sections = ({ isMobile }) => {
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from "react";
 import Image from "next/image";
-import { getPortfolioSections } from "@/app/api/route";
+import { getPortfolioSections } from "@/utils/data";
 
 interface CardDataStatsProps {
   title: string;

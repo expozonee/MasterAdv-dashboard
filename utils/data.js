@@ -3,6 +3,7 @@ export async function getCategories() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "no-cache",
     },
   });
   const data = await response.json();

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Rubik } from "next/font/google";
-import { getCategories } from "@/app/api/route";
+import { getCategories } from "@/utils/data";
 import Type from "./Types";
 import MenuSection from "./MenuSection";
 import SubCategoryItem from "./SubCategoryItem";
