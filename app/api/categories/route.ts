@@ -6,9 +6,6 @@ export async function GET(request: Request) {
       headers: {
         "Content-Type": "application/json",
         "Cache-Control": "no-cache",
-        "Access-Control-Allow-Origin": "https://masteradv.vip/",
-        "Access-Control-Allow-Methods": "GET",
-        "Access-Control-Allow-Headers": "Content-Type",
       },
     }
   );
