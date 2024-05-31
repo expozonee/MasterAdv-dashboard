@@ -1,21 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+import React, { useEffect, useRef, useState, Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import SidebarLinkGroup from "./SidebarLinkGroup";
 import Image from "next/image";
-import { Noto_Kufi_Arabic } from "next/font/google";
 import { getCategories } from "@/utils/data";
 import Menu from "./Menu";
 import NewMenu from "./NewMenu";
 import Logo from "@/assets/masterAdv-Logo.svg";
-const notoHeader = Noto_Kufi_Arabic({ weight: "700", subsets: ["arabic"] });
-const notoSubHeader = Noto_Kufi_Arabic({ weight: "500", subsets: ["arabic"] });
-const notoBody = Noto_Kufi_Arabic({ weight: "400", subsets: ["arabic"] });
+import { useSidebar } from "@/contexts/SideBarContext";
 
-interface SidebarProps {
-  sidebarOpen: boolean;
-  setSidebarOpen: (arg: boolean) => void;
-}
+// interface SidebarProps {
+//   sidebarOpen: boolean;
+//   setSidebarOpen: (arg: boolean) => void;
+// }
 
 interface Category {
   mainCategoryId: number;
@@ -40,7 +37,12 @@ interface SubCategory {
   name: string;
 }
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+type SideBarProps = {
+  categoriesData: any;
+};
+
+const Sidebar = ({ categoriesData }: SideBarProps) => {
+  const { sidebarOpen, toggleSidebar } = useSidebar();
   const pathname = usePathname();
 
   const trigger = useRef<any>(null);
@@ -57,20 +59,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     console.log(open);
   };
 
-  const [categories, setCategories] = useState<Category[]>([]);
+  // const [categories, setCategories] = useState<Category[]>([]);
 
   let storedSidebarExpanded = "true";
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
 
-  useEffect(() => {
-    async function fetchCategories() {
-      const categories = await getCategories();
-      setCategories(categories);
-    }
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchCategories() {
+  //     const categories = await getCategories();
+  //     setCategories(categories);
+  //   }
+  //   fetchCategories();
+  // }, []);
 
   // close on click outside
   useEffect(() => {
@@ -82,7 +84,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         trigger.current.contains(target)
       )
         return;
-      setSidebarOpen(false);
+      toggleSidebar(false);
     };
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
@@ -92,7 +94,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   useEffect(() => {
     const keyHandler = ({ key }: KeyboardEvent) => {
       if (!sidebarOpen || key !== "Escape") return;
-      setSidebarOpen(false);
+      toggleSidebar(false);
     };
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
@@ -128,7 +130,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
         <button
           ref={trigger}
-          onClick={() => setSidebarOpen(!sidebarOpen)}
+          onClick={() => toggleSidebar(!sidebarOpen)}
           aria-controls="sidebar"
           aria-expanded={sidebarOpen}
           className="block lg:hidden mr-4"
@@ -152,7 +154,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* "latest commented item" was here */}
 
       {/* <Menu /> */}
-      <NewMenu />
+      <Suspense fallback={<div>Loading...</div>}>
+        <NewMenu categoriesData={categoriesData} />
+      </Suspense>
     </aside>
   );
 };

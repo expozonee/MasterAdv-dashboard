@@ -1,17 +1,21 @@
+"use client";
+
 import React, {
   useState,
   useEffect,
   CSSProperties,
   useLayoutEffect,
 } from "react";
+import { useSidebar } from "@/contexts/SideBarContext";
 
 interface BackdropProps {
   show: boolean;
 }
 
-const SidebarBackdrop = ({ show }: BackdropProps) => {
-  const [render, setRender] = useState(show);
-  const [visible, setVisible] = useState(show);
+const SidebarBackdrop = () => {
+  const { sidebarOpen } = useSidebar();
+  const [render, setRender] = useState(sidebarOpen);
+  const [visible, setVisible] = useState(sidebarOpen);
 
   // useEffect(() => {
   //   if (show) {
@@ -28,19 +32,19 @@ const SidebarBackdrop = ({ show }: BackdropProps) => {
   // }, [show]);
 
   useEffect(() => {
-    if (show) {
+    if (sidebarOpen) {
       setRender(true);
       setVisible(false); // initially set to false
     } else {
       setVisible(false);
     }
-  }, [show]);
+  }, [sidebarOpen]);
 
   useEffect(() => {
-    show
+    sidebarOpen
       ? setTimeout(() => setVisible(true), 0) // set to true after the transition has started
       : setTimeout(() => setRender(false), 300); // unmount after the transition has completed
-  }, [show]);
+  }, [sidebarOpen]);
 
   const handleTransitionEnd = () => {
     if (!visible) {
