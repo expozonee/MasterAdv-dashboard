@@ -28,6 +28,11 @@ const nextConfig = {
         hostname: "img.freepik.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "masteradv-projects-images.fra1.cdn.digitaloceanspaces.com",
+        port: "",
+      },
     ],
   },
 };
