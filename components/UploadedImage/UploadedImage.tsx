@@ -36,7 +36,7 @@ const UploadedImage = ({
       <div className="grid gap-3">
         <Options
           imageName={name}
-          key={`${name}_${OptionsType.MAIN_CATEGORY}`}
+          key={`${name}_${OptionsType.IS_SPECIAL}`}
           type="IS_SPECIAL"
           onChange={setIsSpecial}
           value={isSpecial}
