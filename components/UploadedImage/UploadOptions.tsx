@@ -56,7 +56,7 @@ const Options = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
-    console.log(OptionsType[type as keyof typeof OptionsType]);
+    // console.log(OptionsType[type as keyof typeof OptionsType]);
   };
 
   let options: any = [];
@@ -102,7 +102,7 @@ const Options = ({
           onChange={handleChange}
           required
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             {type === "IS_SPECIAL"
               ? `האם מיוחד?`
               : `-- בחר ${OptionsType[type as keyof typeof OptionsType]} --`}
