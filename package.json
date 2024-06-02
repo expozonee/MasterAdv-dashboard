@@ -58,12 +58,14 @@
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.160.0",
     "typescript": "5.1.6",
+    "uuid": "^9.0.1",
     "validator": "^13.11.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
     "daisyui": "^4.9.0"
   }
