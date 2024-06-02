@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import { OptionsType } from "@/components/UploadedImage/UploadOptions";
 import { Rubik } from "next/font/google";
 import { Button } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
 
 const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["900"] });
 const rubikText = Rubik({ subsets: ["hebrew"], weight: ["500"] });
@@ -152,7 +151,6 @@ const AdminPage = () => {
     const formData = new FormData();
     imageDataToSubmit.forEach((item, index) => {
       formData.append(`${item.imageName}`, item.imageFile, item.imageFile.name);
-      formData.append(`images[${index}][id]`, uuidv4());
       formData.append(`images[${index}][imageName]`, item.imageName);
       formData.append(`images[${index}][mainCategory]`, item.mainCategory);
       formData.append(`images[${index}][section]`, item.section);
