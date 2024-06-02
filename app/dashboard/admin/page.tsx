@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { OptionsType } from "@/components/UploadedImage/UploadOptions";
 import { Rubik } from "next/font/google";
 import { Button } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 
 const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["900"] });
 const rubikText = Rubik({ subsets: ["hebrew"], weight: ["500"] });
@@ -146,11 +147,12 @@ const AdminPage = () => {
       };
       imageDataToSubmit.push(data);
     }
-    setSubmittedImages(imageDataToSubmit);
+    // setSubmittedImages(imageDataToSubmit);
 
     const formData = new FormData();
-    submittedImages.forEach((item, index) => {
+    imageDataToSubmit.forEach((item, index) => {
       formData.append(`${item.imageName}`, item.imageFile, item.imageFile.name);
+      formData.append(`images[${index}][id]`, uuidv4());
       formData.append(`images[${index}][imageName]`, item.imageName);
       formData.append(`images[${index}][mainCategory]`, item.mainCategory);
       formData.append(`images[${index}][section]`, item.section);
@@ -158,12 +160,13 @@ const AdminPage = () => {
       formData.append(`images[${index}][subCategory]`, item.subCategory);
       formData.append(`images[${index}][isSpecial]`, item.isSpecial);
     });
-    console.log("formData", formData);
+    // console.log("formData", formData);
 
     const uploadImages = await fetch("/api/upload-images", {
       method: "POST",
       body: formData,
     });
+    // console.log("uploadImages", uploadImages.json());
     // console.log("submittedImages", submittedImages);
     setUploadedImages([]);
   };
