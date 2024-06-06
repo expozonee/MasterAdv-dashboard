@@ -51,11 +51,13 @@ type MenuProps = {
 };
 
 const Menu = ({ categoriesData }: MenuProps) => {
+  console.log("this is the categoriesData: ", categoriesData);
   const pathname = usePathname();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [open, setOpen] = useState<OpenStateConfig>({});
   const [activeItem, setActiveItem] = useState<string | undefined>(undefined);
+  const [categories, setCategories] = useState<Category[]>(categoriesData);
 
   useEffect(() => {
     const openStateInitializeData = async () => {
@@ -65,6 +67,14 @@ const Menu = ({ categoriesData }: MenuProps) => {
 
     openStateInitializeData();
   }, []);
+
+  // useEffect(() => {
+  //   async function fetchCategories() {
+  //     const categories = await getCategories();
+  //     setCategories(categories);
+  //   }
+  //   fetchCategories();
+  // }, []);
 
   useEffect(() => {
     const savedActiveItem = sessionStorage.getItem("activeItem");
@@ -101,13 +111,11 @@ const Menu = ({ categoriesData }: MenuProps) => {
     console.log(open);
   };
 
-  const [categories, setCategories] = useState<Category[]>([]);
-
   useEffect(() => {
     setCategories(categoriesData);
     const interval = setInterval(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 300);
     return () => {
       clearInterval(interval);
     };
@@ -124,7 +132,7 @@ const Menu = ({ categoriesData }: MenuProps) => {
       {/* <!-- Sidebar Menu --> */}
       <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
         {/* <!-- Menu Group --> */}
-        <ul>
+        <ul className="relative">
           <Link href={`/dashboard`}>
             <h2
               className={`mb-4 ml-4 text-3xl font-semibold text-bodydark2 hover:text-white transition ease-in ${rubikHeader.className}`}
@@ -133,7 +141,12 @@ const Menu = ({ categoriesData }: MenuProps) => {
             </h2>
           </Link>
 
-          <ul className="menuDesign mb-6 flex flex-col gap-1.5">
+          {isLoading && <h3 className={`mx-auto`}>Loading...</h3>}
+          <ul
+            className={`menuDesign mb-6 flex flex-col gap-1.5 ${
+              isLoading && "hidden"
+            }`}
+          >
             {/* <!-- Menu Item Dashboard --> */}
             {categories.map((category) => {
               return (
