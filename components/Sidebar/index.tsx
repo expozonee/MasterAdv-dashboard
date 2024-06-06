@@ -154,9 +154,9 @@ const Sidebar = ({ categoriesData }: SideBarProps) => {
       {/* "latest commented item" was here */}
 
       {/* <Menu /> */}
-      <Suspense fallback={<div>Loading...</div>}>
-        <NewMenu categoriesData={categoriesData} />
-      </Suspense>
+      {/* <Suspense fallback={<div>Loading...</div>}> */}
+      <NewMenu categoriesData={categoriesData} />
+      {/* </Suspense> */}
     </aside>
   );
 };
