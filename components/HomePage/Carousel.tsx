@@ -1,6 +1,6 @@
+"use client";
 import Image from "next/image";
-import { useRef, useState } from "react";
-import styles from "./Carousel.module.css";
+import { useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,12 +8,41 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useQuery } from "react-query";
+import getProjects from "@/utils/getProjects";
 
 type CarouselProps = {
   title: string;
 };
 
+type Project = {
+  itemId: string;
+  mainCategory: {
+    name: string;
+  };
+  section: {
+    name: string;
+  };
+  subSection: {
+    name: string;
+  };
+  subCategory: {
+    name: string;
+  };
+  imageUrl: string;
+  isSpecial: string;
+};
+
 export default function CarouselComponent({ title }: CarouselProps) {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const { isLoading, isError } = useQuery({
+    queryKey: ["projects"],
+    queryFn: getProjects,
+    onSuccess: (data) => {
+      setProjects(data);
+    },
+  });
+
   const images = [
     {
       id: 1,
@@ -63,6 +92,8 @@ export default function CarouselComponent({ title }: CarouselProps) {
         <h2 className="text-white text-5xl mx-auto max-w-[1500px] py-10 pt-0">
           {title}
         </h2>
+        {isLoading && <p>Loading...</p>}
+        {isError && <p>Error</p>}
         <Carousel
           opts={{
             direction: "rtl",
@@ -72,13 +103,16 @@ export default function CarouselComponent({ title }: CarouselProps) {
           className="max-w-[1500px] mx-20 xl:mx-auto"
         >
           <CarouselContent>
-            {images.map((image, index) => (
-              <CarouselItem key={index} className=" md:basis-1/2 lg:basis-1/4">
+            {projects.map((project, index) => (
+              <CarouselItem
+                key={project.itemId}
+                className=" md:basis-1/2 lg:basis-1/4"
+              >
                 <div className="p-1">
                   <Image
                     className="rounded-md w-full"
-                    src={image.url}
-                    alt="carousel image"
+                    src={project.imageUrl}
+                    alt="Project image"
                     width={400}
                     height={400}
                     priority
