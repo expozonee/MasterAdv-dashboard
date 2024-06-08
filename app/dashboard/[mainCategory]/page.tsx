@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { usePathname, useParams } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
-import getDashboardCategories from "@/components/Dashboard/DashboardCategories";
 import { Rubik } from "next/font/google";
-import type { Categories } from "@/types/categories";
+import DashboardQuery from "@/components/Query/DashboardQuery";
+import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
 
 interface PortfolioData {
   id: number;
@@ -17,15 +17,7 @@ interface PortfolioData {
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 const Section = () => {
-  const [categories, setCategories] = useState<Categories[]>([]);
-
-  useEffect(() => {
-    async function fetchCategories() {
-      const categoriesData: Categories[] = await getDashboardCategories();
-      setCategories(categoriesData);
-    }
-    fetchCategories();
-  }, []);
+  const { categories, isLoading, isError } = DashboardQuery();
 
   const pathname = usePathname();
   const { mainCategory } = useParams();
@@ -50,6 +42,8 @@ const Section = () => {
       ></div> */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+        {isLoading && <DashboardSkeleton />}
+        {isError && <div>Error...</div>}
         {categories?.map((mainCategory) => {
           return mainCategory.sections.map((section) => {
             return (
