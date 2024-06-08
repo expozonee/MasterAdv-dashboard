@@ -5,6 +5,7 @@ import Provider from "@/components/Providers/Providers";
 import design from "./page.module.css";
 import { MobileProvider } from "@/contexts/MobileContext";
 import { Metadata } from "next";
+import ProjectsQueryProvider from "@/contexts/ProjectsQuery";
 
 const noto = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
 const marhey = Marhey({ subsets: ["arabic"], weight: ["600"] });
@@ -27,14 +28,16 @@ export default function RootLayout({
         `bg-no-repeat md:bg-contain ${noto.className} h-full` // Added the 'h-full' to the html tag className on 9/4/2024
       }
     >
-      <Provider>
-        <body
-          className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
-          suppressHydrationWarning={true}
-        >
-          <MobileProvider>{children}</MobileProvider>
-        </body>
-      </Provider>
+      <ProjectsQueryProvider>
+        <Provider>
+          <body
+            className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
+            suppressHydrationWarning={true}
+          >
+            <MobileProvider>{children}</MobileProvider>
+          </body>
+        </Provider>
+      </ProjectsQueryProvider>
     </html>
   );
 }
