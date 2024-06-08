@@ -3,7 +3,7 @@ import axios from "axios";
 export async function getCategories() {
   try {
     const response = await axios
-      .get("https://https://masteradv-backend.vercel.app/categories", {
+      .get("https://masteradv-backend.vercel.app/categories", {
         headers: {
           "Content-Type": "application/json",
           "Cache-Control": "no-cache",
@@ -43,7 +43,7 @@ export async function getTitles(slugs) {
   const stringSlugs = JSON.stringify(slugs);
   try {
     const response = await fetch(
-      `https://https://masteradv-backend.vercel.app/getTitles?slugs=${stringSlugs}`,
+      `https://masteradv-backend.vercel.app/getTitles?slugs=${stringSlugs}`,
       {
         method: "GET",
         headers: {
