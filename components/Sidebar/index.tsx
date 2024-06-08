@@ -155,7 +155,7 @@ const Sidebar = ({ categoriesData }: SideBarProps) => {
 
       {/* <Menu /> */}
       {/* <Suspense fallback={<div>Loading...</div>}> */}
-      <NewMenu categoriesData={categoriesData} />
+      <NewMenu />
       {/* </Suspense> */}
     </aside>
   );
