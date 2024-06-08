@@ -1,16 +1,42 @@
+import axios from "axios";
+
 export async function getCategories() {
-  const response = await fetch(
-    "https://masteradv-backend.vercel.app/categories",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache",
-      },
-    }
-  );
-  const data = await response.json();
-  return data;
+  try {
+    const response = await axios
+      .get("https://masteradv-backend.vercel.app/categories", {
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+        },
+      })
+      .then((res) => {
+        return res.data;
+      });
+    const data = response;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+
+  // const response = await axios
+  //   .get("http://localhost:4000/categories", {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Cache-Control": "no-cache",
+  //     },
+  //   })
+  //   .then((res) => {
+  //     return res.data;
+  //   });
+
+  // const response = await fetch("http://localhost:4000/categories", {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "Cache-Control": "no-cache",
+  //   },
+  // });
+  // console.log("this is from axios", data);
 }
 
 export async function getTitles(slugs) {

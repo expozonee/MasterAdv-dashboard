@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export type Categories = {
   name: string;
   sections: {
@@ -12,11 +14,19 @@ export type Categories = {
 };
 
 export default async function getAllCategories() {
-  const response = await fetch("https://masteradv.vip/api/categories", {
-    headers: {
-      "Cache-Control": "no-cache",
-    },
-  });
+  const response = await axios
+    .get("https://masteradv.vip/api/categories", {
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    })
+    .then((res) => res.data);
+
+  // const response = await fetch("https://masteradv.vip/api/categories", {
+  //   headers: {
+  //     "Cache-Control": "no-cache",
+  //   },
+  // });
   const { data } = await response.json();
 
   return data;
