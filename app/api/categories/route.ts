@@ -1,15 +1,14 @@
-export async function GET(request: Request) {
-  const response = await fetch(
-    "https://masteradv-backend.vercel.app/categories",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "no-cache",
-      },
-    }
-  );
-  const data = await response.json();
+import axios from "axios";
 
-  return new Response(JSON.stringify({ data }));
+export async function GET(request: Request) {
+  const response = await axios
+    .get("https://https://masteradv-backend.vercel.app/categories", {
+      headers: {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res.data);
+
+  return new Response(JSON.stringify(response));
 }

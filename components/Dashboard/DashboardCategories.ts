@@ -1,17 +1,18 @@
+import axios from "axios";
+
 export default async function fetchCategories() {
   try {
-    const categoriesData = await fetch(
+    const response = await axios.get(
       "https://www.masteradv.vip/api/categories",
       {
-        method: "GET",
         headers: {
-          "Content-Type": "application/json",
           "Cache-Control": "no-cache",
+          "Content-Type": "application/json",
         },
       }
     );
-    const { data: categories } = await categoriesData.json();
-    return categories;
+
+    return response.data;
   } catch (error) {
     console.error(error);
   }
