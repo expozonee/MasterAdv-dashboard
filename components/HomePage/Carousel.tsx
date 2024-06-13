@@ -10,9 +10,11 @@ import {
 } from "@/components/ui/carousel";
 import { useQuery } from "react-query";
 import getProjects from "@/utils/getProjects";
+import ProjectSkeleton from "../Skeletons/ProjectSkeleton";
 
 type CarouselProps = {
   title: string;
+  type: "normal" | "special";
 };
 
 type Project = {
@@ -92,7 +94,6 @@ export default function CarouselComponent({ title }: CarouselProps) {
         <h2 className="text-white text-5xl mx-auto max-w-[1500px] py-10 pt-0">
           {title}
         </h2>
-        {isLoading && <p>Loading...</p>}
         {isError && <p>Error</p>}
         <Carousel
           opts={{
@@ -103,6 +104,8 @@ export default function CarouselComponent({ title }: CarouselProps) {
           className="max-w-[1500px] mx-20 xl:mx-auto"
         >
           <CarouselContent>
+            {isLoading && <ProjectSkeleton />}
+
             {projects.map((project, index) => (
               <CarouselItem
                 key={project.itemId}

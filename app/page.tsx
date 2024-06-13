@@ -38,9 +38,9 @@ export default function Home() {
     >
       <LogoBanner />
       <HomeBanner />
-      <ProjectCarousel title="מה חדש" />
+      <ProjectCarousel title="מה חדש" type="normal" />
       <DesignerInfo />
-      <ProjectCarousel title="עבודות נבחרות" />
+      <ProjectCarousel title="עבודות נבחרות" type="special" />
       <Footer />
     </main>
   );
