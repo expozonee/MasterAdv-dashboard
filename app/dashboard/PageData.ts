@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getTitles } from "@/utils/data";
 
 interface Data {
@@ -29,7 +29,10 @@ const PageData = ({
   // const pathname = currentPathname;
   // const sections = pathname.split("/");
   // const slugs = sections.slice(2);
-  const slugs = [mainCategory, section, subSection, subCategories];
+  const slugs = useMemo(
+    () => [mainCategory, section, subSection, subCategories],
+    [mainCategory, section, subSection, subCategories]
+  );
   console.log(slugs);
 
   useEffect(() => {

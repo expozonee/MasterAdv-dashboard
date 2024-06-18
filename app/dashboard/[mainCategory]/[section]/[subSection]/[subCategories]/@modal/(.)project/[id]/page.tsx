@@ -28,13 +28,13 @@ type ProjectModalProps = {
   id: string;
 };
 
-const ProjectModal = ({
+const ProjectModal: React.FC<ProjectModalProps> = ({
   mainCategory,
   section,
   subSection,
   subCategory,
   id,
-}: ProjectModalProps) => {
+}) => {
   // const Component = as || "div";
   const router = useRouter();
   const pathname = usePathname();

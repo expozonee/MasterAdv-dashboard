@@ -41,7 +41,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     if (projectData) {
       setProject(projectData.find((project) => project.itemId == params.id));
     }
-  }, [params.id]);
+  }, [params.id, data]);
 
   return (
     <>
