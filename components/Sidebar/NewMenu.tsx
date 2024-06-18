@@ -7,9 +7,9 @@ import Type from "./Types";
 import MenuSection from "./MenuSection";
 import SubCategoryItem from "./SubCategoryItem";
 import { initializeOpenState } from "./SideBarConfig";
-import { useQuery, useQueryClient } from "react-query";
 import SideBarSkeleton from "../Skeletons/SideBarSkeleton";
 import { useCategories } from "@/components/Query/CategoriesQuery";
+import type { Categories } from "@/types/categories";
 
 const rubikHeader = Rubik({ weight: "800", subsets: ["hebrew"] });
 const rubikSubHeader = Rubik({ weight: "500", subsets: ["hebrew"] });
@@ -69,7 +69,7 @@ const Menu = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState<OpenStateConfig>({});
   const [activeItem, setActiveItem] = useState<string | undefined>(undefined);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Categories[]>([]);
   // console.log("this is the categoriesData: ", categoriesData);
 
   useEffect(() => {
@@ -166,18 +166,12 @@ const Menu = () => {
               {/* <!-- Menu Item Dashboard --> */}
               {categories.map((category) => {
                 return (
-                  <li
-                    className={`${rubikBody.className}`}
-                    key={category.mainCategoryId}
-                  >
+                  <li className={`${rubikBody.className}`} key={category.id}>
                     <div
                       className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 cursor-pointer font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 `}
                       onClick={(e) => {
                         e.preventDefault();
-                        ToggleOpen(
-                          Type.mainCategory.name,
-                          category.mainCategoryId
-                        );
+                        ToggleOpen(Type.mainCategory.name, category.id);
                       }}
                     >
                       <svg
@@ -211,9 +205,7 @@ const Menu = () => {
                       <svg
                         className={`absolute left-4 top-1/2 -translate-y-1/2 fill-current ${
                           open[Type.mainCategory.name] &&
-                          open[Type.mainCategory.name][
-                            category.mainCategoryId
-                          ] &&
+                          open[Type.mainCategory.name][category.id] &&
                           "rotate-180"
                         }`}
                         width="20"
@@ -235,7 +227,7 @@ const Menu = () => {
                       className={`translate transform overflow-hidden ${
                         !(
                           open[Type.mainCategory.name] &&
-                          open[Type.mainCategory.name][category.mainCategoryId]
+                          open[Type.mainCategory.name][category.id]
                         ) && "hidden"
                       }`}
                     >
@@ -245,9 +237,9 @@ const Menu = () => {
                       >
                         {category.sections.map((section) => {
                           return (
-                            <li key={section.sectionId}>
+                            <li key={section.id}>
                               <MenuSection
-                                id={section.sectionId}
+                                id={section.id}
                                 title={section.name}
                                 type={Type.section.name}
                                 ToggleOpen={ToggleOpen}
@@ -257,7 +249,7 @@ const Menu = () => {
                                 className={`py-3 translate transform overflow-hidden ${
                                   !(
                                     open[Type.section.name] &&
-                                    open[Type.section.name][section.sectionId]
+                                    open[Type.section.name][section.id]
                                   ) && "hidden"
                                 }`}
                               >
@@ -270,7 +262,7 @@ const Menu = () => {
                                       return (
                                         <li key={index}>
                                           <MenuSection
-                                            id={subSection.subSectionId}
+                                            id={subSection.id}
                                             title={subSection.name}
                                             type={Type.subSection.name}
                                             ToggleOpen={ToggleOpen}
@@ -281,7 +273,7 @@ const Menu = () => {
                                               !(
                                                 open[Type.subSection.name] &&
                                                 open[Type.subSection.name][
-                                                  subSection.subSectionId
+                                                  subSection.id
                                                 ]
                                               ) && "hidden"
                                             }`}
