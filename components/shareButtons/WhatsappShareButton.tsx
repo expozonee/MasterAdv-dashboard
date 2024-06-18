@@ -18,7 +18,7 @@ const BASE_URL = "https://masteradv.vip/";
 
 export default function WhatsappShareButton({
   isMobile,
-  categories: { id, mainCategory, section, subSection, subCategories },
+  categories: { mainCategory, section, subSection, subCategories, id },
 }: WhatsappShareButtonProps) {
   return isMobile ? (
     <>
