@@ -25,16 +25,16 @@ export default function RootLayout({
       }
     >
       <QueryProvider>
-        <ProjectsQueryProvider>
-          <ProviderSession>
-            <body
-              className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
-              suppressHydrationWarning={true}
-            >
-              <MobileProvider>{children}</MobileProvider>
-            </body>
-          </ProviderSession>
-        </ProjectsQueryProvider>
+        {/* <ProjectsQueryProvider> */}
+        <ProviderSession>
+          <body
+            className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
+            suppressHydrationWarning={true}
+          >
+            <MobileProvider>{children}</MobileProvider>
+          </body>
+        </ProviderSession>
+        {/* </ProjectsQueryProvider> */}
       </QueryProvider>
     </html>
   );
