@@ -8,6 +8,7 @@ import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
 import DashboardQuery from "@/components/Query/DashboardQuery";
 import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
+import { useCategories } from "@/components/Query/CategoriesQuery";
 
 interface PortfolioData {
   id: number;
@@ -20,7 +21,7 @@ const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 const Section = () => {
   const { section } = useParams();
 
-  const { isLoading, isError, categories } = DashboardQuery();
+  const { isLoading, isError, categoriesData: categories } = useCategories();
 
   const data: PortfolioData[] = getPortfolioSections();
   const pathname = usePathname();

@@ -7,6 +7,7 @@ import PageData from "@/app/dashboard/PageData";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
 import DashboardQuery from "@/components/Query/DashboardQuery";
 import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
+import { useCategories } from "@/components/Query/CategoriesQuery";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -17,7 +18,7 @@ interface Data {
 
 const SubSection = () => {
   const { subSection } = useParams();
-  const { categories, isLoading, isError } = DashboardQuery();
+  const { categoriesData: categories, isLoading, isError } = useCategories();
 
   const pathname = usePathname();
   const [titleData, breadcrumbsData] = PageData(pathname);

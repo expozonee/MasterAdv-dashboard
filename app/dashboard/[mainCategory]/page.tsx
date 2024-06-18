@@ -7,6 +7,7 @@ import DashboardCard from "@/components/Dashboard/DashboardCard";
 import { Rubik } from "next/font/google";
 import DashboardQuery from "@/components/Query/DashboardQuery";
 import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
+import { useCategories } from "@/components/Query/CategoriesQuery";
 
 interface PortfolioData {
   id: number;
@@ -17,7 +18,7 @@ interface PortfolioData {
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 const Section = () => {
-  const { categories, isLoading, isError } = DashboardQuery();
+  const { categoriesData: categories, isLoading, isError } = useCategories();
 
   const pathname = usePathname();
   const { mainCategory } = useParams();

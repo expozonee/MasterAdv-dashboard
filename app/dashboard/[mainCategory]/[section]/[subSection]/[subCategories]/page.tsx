@@ -74,8 +74,8 @@ const SubCategory = ({ params }: SubCategoryProps) => {
           item.subCategory.slug === subCategories
         );
       });
-      console.log(projectsData);
-      console.log(filiteredProjectsData);
+      // console.log(projectsData);
+      // console.log(filiteredProjectsData);
       setProjects(filiteredProjectsData);
     }
     fetchData();
