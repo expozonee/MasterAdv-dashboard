@@ -30,9 +30,9 @@ type ProjectModalProps = {
   };
 };
 
-const ProjectModal = ({
+export default function ProjectModal({
   props: { mainCategory, section, subSection, subCategory, id },
-}: ProjectModalProps) => {
+}: ProjectModalProps) {
   // const Component = as || "div";
   const router = useRouter();
   const pathname = usePathname();
@@ -197,7 +197,7 @@ const ProjectModal = ({
       </Fade>
     </Modal>
   );
-};
+}
 
 const style = {
   position: "absolute",
@@ -211,4 +211,4 @@ const style = {
   p: 4,
 };
 
-export default ProjectModal;
+// export default ProjectModal;
