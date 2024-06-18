@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import getProjects from "@/utils/getProjects";
 import ProjectSkeleton from "../Skeletons/ProjectSkeleton";
 
@@ -37,13 +37,17 @@ type Project = {
 
 export default function CarouselComponent({ title }: CarouselProps) {
   const [projects, setProjects] = useState<Project[]>([]);
-  const { isLoading, isError } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
-    onSuccess: (data) => {
-      setProjects(data);
-    },
   });
+
+  useEffect(() => {
+    const projectData: Project[] = data as Project[];
+    if (projectData) {
+      setProjects(projectData);
+    }
+  }, [data]);
 
   const images = [
     {
