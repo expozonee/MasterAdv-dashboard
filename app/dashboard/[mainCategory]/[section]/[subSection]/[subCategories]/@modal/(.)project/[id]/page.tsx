@@ -20,7 +20,21 @@ type ImageOwnProps<T extends React.ElementType> = {
 type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
   Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
 
-const ProjectModal = () => {
+type ProjectModalProps = {
+  mainCategory: string;
+  section: string;
+  subSection: string;
+  subCategory: string;
+  id: string;
+};
+
+const ProjectModal = ({
+  mainCategory,
+  section,
+  subSection,
+  subCategory,
+  id,
+}: ProjectModalProps) => {
   // const Component = as || "div";
   const router = useRouter();
   const pathname = usePathname();
@@ -143,7 +157,16 @@ const ProjectModal = () => {
               } p-3 flex flex-col justify-start relative`}
             >
               <div className={`${isMobile ? "order-1" : "order-3"}`}>
-                <WhatsappShareButton pathname={pathname} isMobile />
+                <WhatsappShareButton
+                  categories={{
+                    id: id,
+                    mainCategory: mainCategory,
+                    section: section,
+                    subSection: subSection,
+                    subCategories: subCategory,
+                  }}
+                  isMobile
+                />
               </div>
               <h2 className="project-title text-gold font-black px-2 text-3xl order-1">
                 Title
