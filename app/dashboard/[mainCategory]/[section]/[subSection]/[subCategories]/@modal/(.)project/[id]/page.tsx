@@ -21,20 +21,18 @@ type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
   Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
 
 type ProjectModalProps = {
-  mainCategory: string;
-  section: string;
-  subSection: string;
-  subCategory: string;
-  id: string;
+  props: {
+    mainCategory: string;
+    section: string;
+    subSection: string;
+    subCategory: string;
+    id: string;
+  };
 };
 
-const ProjectModal: React.FC<ProjectModalProps> = ({
-  mainCategory,
-  section,
-  subSection,
-  subCategory,
-  id,
-}) => {
+const ProjectModal = ({
+  props: { mainCategory, section, subSection, subCategory, id },
+}: ProjectModalProps) => {
   // const Component = as || "div";
   const router = useRouter();
   const pathname = usePathname();
