@@ -39,7 +39,7 @@ const PageData = ({
       setBreadcrumbsData(data);
     }
     getTitle();
-  }, []);
+  }, [slugs]);
 
   return [titleData, breadcrumbsData];
 };
