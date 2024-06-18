@@ -20,24 +20,15 @@ type ImageOwnProps<T extends React.ElementType> = {
 type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
   Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
 
-type ProjectModalProps = {
-  mainCategory: string;
-  section: string;
-  subSection: string;
-  subCategory: string;
-  id: string;
-};
-
-export default function ProjectModal({
-  mainCategory,
-  section,
-  subSection,
-  subCategory,
-  id,
-}: ProjectModalProps) {
-  // const Component = as || "div";
+export default function ProjectModal() {
   const router = useRouter();
   const pathname = usePathname();
+  pathname.split("/");
+
+  const [, , ...restPath] = pathname.split("/");
+  const [mainCategory, section, subSection, subCategory, , id] = restPath;
+  console.log(mainCategory, section, subSection, subCategory, id);
+  // console.log(restPath);
 
   const onDismiss = useCallback(() => {
     router.back();
