@@ -21,17 +21,19 @@ type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
   Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
 
 type ProjectModalProps = {
-  props: {
-    mainCategory: string;
-    section: string;
-    subSection: string;
-    subCategory: string;
-    id: string;
-  };
+  mainCategory: string;
+  section: string;
+  subSection: string;
+  subCategory: string;
+  id: string;
 };
 
 export default function ProjectModal({
-  props: { mainCategory, section, subSection, subCategory, id },
+  mainCategory,
+  section,
+  subSection,
+  subCategory,
+  id,
 }: ProjectModalProps) {
   // const Component = as || "div";
   const router = useRouter();
