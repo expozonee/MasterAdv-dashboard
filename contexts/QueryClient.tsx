@@ -1,6 +1,6 @@
 "use client";
-import { getCategories } from "@/utils/data";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { getCategories, getTitles } from "@/utils/data";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function QueryProvider({
   children,
