@@ -8,10 +8,10 @@ interface Data {
 }
 
 type PageDataProps = {
-  mainCategory: string;
-  section: string;
-  subSection: string;
-  subCategories: string;
+  mainCategory?: string;
+  section?: string;
+  subSection?: string;
+  subCategories?: string;
 };
 
 const PageData = ({

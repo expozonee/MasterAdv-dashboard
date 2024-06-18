@@ -16,12 +16,20 @@ interface Data {
   urls: string[];
 }
 
-const SubSection = () => {
+type SubSectionProps = {
+  params: {
+    mainCategory: string;
+    section: string;
+    subSection: string;
+  };
+};
+
+const SubSection = ({ params }: SubSectionProps) => {
   const { subSection } = useParams();
   const { categoriesData: categories, isLoading, isError } = useCategories();
 
   const pathname = usePathname();
-  const [titleData, breadcrumbsData] = PageData(pathname);
+  const [titleData, breadcrumbsData] = PageData(params);
   const title = titleData;
 
   return (

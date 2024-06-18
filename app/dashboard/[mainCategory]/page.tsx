@@ -15,14 +15,20 @@ interface PortfolioData {
   imageUrl: string;
 }
 
+type MainCategoryProps = {
+  params: {
+    mainCategory: string;
+  };
+};
+
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
-const Section = () => {
+const MainCategory = ({ params }: MainCategoryProps) => {
   const { categoriesData: categories, isLoading, isError } = useCategories();
 
   const pathname = usePathname();
   const { mainCategory } = useParams();
-  const [titleData, breadcrumbsData] = PageData(pathname);
+  const [titleData, breadcrumbsData] = PageData(params);
   const title = titleData;
 
   return (
@@ -61,4 +67,4 @@ const Section = () => {
   );
 };
 
-export default Section;
+export default MainCategory;

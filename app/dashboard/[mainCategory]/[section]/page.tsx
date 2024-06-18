@@ -16,16 +16,23 @@ interface PortfolioData {
   imageUrl: string;
 }
 
+type SectionProps = {
+  params: {
+    mainCategory: string;
+    section: string;
+  };
+};
+
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
-const Section = () => {
+const Section = ({ params }: SectionProps) => {
   const { section } = useParams();
 
   const { isLoading, isError, categoriesData: categories } = useCategories();
 
   const data: PortfolioData[] = getPortfolioSections();
   const pathname = usePathname();
-  const [titleData, breadcrumbsData] = PageData(pathname);
+  const [titleData, breadcrumbsData] = PageData(params);
   const title = titleData;
 
   return (
