@@ -1,14 +1,16 @@
 import axios from "axios";
 
 export async function GET(request: Request) {
-  const response = await axios
-    .get("https://masteradv-backend.vercel.app/categories", {
+  const response = await axios.get(
+    "https://masteradv-backend.vercel.app/categories",
+    {
       headers: {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json",
       },
-    })
-    .then((res) => res.data);
+    }
+  );
+  const data = await response.data;
 
-  return new Response(JSON.stringify(response));
+  return new Response(JSON.stringify(data));
 }
