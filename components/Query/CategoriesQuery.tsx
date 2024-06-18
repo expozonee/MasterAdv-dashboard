@@ -1,12 +1,13 @@
 "use client";
 import { getCategories } from "@/utils/data";
 import React, { createContext, useContext } from "react";
-import { useQuery, QueryClient } from "react-query";
+import { useQuery } from "@tanstack/react-query";
+import type { Categories } from "@/types/categories";
 
 type CategoriesData = {
   isLoading: boolean;
   isError: boolean;
-  categoriesData: any;
+  categoriesData: Categories[];
 };
 
 const CategoriesContext = createContext<CategoriesData | undefined>(undefined);
@@ -28,7 +29,7 @@ function categoriesQuery() {
     isLoading,
     isError,
     data: categoriesData,
-  } = useQuery("categories", getCategories);
+  } = useQuery({ queryKey: ["categories"], queryFn: getCategories });
 
   return { isLoading, isError, categoriesData };
 }
