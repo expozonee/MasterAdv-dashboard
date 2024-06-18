@@ -9,7 +9,7 @@ import WhatsappShareButton from "@/components/shareButtons/WhatsappShareButton";
 import { useEffect, useState } from "react";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import type { Project } from "@/types/project/Project";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import ProjectSkeleton from "@/components/Skeletons/ProjectSkeleton";
 import DashboardProjectSkeleton from "@/components/Skeletons/DashboardProjectSkeleton";
 
@@ -29,15 +29,19 @@ const ArimoFontText = Arimo({ subsets: ["hebrew"], weight: ["400"] });
 export default function ProjectPage({ params }: ProjectPageProps) {
   const [project, setProject] = useState<Project | undefined>(undefined);
 
-  const { isLoading, isError } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ["projects", params],
     queryFn: async () => {
       return await getProjectsDashboard(params);
     },
-    onSuccess: (data: Project[]) => {
-      setProject(data.find((project) => project.itemId == params.id));
-    },
   });
+
+  useEffect(() => {
+    const projectData: Project[] = data as Project[];
+    if (projectData) {
+      setProject(projectData.find((project) => project.itemId == params.id));
+    }
+  }, [data]);
 
   return (
     <>
