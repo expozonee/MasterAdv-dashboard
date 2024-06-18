@@ -17,21 +17,17 @@ export function CategoriesProvider({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <CategoriesContext.Provider value={categoriesQuery()}>
-      {children}
-    </CategoriesContext.Provider>
-  );
-}
-
-function categoriesQuery() {
   const {
     isLoading,
     isError,
     data: categoriesData,
   } = useQuery({ queryKey: ["categories"], queryFn: getCategories });
 
-  return { isLoading, isError, categoriesData };
+  return (
+    <CategoriesContext.Provider value={{ isLoading, isError, categoriesData }}>
+      {children}
+    </CategoriesContext.Provider>
+  );
 }
 
 export function useCategories() {

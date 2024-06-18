@@ -77,7 +77,7 @@ const Menu = () => {
       setCategories(categoriesData);
       console.log(categories);
     }
-  }, [isLoading]);
+  }, [isLoading, categoriesData]);
 
   useEffect(() => {
     const openStateInitializeData = async () => {

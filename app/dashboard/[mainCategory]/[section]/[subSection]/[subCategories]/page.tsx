@@ -79,7 +79,7 @@ const SubCategory = ({ params }: SubCategoryProps) => {
       setProjects(filiteredProjectsData);
     }
     fetchData();
-  }, []);
+  }, [mainCategory, section, subSection, subCategories]);
 
   return (
     <div>
