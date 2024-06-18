@@ -7,6 +7,7 @@ import DashboardCard from "@/components/Dashboard/DashboardCard";
 import { Rubik } from "next/font/google";
 import DashboardQuery from "@/components/Query/DashboardQuery";
 import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
+import { useCategories } from "@/components/Query/CategoriesQuery";
 
 interface PortfolioData {
   id: number;
@@ -14,14 +15,20 @@ interface PortfolioData {
   imageUrl: string;
 }
 
+type MainCategoryProps = {
+  params: {
+    mainCategory: string;
+  };
+};
+
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
-const Section = () => {
-  const { categories, isLoading, isError } = DashboardQuery();
+const MainCategory = ({ params }: MainCategoryProps) => {
+  const { categoriesData: categories, isLoading, isError } = useCategories();
 
   const pathname = usePathname();
   const { mainCategory } = useParams();
-  const [titleData, breadcrumbsData] = PageData(pathname);
+  const [titleData, breadcrumbsData] = PageData(params);
   const title = titleData;
 
   return (
@@ -60,4 +67,4 @@ const Section = () => {
   );
 };
 
-export default Section;
+export default MainCategory;

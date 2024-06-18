@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Rubik } from "next/font/google";
@@ -7,8 +7,8 @@ import { usePathname } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import PageData from "@/app/dashboard/PageData";
 import { getPortfolioSections } from "@/utils/data";
-import PortfolioImage from "@/components/PortfolioImage/PortfolioImage";
 import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
+import getProjectsDashboard from "@/utils/getProjectsDashboard";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -23,11 +23,63 @@ interface PortfolioData {
   imageUrl: string;
 }
 
-const SubCategory = () => {
-  const pathname = usePathname();
-  const data: PortfolioData[] = getPortfolioSections();
+type SubCategoryProps = {
+  params: {
+    mainCategory: string;
+    section: string;
+    subSection: string;
+    subCategories: string;
+  };
+};
 
-  const [titleData, breadcrumbsData] = PageData(pathname);
+type Project = {
+  itemId: string;
+  mainCategory: {
+    name: string;
+    slug: string;
+  };
+  section: {
+    name: string;
+    slug: string;
+  };
+  subSection: {
+    name: string;
+    slug: string;
+  };
+  subCategory: {
+    name: string;
+    slug: string;
+  };
+  imageUrl: string;
+  isSpecial: string;
+};
+
+const SubCategory = ({ params }: SubCategoryProps) => {
+  const { mainCategory, section, subSection, subCategories } = params;
+  // console.log(params);
+  // const pathname = usePathname();
+  const data: PortfolioData[] = getPortfolioSections();
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  const [titleData, breadcrumbsData] = PageData(params);
+
+  useEffect(() => {
+    async function fetchData() {
+      const projectsData = await getProjectsDashboard(params);
+      const filiteredProjectsData = projectsData.filter((item: Project) => {
+        return (
+          item.mainCategory.slug === mainCategory &&
+          item.section.slug === section &&
+          item.subSection.slug === subSection &&
+          item.subCategory.slug === subCategories
+        );
+      });
+      // console.log(projectsData);
+      // console.log(filiteredProjectsData);
+      setProjects(filiteredProjectsData);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -35,35 +87,20 @@ const SubCategory = () => {
         <h1 className={`${titleRubik.className} text-4xl`}>{titleData}</h1>
         <Breadcrumb pageData={breadcrumbsData} />
       </div>
-      {/* <div
-        style={{
-          display: "grid",
-          gridAutoFlow: "dense",
-          gap: "1rem",
-          gridTemplateColumns:
-            "repeat(auto-fill, minmax(min(100%, 400px), 1fr))",
-        }}
-        className="justify-items-center justify-center"
-      > */}
+
       <ImagesGrid>
-        {data.map((item, index) => (
+        {projects.map((project) => (
           <div
-            key={index}
+            key={project.itemId}
             className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
           >
-            {/* <PortfolioImage
-              id="1"
-              className="rounded-t-lg w-full h-full aspect-square"
-              image={item.imageUrl}
-              alt={item.title}
-            /> */}
             <Link
-              href={`${pathname}/project/${item.id}`}
+              href={`${subCategories}/project/${project.itemId}`}
               className="w-full h-full"
             >
               <Image
-                src={item.imageUrl}
-                alt={item.title}
+                src={project.imageUrl}
+                alt={project.imageUrl}
                 width={400}
                 height={400}
                 className="rounded-lg w-full h-full"

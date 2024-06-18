@@ -1,6 +1,6 @@
+"use client";
 import Image from "next/image";
-import { useRef, useState } from "react";
-import styles from "./Carousel.module.css";
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,12 +8,47 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useQuery } from "@tanstack/react-query";
+import getProjects from "@/utils/getProjects";
+import ProjectSkeleton from "../Skeletons/ProjectSkeleton";
 
 type CarouselProps = {
   title: string;
+  type: "normal" | "special";
+};
+
+type Project = {
+  itemId: string;
+  mainCategory: {
+    name: string;
+  };
+  section: {
+    name: string;
+  };
+  subSection: {
+    name: string;
+  };
+  subCategory: {
+    name: string;
+  };
+  imageUrl: string;
+  isSpecial: string;
 };
 
 export default function CarouselComponent({ title }: CarouselProps) {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["projects"],
+    queryFn: getProjects,
+  });
+
+  useEffect(() => {
+    const projectData: Project[] = data as Project[];
+    if (projectData) {
+      setProjects(projectData);
+    }
+  }, [data]);
+
   const images = [
     {
       id: 1,
@@ -63,6 +98,7 @@ export default function CarouselComponent({ title }: CarouselProps) {
         <h2 className="text-white text-5xl mx-auto max-w-[1500px] py-10 pt-0">
           {title}
         </h2>
+        {isError && <p>Error</p>}
         <Carousel
           opts={{
             direction: "rtl",
@@ -72,13 +108,18 @@ export default function CarouselComponent({ title }: CarouselProps) {
           className="max-w-[1500px] mx-20 xl:mx-auto"
         >
           <CarouselContent>
-            {images.map((image, index) => (
-              <CarouselItem key={index} className=" md:basis-1/2 lg:basis-1/4">
+            {isLoading && <ProjectSkeleton />}
+
+            {projects.map((project, index) => (
+              <CarouselItem
+                key={project.itemId}
+                className=" md:basis-1/2 lg:basis-1/4"
+              >
                 <div className="p-1">
                   <Image
                     className="rounded-md w-full"
-                    src={image.url}
-                    alt="carousel image"
+                    src={project.imageUrl}
+                    alt="Project image"
                     width={400}
                     height={400}
                     priority

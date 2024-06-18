@@ -4,6 +4,7 @@ import { getPortfolioSections } from "@/utils/data";
 import DashboardCard from "./DashboardCard";
 import { usePathname } from "next/navigation";
 import DashboardQuery from "../Query/DashboardQuery";
+import { useCategories } from "../Query/CategoriesQuery";
 
 // without this the component renders on server and throws an error
 import dynamic from "next/dynamic";
@@ -23,7 +24,7 @@ const Dashboard: React.FC = () => {
   // const currentCategory = pathname[pathname.length - 1];
   console.log(pathname);
 
-  const { categories, isLoading, isError } = DashboardQuery();
+  const { categoriesData: categories, isLoading, isError } = useCategories();
 
   return (
     <div className="grid gap-3">

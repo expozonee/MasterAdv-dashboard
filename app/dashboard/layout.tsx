@@ -2,41 +2,15 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import SidebarBackdrop from "@/components/Sidebar/SidebarBackdrop";
 import { SideBarProvider } from "@/contexts/SideBarContext";
-import { getCategories } from "@/utils/data";
-import QueryProvider from "@/contexts/QueryClient";
+import { CategoriesProvider } from "@/components/Query/CategoriesQuery";
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const categoriesData = await getCategories();
-
-  // const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  // const [loading, setLoading] = useState<boolean>(true);
-
-  // const containerRef = useRef<HTMLDivElement>(null);
-  // const [parentWidth, setParentWidth] = useState<number>(0);
-
-  // useEffect(() => {
-  //   if (containerRef.current) {
-  //     setParentWidth(containerRef.current.offsetWidth);
-  //   }
-  // }, []);
-
-  // const mainRef = useMainRef();
-
-  // useEffect(() => {
-  //   setTimeout(() => setLoading(false), 1000);
-  // }, []);
-
-  // const mainRef = useRef(null);
   return (
-    // <html lang="en" dir="rtl">
-    // <body suppressHydrationWarning={true}>
-    // <div className="dark:bg-boxdark-2 dark:text-bodydark bg-main">
-    <QueryProvider>
+    <CategoriesProvider>
       <SideBarProvider>
         <div className="bg-main text-white">
           {/* {loading ? (
@@ -44,7 +18,7 @@ export default async function RootLayout({
         ) : ( */}
           <div className="flex h-screen overflow-hidden">
             {/* <!-- ===== Sidebar Start ===== --> */}
-            <Sidebar categoriesData={categoriesData} />
+            <Sidebar />
             <SidebarBackdrop />
             {/* <!-- ===== Sidebar End ===== --> */}
 
@@ -73,8 +47,6 @@ export default async function RootLayout({
           {/* // )} */}
         </div>
       </SideBarProvider>
-    </QueryProvider>
-    // {/* </body> */}
-    // {/* //</html> */}
+    </CategoriesProvider>
   );
 }

@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { getTitles } from "@/utils/data";
 
@@ -6,16 +7,30 @@ interface Data {
   urls: string[];
 }
 
-const PageData = (currentPathname: string): [string, Data] => {
+type PageDataProps = {
+  mainCategory?: string;
+  section?: string;
+  subSection?: string;
+  subCategories?: string;
+};
+
+const PageData = ({
+  mainCategory,
+  section,
+  subSection,
+  subCategories,
+}: PageDataProps): [string, Data] => {
   const [titleData, setTitleData] = useState<string>("");
   const [breadcrumbsData, setBreadcrumbsData] = useState<Data>({
     names: [{ name: "" }],
     urls: [""],
   });
 
-  const pathname = currentPathname;
-  const sections = pathname.split("/");
-  const slugs = sections.slice(2);
+  // const pathname = currentPathname;
+  // const sections = pathname.split("/");
+  // const slugs = sections.slice(2);
+  const slugs = [mainCategory, section, subSection, subCategories];
+  console.log(slugs);
 
   useEffect(() => {
     async function getTitle() {

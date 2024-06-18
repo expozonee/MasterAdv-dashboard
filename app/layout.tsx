@@ -1,13 +1,10 @@
-import "./globals.css";
-import { Noto_Kufi_Arabic, Marhey } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
-import Provider from "@/components/Providers/Providers";
+import ProviderSession from "@/components/Providers/Providers";
 import design from "./page.module.css";
 import { MobileProvider } from "@/contexts/MobileContext";
 import { Metadata } from "next";
-
-const noto = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["600"] });
-const marhey = Marhey({ subsets: ["arabic"], weight: ["600"] });
+import ProjectsQueryProvider from "@/contexts/ProjectsQuery";
+import QueryProvider from "@/contexts/QueryClient";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Master Adv",
@@ -24,17 +21,21 @@ export default function RootLayout({
       lang="en"
       dir="rtl"
       className={
-        `bg-no-repeat md:bg-contain ${noto.className} h-full` // Added the 'h-full' to the html tag className on 9/4/2024
+        `bg-no-repeat md:bg-contain h-full` // Added the 'h-full' to the html tag className on 9/4/2024
       }
     >
-      <Provider>
-        <body
-          className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
-          suppressHydrationWarning={true}
-        >
-          <MobileProvider>{children}</MobileProvider>
-        </body>
-      </Provider>
+      <QueryProvider>
+        {/* <ProjectsQueryProvider> */}
+        <ProviderSession>
+          <body
+            className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
+            suppressHydrationWarning={true}
+          >
+            <MobileProvider>{children}</MobileProvider>
+          </body>
+        </ProviderSession>
+        {/* </ProjectsQueryProvider> */}
+      </QueryProvider>
     </html>
   );
 }
