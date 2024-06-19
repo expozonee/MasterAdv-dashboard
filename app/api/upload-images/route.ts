@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  console.log(response);
+
   return new Response(await response.json(), {
     status: response.status,
   });
