@@ -15,7 +15,7 @@ export type Categories = {
 
 export default async function getAllCategories() {
   const response = await axios
-    .get("https://masteradv.vip/api/categories", {
+    .get("https://www.masteradv.vip/api/categories", {
       headers: {
         "Cache-Control": "no-cache",
       },
@@ -27,7 +27,7 @@ export default async function getAllCategories() {
   //     "Cache-Control": "no-cache",
   //   },
   // });
-  const { data } = await response.json();
+  // const { data } = await response.json();
 
-  return data;
+  return response;
 }
