@@ -6,7 +6,7 @@ export default async function getTitles() {
     {
       headers: {
         "Cache-Control": "no-cache",
-        "Acess-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "*",
       },
     }
   );
