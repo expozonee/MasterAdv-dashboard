@@ -13,7 +13,7 @@ export default async function getProjectsDashboard({
   subSection,
   subCategories,
 }: getProjectsDashboardProps) {
-  const result = await axios.get(`http://localhost:3000/api/projects`, {
+  const result = await axios.get(`https://www.masteradv.vip/api/projects`, {
     headers: {
       "Cache-Control": "no-cache",
     },
