@@ -1,11 +1,16 @@
 import Link from "next/link";
 
-interface BreadcrumbProps {
-  names: [{ name: string }];
-  urls: string[];
-}
+// interface BreadcrumbProps {
+//   names: [{ name: string }];
+//   urls: string[];
+// }
 
-const Breadcrumb = ({ pageData }: { pageData: BreadcrumbProps }) => {
+type BreadcrumbProps = {
+  titleNames: string[];
+  titleUrls: string[];
+};
+
+const Breadcrumb = ({ titleNames, titleUrls }: BreadcrumbProps) => {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       {/* <h2 className="text-title-md2 font-semibold text-black dark:text-white">
@@ -19,12 +24,13 @@ const Breadcrumb = ({ pageData }: { pageData: BreadcrumbProps }) => {
               ראשי /
             </Link>
           </li>
-          {pageData.names.map((name, index) => {
+          {titleNames.map((name, index) => {
+            console.log(titleUrls[index]);
             return (
-              index < pageData.names.length - 1 && (
+              index < titleNames.length - 1 && (
                 <li key={index}>
-                  <Link className="font-medium" href={pageData.urls[index]}>
-                    {`${name.name} /`}
+                  <Link className="font-medium" href={`/${titleUrls[index]}`}>
+                    {`${name} /`}
                   </Link>
                 </li>
               )
@@ -32,8 +38,7 @@ const Breadcrumb = ({ pageData }: { pageData: BreadcrumbProps }) => {
           })}
 
           <li className="font-medium text-primary">
-            {pageData.names[pageData.names.length - 1] &&
-              pageData.names[pageData.names.length - 1].name}
+            {titleNames[titleNames.length - 1]}
           </li>
         </ol>
       </nav>

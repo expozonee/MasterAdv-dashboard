@@ -1,5 +1,6 @@
 "use client";
-import { getCategories, getTitles } from "@/utils/data";
+import { getCategories } from "@/utils/data";
+import getTitles from "@/utils/getTitles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function QueryProvider({
@@ -9,10 +10,14 @@ export default function QueryProvider({
 }) {
   const queryClient = new QueryClient();
 
-  const prefetchCategories = async () => {
+  async () => {
     await queryClient.prefetchQuery({
       queryKey: ["categories"],
       queryFn: getCategories,
+    });
+    await queryClient.prefetchQuery({
+      queryKey: ["titles"],
+      queryFn: getTitles,
     });
   };
 

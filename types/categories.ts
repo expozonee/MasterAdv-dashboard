@@ -18,3 +18,24 @@ export type Categories = {
     }[];
   }[];
 };
+
+export type Category = {
+  mainCategoryId: number;
+  name: string;
+  slug: string;
+  sections: {
+    sectionId: number;
+    name: string;
+    slug: string;
+    subSections: {
+      subSectionId: number;
+      name: string;
+      slug: string;
+      subCategories: {
+        subCategoryId: number;
+        name: string;
+        slug: string;
+      }[];
+    }[];
+  }[];
+};

@@ -32,14 +32,15 @@ const Section = ({ params }: SectionProps) => {
 
   const data: PortfolioData[] = getPortfolioSections();
   const pathname = usePathname();
-  const [titleData, breadcrumbsData] = PageData(params);
-  const title = titleData;
+  const [titleNames, titlesUrls] = PageData(params);
+  const title = titleNames[titleNames.length - 1];
+  console.log(title);
 
   return (
     <div>
       <div>
         <h1 className={`text-3xl ${titleRubik.className}`}>{title}</h1>
-        <BreadCrumbs pageData={breadcrumbsData} />
+        <BreadCrumbs titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
       {/* <div
         style={{

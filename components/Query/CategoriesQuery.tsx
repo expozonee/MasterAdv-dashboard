@@ -2,12 +2,12 @@
 import { getCategories } from "@/utils/data";
 import React, { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import type { Categories } from "@/types/categories";
+import type { Category } from "@/types/categories";
 
 type CategoriesData = {
   isLoading: boolean;
   isError: boolean;
-  categoriesData: Categories[];
+  categoriesData: Category[];
 };
 
 const CategoriesContext = createContext<CategoriesData | undefined>(undefined);
