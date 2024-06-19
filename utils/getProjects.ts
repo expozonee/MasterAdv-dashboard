@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function getProjects() {
   const response = await axios
-    .get("http://localhost:3000/api/projects", {
+    .get("https://www.masteradv.vip/api/projects", {
       headers: {
         "Cache-Control": "no-cache",
       },
