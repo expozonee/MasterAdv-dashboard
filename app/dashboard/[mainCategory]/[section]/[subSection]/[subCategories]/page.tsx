@@ -61,7 +61,9 @@ const SubCategory = ({ params }: SubCategoryProps) => {
   const data: PortfolioData[] = getPortfolioSections();
   const [projects, setProjects] = useState<Project[]>([]);
 
-  const [titleData, breadcrumbsData] = PageData(params);
+  const [titleNames, titlesUrls] = PageData(params);
+  const title = titleNames[titleNames.length - 1];
+  console.log(title);
 
   useEffect(() => {
     async function fetchData() {
@@ -84,8 +86,8 @@ const SubCategory = ({ params }: SubCategoryProps) => {
   return (
     <div>
       <div>
-        <h1 className={`${titleRubik.className} text-4xl`}>{titleData}</h1>
-        <Breadcrumb pageData={breadcrumbsData} />
+        <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
+        <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
 
       <ImagesGrid>

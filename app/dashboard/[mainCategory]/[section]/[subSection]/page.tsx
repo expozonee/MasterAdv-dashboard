@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { usePathname, useParams } from "next/navigation";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import { Rubik } from "next/font/google";
 import PageData from "@/app/dashboard/PageData";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
@@ -29,13 +29,14 @@ const SubSection = ({ params }: SubSectionProps) => {
   const { categoriesData: categories, isLoading, isError } = useCategories();
 
   const pathname = usePathname();
-  const [titleData, breadcrumbsData] = PageData(params);
-  const title = titleData;
+  const [titleNames, titlesUrls] = PageData(params);
+  const title = titleNames[titleNames.length - 1];
+  console.log(title);
 
   return (
     <div>
       <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
-      <Breadcrumb pageData={breadcrumbsData} />
+      <BreadCrumbs titleNames={titleNames} titleUrls={titlesUrls} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
         {isLoading && <DashboardSkeleton />}
         {isError && <div>Error...</div>}
