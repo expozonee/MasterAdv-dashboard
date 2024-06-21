@@ -31,24 +31,24 @@ const marhey = Marhey({ subsets: ["arabic"], weight: "500" });
 export default function BurgerMenu() {
   const [open, setOpen] = React.useState(false);
 
-  const theme = createTheme({
-    components: {
-      MuiDrawer: {
-        styleOverrides: {
-          paper: {
-            background: "black",
-          },
-        },
-      },
-    },
-  });
+  // const theme = createTheme({
+  //   components: {
+  //     MuiDrawer: {
+  //       styleOverrides: {
+  //         paper: {
+  //           background: "black",
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
 
   return (
     <>
       {/* <ThemeProvider theme={theme}> */}
       <IconButton
         variant="soft"
-        className="text-gold md:hidden"
+        className="burger-button-icon"
         onClick={() => setOpen(true)}
       >
         <Menu />
@@ -190,4 +190,3 @@ export default function BurgerMenu() {
     </>
   );
 }
-4;

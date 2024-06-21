@@ -159,7 +159,7 @@ export default function ProjectModal() {
                   isMobile
                 />
               </div>
-              <h2 className="project-title text-gold font-black px-2 text-3xl order-1">
+              {/* <h2 className="project-title text-gold font-black px-2 text-3xl order-1">
                 Title
               </h2>
               <p className="project-description text-white pb-3 px-2 order-2">
@@ -172,7 +172,7 @@ export default function ProjectModal() {
                 nunc vel odio scelerisque. Lorem ipsum dolor sit amet,
                 consectetur adipiscing elit. Donec nec odio vitae odio pharetra.
                 Integer non nunc vel odio scelerisque.
-              </p>
+              </p> */}
             </div>
             <ModalClose
               variant="plain"
