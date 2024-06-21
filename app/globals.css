@@ -206,3 +206,13 @@ footer {
   opacity: 0.1;
   content: "";
 }
+
+/* my custom tailwind css styles */
+
+.button {
+  @apply text-white text-xl text-white px-6 py-3;
+}
+
+.burger-button-icon {
+  @apply md:hidden;
+}

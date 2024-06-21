@@ -28,9 +28,7 @@ const LogoBanner = () => {
         </Link>
 
         <Link className="mx-3 hidden md:block" href={"/dashboard"}>
-          <Button
-            className={`text-xl text-white px-6 py-3 ${rubikButton.className}`}
-          >
+          <Button className={`button  ${rubikButton.className}`}>
             העבודות שלנו
           </Button>
         </Link>
@@ -40,9 +38,7 @@ const LogoBanner = () => {
           }`}
           href={"/about-us"}
         >
-          <Button
-            className={`hover:bg-gold text-xl text-white px-6 py-3 ${rubikButton.className}`}
-          >
+          <Button className={`hover:bg-gold button ${rubikButton.className}`}>
             מי אנחנו
           </Button>
         </Link>
