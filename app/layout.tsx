@@ -4,6 +4,8 @@ import { MobileProvider } from "@/contexts/MobileContext";
 import { Metadata } from "next";
 import ProjectsQueryProvider from "@/contexts/ProjectsQuery";
 import QueryProvider from "@/contexts/QueryClient";
+import EmotionCacheProvider from "@/components/Providers/EmotionCacheProvider";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,18 +26,20 @@ export default function RootLayout({
         `bg-no-repeat md:bg-contain h-full` // Added the 'h-full' to the html tag className on 9/4/2024
       }
     >
-      <QueryProvider>
-        {/* <ProjectsQueryProvider> */}
-        <ProviderSession>
-          <body
-            className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
-            suppressHydrationWarning={true}
-          >
-            <MobileProvider>{children}</MobileProvider>
-          </body>
-        </ProviderSession>
-        {/* </ProjectsQueryProvider> */}
-      </QueryProvider>
+      <EmotionCacheProvider>
+        <QueryProvider>
+          {/* <ProjectsQueryProvider> */}
+          <ProviderSession>
+            <body
+              className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
+              suppressHydrationWarning={true}
+            >
+              <MobileProvider>{children}</MobileProvider>
+            </body>
+          </ProviderSession>
+          {/* </ProjectsQueryProvider> */}
+        </QueryProvider>
+      </EmotionCacheProvider>
     </html>
   );
 }
