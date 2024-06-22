@@ -84,6 +84,7 @@ const UploadedImage = ({
         )}
 
         <Button
+          classes={{ containedError: "bg-red-500" }}
           variant="contained"
           color="error"
           className="w-11/12"
@@ -92,7 +93,7 @@ const UploadedImage = ({
             handleRemove(name);
           }}
         >
-          Remove
+          ביטול
         </Button>
       </div>
     </div>
