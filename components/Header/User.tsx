@@ -23,6 +23,7 @@ const Logout = () => {
   return isLoggedIn ? (
     <>
       <Button
+        className="bg-red-500"
         variant="contained"
         color="error"
         onClick={handleLogout}

@@ -239,6 +239,7 @@ const AdminPage = () => {
             // onClick={() => setUploadedImages([])}
           > */}
           <Button
+            classes={{ containedError: "bg-red-500" }}
             variant="contained"
             color="error"
             sx={{
