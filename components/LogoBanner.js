@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import BurgerMenu from "./BurgerMenu/BurgerMenu";
@@ -8,10 +8,31 @@ import { Rubik } from "next/font/google";
 import Logo from "@/assets/masterAdv-Logo.svg";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "@/utils/data";
+import getTitles from "@/utils/getTitles";
 
 const rubikButton = Rubik({ subsets: ["hebrew"], weight: ["500"] });
 
 const LogoBanner = () => {
+  useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const data = await getCategories();
+      return data;
+    },
+  });
+
+  useQuery({
+    queryKey: ["titles"],
+    queryFn: async () => {
+      const data = await getTitles();
+      return data;
+    },
+  });
+
+  useEffect(() => {}, []);
+
   const path = usePathname();
   // const isDashboard = path.startsWith("/dashboard");
   return (
