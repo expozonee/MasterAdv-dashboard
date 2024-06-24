@@ -8,27 +8,58 @@ import Fade from "@mui/material/Fade";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import WhatsappShareButton from "@/components/shareButtons/WhatsappShareButton";
+import { useQuery } from "@tanstack/react-query";
+import getProjects from "@/utils/getProjects";
 
-type ImageOwnProps<T extends React.ElementType> = {
-  className: string;
-  image: string;
-  alt: string;
-  objectCover?: string;
-  as?: T;
+// type ImageOwnProps<T extends React.ElementType> = {
+//   className: string;
+//   image: string;
+//   alt: string;
+//   objectCover?: string;
+//   as?: T;
+// };
+
+// type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
+//   Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
+
+type Project = {
+  itemId: string;
+  mainCategory: {
+    name: string;
+  };
+  section: {
+    name: string;
+  };
+  subSection: {
+    name: string;
+  };
+  subCategory: {
+    name: string;
+  };
+  imageUrl: string;
+  isSpecial: string;
 };
-
-type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
-  Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
 
 export default function ProjectModal() {
   const router = useRouter();
   const pathname = usePathname();
   pathname.split("/");
 
+  const [desiredHeight, setDesiredHeight] = useState<string>("");
+  const [desiredWidth, setDesiredWidth] = useState<string>("");
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string>("");
+
   const [, , ...restPath] = pathname.split("/");
   const [mainCategory, section, subSection, subCategory, , id] = restPath;
-  console.log(mainCategory, section, subSection, subCategory, id);
+  // console.log(mainCategory, section, subSection, subCategory, id);
   // console.log(restPath);
+
+  const { isError, isLoading, data } = useQuery({
+    queryKey: ["project", id],
+    queryFn: getProjects,
+    enabled: !!id,
+  });
 
   const onDismiss = useCallback(() => {
     router.back();
@@ -50,9 +81,15 @@ export default function ProjectModal() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown]);
 
-  const [desiredHeight, setDesiredHeight] = useState<string>("");
-  const [desiredWidth, setDesiredWidth] = useState<string>("");
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  useEffect(() => {
+    if (data) {
+      const imageUrl = (data as Project[]).find(
+        (item) => item.itemId === id
+      )?.imageUrl;
+
+      setImageUrl(imageUrl!);
+    }
+  }, [id, isLoading, isError]);
 
   useEffect(() => {
     function handleResize() {
@@ -107,7 +144,7 @@ export default function ProjectModal() {
             // position: "absolute",
             width: `85%`,
             maxWidth: "1600px",
-            height: `${isMobile ? "min-content" : desiredHeight}`,
+            height: `${isMobile ? "min-content" : "auto"}`,
             // maxHeight: `${!isMobile ? "960px" : ""}`,
             borderRadius: "md",
             boxShadow: "lg",
@@ -126,21 +163,29 @@ export default function ProjectModal() {
                 isMobile ? `w-full aspect-square` : "w-3/5 h-full"
               }  m-0 p-0`}
             >
-              <Image
-                className={`${
-                  isMobile ? "rounded-t-lg" : "rounded-r-md"
-                }  aspect-square`}
-                src={
-                  "https://img.freepik.com/free-photo/adorable-black-white-kitty-with-monochrome-wall-her_23-2148955183.jpg?t=st=1709469369~exp=1709472969~hmac=6c23ccc6e48a2cf591de7976a546130de6d1b610f7761a17429e62e3abbaa2f8&w=2000"
-                }
-                alt={"alt"}
-                width={600}
-                height={600}
-                style={{
-                  width: `${isMobile ? "100%" : desiredWidth}`,
-                  objectFit: "contain",
-                }}
-              />
+              {!isLoading && !isError && imageUrl ? (
+                <Image
+                  className={`${
+                    isMobile ? "rounded-t-lg" : "rounded-r-md"
+                  }  aspect-square`}
+                  src={imageUrl}
+                  alt={"alt"}
+                  width={600}
+                  height={600}
+                  style={{
+                    width: `${isMobile ? "100%" : "80vh"}`,
+                    objectFit: "contain",
+                  }}
+                />
+              ) : (
+                <div
+                  className={`aspect-square ${
+                    isMobile ? "w-full" : "w-[80vh]"
+                  }  flex justify-center items-center`}
+                >
+                  Loading...
+                </div>
+              )}
             </div>
             <div
               className={`${
