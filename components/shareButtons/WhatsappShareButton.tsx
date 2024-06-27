@@ -43,7 +43,7 @@ export default function WhatsappShareButton({
         }`}
       >
         <Link
-          href={`https://wa.me/972526453088?text=${BASE_URL}${mainCategory}/${section}/${subSection}/${subCategories}/project/${id}`}
+          href={`https://wa.me/972526453088?text=${BASE_URL}/dashboard/${mainCategory}/${section}/${subSection}/${subCategories}/project/${id}`}
           target="_blank"
         >
           <Image

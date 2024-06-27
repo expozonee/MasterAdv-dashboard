@@ -6,7 +6,8 @@ import { useSession } from "next-auth/react";
 import { OptionsType } from "@/components/UploadedImage/UploadOptions";
 import { Rubik } from "next/font/google";
 import { Button } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+import { useMutateUpload } from "@/utils/customHooks/useMutateUpload";
 
 const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["900"] });
 const rubikText = Rubik({ subsets: ["hebrew"], weight: ["500"] });
@@ -32,6 +33,14 @@ export type ImageData = {
 
 const AdminPage = () => {
   const { data: session, status } = useSession();
+
+  const {
+    isError: isErrorOnUpload,
+    isSuccess,
+    isPending,
+    mutate,
+    mutateAsync,
+  } = useMutateUpload();
 
   console.log("session", session);
 
@@ -147,12 +156,11 @@ const AdminPage = () => {
       };
       imageDataToSubmit.push(data);
     }
-    // setSubmittedImages(imageDataToSubmit);
 
     const formData = new FormData();
     imageDataToSubmit.forEach((item, index) => {
       formData.append(`${item.imageName}`, item.imageFile, item.imageFile.name);
-      formData.append(`images[${index}][id]`, uuidv4());
+      // formData.append(`images[${index}][id]`, uuidv4());
       formData.append(`images[${index}][imageName]`, item.imageName);
       formData.append(`images[${index}][mainCategory]`, item.mainCategory);
       formData.append(`images[${index}][section]`, item.section);
@@ -160,14 +168,14 @@ const AdminPage = () => {
       formData.append(`images[${index}][subCategory]`, item.subCategory);
       formData.append(`images[${index}][isSpecial]`, item.isSpecial);
     });
-    // console.log("formData", formData);
 
-    const uploadImages = await fetch("/api/upload-images", {
-      method: "POST",
-      body: formData,
-    });
-    // console.log("uploadImages", uploadImages.json());
-    // console.log("submittedImages", submittedImages);
+    // const uploadImages = await fetch("/api/upload-images", {
+    //   method: "POST",
+    //   body: formData,
+    // });
+
+    mutate(formData);
+
     setUploadedImages([]);
   };
 
@@ -257,8 +265,9 @@ const AdminPage = () => {
           <button
             className={`${rubikText.className} flex justify-center rounded bg-gold py-2 px-6 font-medium text-gray hover:bg-opacity-95`}
             type="submit"
+            disabled={uploadedImages.length === 0 || isPending}
           >
-            העלאה
+            {isPending ? "מעלה..." : "העלאה"}
           </button>
         </div>
         <div className="mt-12">
@@ -279,7 +288,7 @@ const AdminPage = () => {
           </div>
           {uploadedImages.length === 0 && (
             <h4 className="text-center mt-12 text-2xl opacity-50">
-              התמונות שהועלו יופיעו כאן
+              {isPending ? "מעלה..." : "התמונות שהועלו יופיעו כאן"}
             </h4>
           )}
         </div>
