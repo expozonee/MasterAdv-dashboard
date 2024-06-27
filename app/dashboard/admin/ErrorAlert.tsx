@@ -3,7 +3,10 @@ import { Alert, makeStyles } from "@mui/material";
 import animation from "./errorsAlerts.module.css";
 
 type ErrorAlertProps = {
-  alerts: string[];
+  alerts: {
+    text: string;
+    type: "error" | "success";
+  }[];
 };
 
 const iconStyle = {
@@ -27,7 +30,7 @@ const ErrorAlert = ({ alerts }: ErrorAlertProps) => {
         <Alert
           className={`transition-all duration-300 ease-in-out ${animation[animationClass]}`}
           key={index}
-          severity="error"
+          severity={alert.type === "error" ? "error" : "success"}
           sx={{
             minWidth: "350px",
             gap: ".5rem",
@@ -35,7 +38,7 @@ const ErrorAlert = ({ alerts }: ErrorAlertProps) => {
           }}
           onAnimationEnd={handleAnimationEnd}
         >
-          {alert}
+          {alert.text}
         </Alert>
       ))}
     </div>

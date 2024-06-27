@@ -31,6 +31,11 @@ export type ImageData = {
   isSpecial: string;
 };
 
+type Alert = {
+  text: string;
+  type: "error" | "success";
+};
+
 const AdminPage = () => {
   const { data: session, status } = useSession();
 
@@ -46,7 +51,7 @@ const AdminPage = () => {
 
   const [submittedImages, setSubmittedImages] = useState<ImageData[]>([]);
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
-  const [alerts, setAlerts] = useState<string[]>([]);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
   const [isError, setIsError] = useState(false);
   const maxHeight = 1500;
   const maxWidth = 1500;
@@ -55,8 +60,14 @@ const AdminPage = () => {
     const images = e.target.files;
     const acceptedImageTypes = "image/webp";
     const acceptedImages: File[] = [];
-    const sizeError = `Image must be ${maxHeight} X ${maxWidth}px or less`;
-    const typeError = "Image must be a WEBP file";
+    const sizeError: Alert = {
+      text: `Image must be ${maxHeight} X ${maxWidth}px or less`,
+      type: "error",
+    };
+    const typeError: Alert = {
+      text: "Image must be a WEBP file",
+      type: "error",
+    };
 
     if (images) {
       let loadedImagesCount = 0;
@@ -174,7 +185,23 @@ const AdminPage = () => {
     //   body: formData,
     // });
 
-    mutate(formData);
+    mutate(formData, {
+      onError: (error) => {
+        setIsError(true);
+        const errorAlert: Alert = {
+          text: "ההעלאה נכשלה! נסה שוב!",
+          type: "error",
+        };
+        setAlerts((prevAlerts) => [...prevAlerts, errorAlert]);
+      },
+      onSuccess: (data) => {
+        const successAlert: Alert = {
+          text: "הועלה בהצלחה!",
+          type: "success",
+        };
+        setAlerts((prevAlerts) => [...prevAlerts, successAlert]);
+      },
+    });
 
     setUploadedImages([]);
   };
@@ -293,11 +320,13 @@ const AdminPage = () => {
           )}
         </div>
       </form>
-      {isError && (
-        <>
-          <ErrorAlert key={Math.floor(Math.random() * 100)} alerts={alerts} />
-        </>
-      )}
+      {isError ||
+        isErrorOnUpload ||
+        (isSuccess && (
+          <>
+            <ErrorAlert key={Math.floor(Math.random() * 100)} alerts={alerts} />
+          </>
+        ))}
     </>
   );
 };
