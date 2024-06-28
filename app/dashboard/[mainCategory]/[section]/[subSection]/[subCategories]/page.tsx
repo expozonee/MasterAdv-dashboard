@@ -127,7 +127,14 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
   return (
     <div>
       <h1>welcome server</h1>
-      {/* <div>
+    </div>
+  );
+};
+
+export default SubCategory;
+
+{
+  /* <div>
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
@@ -153,20 +160,5 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
           </div>
         ))}
       </ImagesGrid>
-      </div> */}
-    </div>
-  );
-};
-
-export default SubCategory;
-
-// {
-//   params,
-// }: {
-//   params: {
-//     mainCategory: string;
-//     section: string;
-//     subSection: string;
-//     subCategories: string;
-//   };
-// }
+      </div> */
+}
