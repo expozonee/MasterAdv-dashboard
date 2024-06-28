@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 // import { usePathname, useParams } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
@@ -6,7 +7,7 @@ import DashboardCard from "@/components/Dashboard/DashboardCard";
 import { Rubik } from "next/font/google";
 // import DashboardQuery from "@/components/Query/DashboardQuery";
 // import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
-// import { useCategories } from "@/components/Query/CategoriesQuery";
+import { useCategories } from "@/components/Query/CategoriesQuery";
 import { getCategories } from "@/utils/data";
 import type { Category } from "@/types/categories";
 
@@ -25,15 +26,32 @@ type MainCategoryProps = {
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 const MainCategory = async ({ params }: MainCategoryProps) => {
-  // const { categoriesData: categories, isLoading, isError } = useCategories();
+  const { categoriesData: categories, isLoading, isError } = useCategories();
 
-  const categories: Category[] = await getCategories();
+  // const categories: Category[] = await getCategories();
+
+  const [titleNames, setTitleNames] = useState<string[]>([]);
+
+  const [titlesUrls, setTitleUrls] = useState<string[]>([]);
+
+  const [title, setTitle] = useState<string>("");
+
+  useEffect(() => {
+    async function fetchTitles() {
+      const [titleNames, titlesUrls] = await PageData(params);
+      const title = titleNames[titleNames.length - 1];
+      setTitleNames(titleNames);
+      setTitleUrls(titlesUrls);
+      setTitle(title);
+    }
+    fetchTitles();
+  }, []);
 
   // const pathname = usePathname();
   // const { mainCategory } = useParams();
-  const [titleNames, titlesUrls] = await PageData(params);
-  const title = titleNames[titleNames.length - 1];
-  console.log(title);
+  // const [titleNames, titlesUrls] = await PageData(params);
+  // const title = titleNames[titleNames.length - 1];
+  // console.log(title);
 
   return (
     <div>

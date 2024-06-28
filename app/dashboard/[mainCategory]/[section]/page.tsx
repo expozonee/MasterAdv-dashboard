@@ -1,15 +1,15 @@
-// "use client";
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { getCategories, getPortfolioSections } from "@/utils/data";
 // import { usePathname, useParams } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import { Rubik } from "next/font/google";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
-import DashboardQuery from "@/components/Query/DashboardQuery";
-import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
+// import DashboardQuery from "@/components/Query/DashboardQuery";
+// import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
 import { useCategories } from "@/components/Query/CategoriesQuery";
-import { Category } from "@/types/categories";
+// import { Category } from "@/types/categories";
 
 interface PortfolioData {
   id: number;
@@ -29,13 +29,30 @@ const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 const Section = async ({ params }: SectionProps) => {
   // const { section } = useParams();
 
-  // const { isLoading, isError, categoriesData: categories } = useCategories();
+  const { isLoading, isError, categoriesData: categories } = useCategories();
 
-  const categories: Category[] = await getCategories();
+  // const categories: Category[] = await getCategories();
 
-  const [titleNames, titlesUrls] = await PageData(params);
-  const title = titleNames[titleNames.length - 1];
-  console.log(title);
+  const [titleNames, setTitleNames] = useState<string[]>([]);
+
+  const [titlesUrls, setTitleUrls] = useState<string[]>([]);
+
+  const [title, setTitle] = useState<string>("");
+
+  useEffect(() => {
+    async function fetchTitles() {
+      const [titleNames, titlesUrls] = await PageData(params);
+      const title = titleNames[titleNames.length - 1];
+      setTitleNames(titleNames);
+      setTitleUrls(titlesUrls);
+      setTitle(title);
+    }
+    fetchTitles();
+  }, []);
+
+  // const [titleNames, titlesUrls] = await PageData(params);
+  // const title = titleNames[titleNames.length - 1];
+  // console.log(title);
 
   return (
     <div>
