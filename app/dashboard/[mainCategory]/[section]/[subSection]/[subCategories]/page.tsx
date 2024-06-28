@@ -93,13 +93,12 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
   });
   const projects: Project[] = filiteredProjectsData;
 
+  const [titleNames, titlesUrls] = await PageData(params);
+  const title = titleNames[titleNames.length - 1];
   // end of new
 
   // old
   // const [projects, setProjects] = useState<Project[]>([]);
-
-  const [titleNames, titlesUrls] = await PageData(params);
-  const title = titleNames[titleNames.length - 1];
 
   // useEffect(() => {
   //   async function fetchData() {
