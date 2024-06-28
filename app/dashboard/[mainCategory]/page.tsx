@@ -4,9 +4,11 @@ import PageData from "@/app/dashboard/PageData";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
 import { Rubik } from "next/font/google";
-import DashboardQuery from "@/components/Query/DashboardQuery";
-import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
-import { useCategories } from "@/components/Query/CategoriesQuery";
+// import DashboardQuery from "@/components/Query/DashboardQuery";
+// import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
+// import { useCategories } from "@/components/Query/CategoriesQuery";
+import { getCategories } from "@/utils/data";
+import type { Category } from "@/types/categories";
 
 interface PortfolioData {
   id: number;
@@ -23,7 +25,9 @@ type MainCategoryProps = {
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 const MainCategory = async ({ params }: MainCategoryProps) => {
-  const { categoriesData: categories, isLoading, isError } = useCategories();
+  // const { categoriesData: categories, isLoading, isError } = useCategories();
+
+  const categories: Category[] = await getCategories();
 
   // const pathname = usePathname();
   // const { mainCategory } = useParams();
@@ -49,8 +53,8 @@ const MainCategory = async ({ params }: MainCategoryProps) => {
       ></div> */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-        {isLoading && <DashboardSkeleton />}
-        {isError && <div>Error...</div>}
+        {/* {isLoading && <DashboardSkeleton />} */}
+        {/* {isError && <div>Error...</div>} */}
         {categories?.map((mainCategory) => {
           return mainCategory.sections.map((section) => {
             return (

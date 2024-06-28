@@ -7,6 +7,8 @@ import DashboardCard from "@/components/Dashboard/DashboardCard";
 import DashboardQuery from "@/components/Query/DashboardQuery";
 import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
 import { useCategories } from "@/components/Query/CategoriesQuery";
+import { Category } from "@/types/categories";
+import { getCategories } from "@/utils/data";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -25,7 +27,9 @@ type SubSectionProps = {
 
 const SubSection = async ({ params }: SubSectionProps) => {
   // const { subSection } = useParams();
-  const { categoriesData: categories, isLoading, isError } = useCategories();
+  // const { categoriesData: categories, isLoading, isError } = useCategories();
+
+  const categories: Category[] = await getCategories();
 
   // const pathname = usePathname();
   const [titleNames, titlesUrls] = await PageData(params);
@@ -37,8 +41,8 @@ const SubSection = async ({ params }: SubSectionProps) => {
       <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
       <BreadCrumbs titleNames={titleNames} titleUrls={titlesUrls} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-        {isLoading && <DashboardSkeleton />}
-        {isError && <div>Error...</div>}
+        {/* {isLoading && <DashboardSkeleton />} */}
+        {/* {isError && <div>Error...</div>} */}
         {categories?.map((mainCategory) => {
           return mainCategory.sections.map((section) => {
             const desiredSubSection = section.subSections.find(
