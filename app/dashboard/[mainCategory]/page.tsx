@@ -1,6 +1,5 @@
-"use client";
 import React from "react";
-import { usePathname, useParams } from "next/navigation";
+// import { usePathname, useParams } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
@@ -23,12 +22,12 @@ type MainCategoryProps = {
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
-const MainCategory = ({ params }: MainCategoryProps) => {
+const MainCategory = async ({ params }: MainCategoryProps) => {
   const { categoriesData: categories, isLoading, isError } = useCategories();
 
-  const pathname = usePathname();
-  const { mainCategory } = useParams();
-  const [titleNames, titlesUrls] = PageData(params);
+  // const pathname = usePathname();
+  // const { mainCategory } = useParams();
+  const [titleNames, titlesUrls] = await PageData(params);
   const title = titleNames[titleNames.length - 1];
   console.log(title);
 

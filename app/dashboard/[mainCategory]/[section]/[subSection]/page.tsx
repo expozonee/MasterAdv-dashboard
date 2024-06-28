@@ -1,6 +1,5 @@
-"use client";
 import React from "react";
-import { usePathname, useParams } from "next/navigation";
+// import { usePathname, useParams } from "next/navigation";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import { Rubik } from "next/font/google";
 import PageData from "@/app/dashboard/PageData";
@@ -24,12 +23,12 @@ type SubSectionProps = {
   };
 };
 
-const SubSection = ({ params }: SubSectionProps) => {
-  const { subSection } = useParams();
+const SubSection = async ({ params }: SubSectionProps) => {
+  // const { subSection } = useParams();
   const { categoriesData: categories, isLoading, isError } = useCategories();
 
-  const pathname = usePathname();
-  const [titleNames, titlesUrls] = PageData(params);
+  // const pathname = usePathname();
+  const [titleNames, titlesUrls] = await PageData(params);
   const title = titleNames[titleNames.length - 1];
   console.log(title);
 
@@ -43,7 +42,8 @@ const SubSection = ({ params }: SubSectionProps) => {
         {categories?.map((mainCategory) => {
           return mainCategory.sections.map((section) => {
             const desiredSubSection = section.subSections.find(
-              (desiredSubSection) => desiredSubSection.slug === subSection
+              (desiredSubSection) =>
+                desiredSubSection.slug === params.subSection
             );
             return desiredSubSection?.subCategories.map((subCategory) => {
               return (

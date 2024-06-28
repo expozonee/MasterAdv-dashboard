@@ -1,7 +1,7 @@
-"use client";
+// "use client";
 import React from "react";
 import { getPortfolioSections } from "@/utils/data";
-import { usePathname, useParams } from "next/navigation";
+// import { usePathname, useParams } from "next/navigation";
 import PageData from "@/app/dashboard/PageData";
 import { Rubik } from "next/font/google";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
@@ -25,14 +25,14 @@ type SectionProps = {
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
-const Section = ({ params }: SectionProps) => {
-  const { section } = useParams();
+const Section = async ({ params }: SectionProps) => {
+  // const { section } = useParams();
 
   const { isLoading, isError, categoriesData: categories } = useCategories();
 
   const data: PortfolioData[] = getPortfolioSections();
-  const pathname = usePathname();
-  const [titleNames, titlesUrls] = PageData(params);
+  // const pathname = usePathname();
+  const [titleNames, titlesUrls] = await PageData(params);
   const title = titleNames[titleNames.length - 1];
   console.log(title);
 
@@ -70,7 +70,7 @@ const Section = ({ params }: SectionProps) => {
         {isError && <div>Error...</div>}
         {categories?.map((mainCategory) => {
           const desiredSection = mainCategory.sections.find(
-            (desiredSection) => desiredSection.slug === section
+            (desiredSection) => desiredSection.slug === params.section
           );
           return desiredSection?.subSections.map((subSection) => {
             return (
