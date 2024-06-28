@@ -58,9 +58,9 @@ type Project = {
 export async function generateStaticParams() {
   const categories: Category[] = await getCategories();
 
-  return categories.map((category) => {
-    return category.sections.map((section) => {
-      return section.subSections.map((subSection) => {
+  const paths = categories.flatMap((category) => {
+    return category.sections.flatMap((section) => {
+      return section.subSections.flatMap((subSection) => {
         return subSection.subCategories.map((subCategory) => {
           return {
             mainCategory: category.slug,
@@ -72,6 +72,10 @@ export async function generateStaticParams() {
       });
     });
   });
+
+  console.log(paths);
+
+  return paths;
 }
 
 const SubCategory = async ({ params }: SubCategoryProps) => {
