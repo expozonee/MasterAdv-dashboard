@@ -67,12 +67,12 @@ const PageData = async ({
   // );
 
   // useEffect(() => {
-  async function getTitle() {
-    // const data: Data = await getTitles(slugs);
-    // setTitleData(data.names[data.names.length - 1].name);
-    // setBreadcrumbsData(data);
-  }
-  getTitle();
+  // async function getTitle() {
+  // const data: Data = await getTitles(slugs);
+  // setTitleData(data.names[data.names.length - 1].name);
+  // setBreadcrumbsData(data);
+  // }
+  // getTitle();
 
   const paths = [mainCategory, section, subSection, subCategories].filter(
     Boolean
