@@ -126,7 +126,8 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
 
   return (
     <div>
-      <div>
+      <h1>welcome server</h1>
+      {/* <div>
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
@@ -152,7 +153,7 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
           </div>
         ))}
       </ImagesGrid>
-      {/* </div> */}
+      </div> */}
     </div>
   );
 };
