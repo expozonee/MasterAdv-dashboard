@@ -26,7 +26,7 @@ type SectionProps = {
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
-const Section = async ({ params }: SectionProps) => {
+const Section = ({ params }: SectionProps) => {
   // const { section } = useParams();
 
   const { isLoading, isError, categoriesData: categories } = useCategories();

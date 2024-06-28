@@ -25,7 +25,7 @@ type MainCategoryProps = {
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
-const MainCategory = async ({ params }: MainCategoryProps) => {
+const MainCategory = ({ params }: MainCategoryProps) => {
   const { categoriesData: categories, isLoading, isError } = useCategories();
 
   // const categories: Category[] = await getCategories();
