@@ -103,8 +103,8 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
   // old
   // const [projects, setProjects] = useState<Project[]>([]);
 
-  const [titleNames, titlesUrls] = PageData(params);
-  const title = titleNames[titleNames.length - 1];
+  // const [titleNames, titlesUrls] = PageData(params);
+  // const title = titleNames[titleNames.length - 1];
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -126,17 +126,9 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
 
   return (
     <div>
-      <h1>welcome server</h1>
-    </div>
-  );
-};
-
-export default SubCategory;
-
-{
-  /* <div>
-        <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
-        <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
+      <div>
+        {/* <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1> */}
+        {/* <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} /> */}
       </div>
 
       <ImagesGrid>
@@ -160,5 +152,20 @@ export default SubCategory;
           </div>
         ))}
       </ImagesGrid>
-      </div> */
-}
+      {/* </div> */}
+    </div>
+  );
+};
+
+export default SubCategory;
+
+// {
+//   params,
+// }: {
+//   params: {
+//     mainCategory: string;
+//     section: string;
+//     subSection: string;
+//     subCategories: string;
+//   };
+// }
