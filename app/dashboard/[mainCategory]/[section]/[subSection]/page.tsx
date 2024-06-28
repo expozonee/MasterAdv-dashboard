@@ -1,6 +1,5 @@
-"use client";
 import React from "react";
-import { usePathname, useParams } from "next/navigation";
+// import { usePathname, useParams } from "next/navigation";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import { Rubik } from "next/font/google";
 import PageData from "@/app/dashboard/PageData";
@@ -8,6 +7,8 @@ import DashboardCard from "@/components/Dashboard/DashboardCard";
 import DashboardQuery from "@/components/Query/DashboardQuery";
 import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
 import { useCategories } from "@/components/Query/CategoriesQuery";
+import { Category } from "@/types/categories";
+import { getCategories } from "@/utils/data";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -24,12 +25,14 @@ type SubSectionProps = {
   };
 };
 
-const SubSection = ({ params }: SubSectionProps) => {
-  const { subSection } = useParams();
-  const { categoriesData: categories, isLoading, isError } = useCategories();
+const SubSection = async ({ params }: SubSectionProps) => {
+  // const { subSection } = useParams();
+  // const { categoriesData: categories, isLoading, isError } = useCategories();
 
-  const pathname = usePathname();
-  const [titleNames, titlesUrls] = PageData(params);
+  const categories: Category[] = await getCategories();
+
+  // const pathname = usePathname();
+  const [titleNames, titlesUrls] = await PageData(params);
   const title = titleNames[titleNames.length - 1];
   console.log(title);
 
@@ -38,12 +41,13 @@ const SubSection = ({ params }: SubSectionProps) => {
       <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
       <BreadCrumbs titleNames={titleNames} titleUrls={titlesUrls} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-        {isLoading && <DashboardSkeleton />}
-        {isError && <div>Error...</div>}
+        {/* {isLoading && <DashboardSkeleton />} */}
+        {/* {isError && <div>Error...</div>} */}
         {categories?.map((mainCategory) => {
           return mainCategory.sections.map((section) => {
             const desiredSubSection = section.subSections.find(
-              (desiredSubSection) => desiredSubSection.slug === subSection
+              (desiredSubSection) =>
+                desiredSubSection.slug === params.subSection
             );
             return desiredSubSection?.subCategories.map((subCategory) => {
               return (
