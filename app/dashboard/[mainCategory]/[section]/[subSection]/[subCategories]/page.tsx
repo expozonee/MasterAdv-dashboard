@@ -103,8 +103,8 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
   // old
   // const [projects, setProjects] = useState<Project[]>([]);
 
-  // const [titleNames, titlesUrls] = PageData(params);
-  // const title = titleNames[titleNames.length - 1];
+  const [titleNames, titlesUrls] = await PageData(params);
+  const title = titleNames[titleNames.length - 1];
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -127,8 +127,8 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
   return (
     <div>
       <div>
-        {/* <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1> */}
-        {/* <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} /> */}
+        <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
+        <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
 
       <ImagesGrid>
