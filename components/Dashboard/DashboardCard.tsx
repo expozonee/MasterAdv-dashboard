@@ -1,3 +1,4 @@
+"use client";
 import { Rubik } from "next/font/google";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
