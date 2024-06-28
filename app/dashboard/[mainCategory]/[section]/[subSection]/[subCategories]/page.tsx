@@ -93,11 +93,6 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
   });
   const projects: Project[] = filiteredProjectsData;
 
-  console.log(projectsData, "projectsData");
-  console.log(filiteredProjectsData, "filiteredProjectsData");
-  console.log(projects, "projects");
-  console.log(params, "params");
-
   // end of new
 
   // old
