@@ -1,14 +1,15 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Rubik } from "next/font/google";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import PageData from "@/app/dashboard/PageData";
-import { getPortfolioSections } from "@/utils/data";
+// import { getPortfolioSections } from "@/utils/data";
 import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
+import { getCategories } from "@/utils/data";
+import type { Category } from "@/types/categories";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -17,11 +18,11 @@ const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 //   urls: string[];
 // }
 
-interface PortfolioData {
-  id: number;
-  title: string;
-  imageUrl: string;
-}
+// interface PortfolioData {
+//   id: number;
+//   title: string;
+//   imageUrl: string;
+// }
 
 type SubCategoryProps = {
   params: {
@@ -54,34 +55,65 @@ type Project = {
   isSpecial: string;
 };
 
-const SubCategory = ({ params }: SubCategoryProps) => {
+export async function generateStaticParams() {
+  const categories: Category[] = await getCategories();
+
+  return categories.map((category) => {
+    return category.sections.map((section) => {
+      return section.subSections.map((subSection) => {
+        return subSection.subCategories.map((subCategory) => {
+          return {
+            mainCategory: category.slug,
+            section: section.slug,
+            subSection: subSection.slug,
+            subCategories: subCategory.slug,
+          };
+        });
+      });
+    });
+  });
+}
+
+const SubCategory = async ({ params }: SubCategoryProps) => {
   const { mainCategory, section, subSection, subCategories } = params;
-  // console.log(params);
-  // const pathname = usePathname();
-  const data: PortfolioData[] = getPortfolioSections();
-  const [projects, setProjects] = useState<Project[]>([]);
+
+  // new
+  const projectsData = await getProjectsDashboard(params);
+  const filiteredProjectsData = projectsData.filter((item: Project) => {
+    return (
+      item.mainCategory.slug === mainCategory &&
+      item.section.slug === section &&
+      item.subSection.slug === subSection &&
+      item.subCategory.slug === subCategories
+    );
+  });
+  const projects: Project[] = filiteredProjectsData;
+
+  // end of new
+
+  // old
+  // const [projects, setProjects] = useState<Project[]>([]);
 
   const [titleNames, titlesUrls] = PageData(params);
   const title = titleNames[titleNames.length - 1];
-  console.log(title);
 
-  useEffect(() => {
-    async function fetchData() {
-      const projectsData = await getProjectsDashboard(params);
-      const filiteredProjectsData = projectsData.filter((item: Project) => {
-        return (
-          item.mainCategory.slug === mainCategory &&
-          item.section.slug === section &&
-          item.subSection.slug === subSection &&
-          item.subCategory.slug === subCategories
-        );
-      });
-      // console.log(projectsData);
-      // console.log(filiteredProjectsData);
-      setProjects(filiteredProjectsData);
-    }
-    fetchData();
-  }, [mainCategory, section, subSection, subCategories, params]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const projectsData = await getProjectsDashboard(params);
+  //     const filiteredProjectsData = projectsData.filter((item: Project) => {
+  //       return (
+  //         item.mainCategory.slug === mainCategory &&
+  //         item.section.slug === section &&
+  //         item.subSection.slug === subSection &&
+  //         item.subCategory.slug === subCategories
+  //       );
+  //     });
+  //     // console.log(projectsData);
+  //     // console.log(filiteredProjectsData);
+  //     // setProjects(filiteredProjectsData);
+  //   }
+  //   fetchData();
+  // }, [mainCategory, section, subSection, subCategories, params]);
 
   return (
     <div>
