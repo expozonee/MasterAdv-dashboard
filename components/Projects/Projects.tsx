@@ -23,7 +23,6 @@ const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 export function Projects({ params }: ProjectsProps) {
   const { mainCategory, section, subSection, subCategories } = params;
   const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading_Test, setIsLoading_Test] = useState<boolean>(true);
   const {
     data: projectsData,
     isError,
@@ -51,14 +50,15 @@ export function Projects({ params }: ProjectsProps) {
     fetchData();
   }, [mainCategory, section, subSection, subCategories, params]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading_Test(false);
-    }, 3000);
-  }, []);
-
-  if (isError) return <div>שגיאה בטעינת פרויקטים</div>;
-  if (isLoading_Test) return <ProjectSkeleton location="dashboard" />;
+  if (isError)
+    return (
+      <div
+        className={`text-gold ${titleRubik.className} text-2xl text-center mx-auto`}
+      >
+        שגיאה בטעינת פרויקטים
+      </div>
+    );
+  if (isLoading) return <ProjectSkeleton location="dashboard" />;
 
   return (
     <>
