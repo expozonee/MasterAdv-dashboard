@@ -20,6 +20,7 @@ type ProjectsProps = {
 export function Projects({ params }: ProjectsProps) {
   const { mainCategory, section, subSection, subCategories } = params;
   const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading_Test, setIsLoading_Test] = useState<boolean>(true);
   const {
     data: projectsData,
     isError,
@@ -47,31 +48,41 @@ export function Projects({ params }: ProjectsProps) {
     fetchData();
   }, [mainCategory, section, subSection, subCategories, params]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading_Test(false);
+    }, 3000);
+  }, []);
+
   if (isError) return <div>שגיאה בטעינת פרויקטים</div>;
-  if (isLoading) return <ProjectSkeleton />;
+  if (isLoading_Test) return <ProjectSkeleton />;
 
   return (
     <>
       <ImagesGrid>
-        {projects.map((project) => (
-          <div
-            key={project.itemId}
-            className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
-          >
-            <Link
-              href={`${subCategories}/project/${project.itemId}`}
-              className="w-full h-full"
+        {projects.length > 0 ? (
+          projects.map((project) => (
+            <div
+              key={project.itemId}
+              className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
             >
-              <Image
-                src={project.imageUrl}
-                alt={project.imageUrl}
-                width={400}
-                height={400}
-                className="rounded-lg w-full h-full"
-              />
-            </Link>
-          </div>
-        ))}
+              <Link
+                href={`${subCategories}/project/${project.itemId}`}
+                className="w-full h-full"
+              >
+                <Image
+                  src={project.imageUrl}
+                  alt={project.imageUrl}
+                  width={400}
+                  height={400}
+                  className="rounded-lg w-full h-full"
+                />
+              </Link>
+            </div>
+          ))
+        ) : (
+          <div>אין פרויקטים להצגה</div>
+        )}
       </ImagesGrid>
     </>
   );
