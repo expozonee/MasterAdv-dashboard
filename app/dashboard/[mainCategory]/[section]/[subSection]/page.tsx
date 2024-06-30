@@ -1,5 +1,4 @@
-"use client";
-import React, { cache, useEffect, useState } from "react";
+import React, { cache } from "react";
 // import { usePathname, useParams } from "next/navigation";
 import BreadCrumbs from "@/components/Breadcrumbs/Breadcrumb";
 import { Rubik } from "next/font/google";
@@ -7,7 +6,7 @@ import PageData from "@/app/dashboard/PageData";
 import DashboardCard from "@/components/Dashboard/DashboardCard";
 import DashboardQuery from "@/components/Query/DashboardQuery";
 import DashboardSkeleton from "@/components/Skeletons/DashboardSkeleton";
-import { useCategories } from "@/components/Query/CategoriesQuery";
+// import { useCategories } from "@/components/Query/CategoriesQuery";
 import { Category } from "@/types/categories";
 import { getCategories } from "@/utils/data";
 
