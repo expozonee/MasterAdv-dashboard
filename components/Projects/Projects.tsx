@@ -27,7 +27,7 @@ export function Projects({ params }: ProjectsProps) {
     data: projectsData,
     isError,
     isLoading,
-  } = useQuery({
+  } = useQuery<Project[]>({
     queryKey: ["projects", params],
     queryFn: async () => {
       return await getProjectsDashboard(params);
@@ -37,16 +37,15 @@ export function Projects({ params }: ProjectsProps) {
   useEffect(() => {
     async function fetchData() {
       //   const projectsData = await getProjectsDashboard(params);
-      const filiteredProjectsData = (projectsData as Project[]).filter(
-        (item: Project) => {
-          return (
-            item.mainCategory.slug === mainCategory &&
-            item.section.slug === section &&
-            item.subSection.slug === subSection &&
-            item.subCategory.slug === subCategories
-          );
-        }
-      );
+      if (!projectsData || projectsData?.length === 0) return;
+      const filiteredProjectsData = projectsData.filter((item: Project) => {
+        return (
+          item.mainCategory.slug === mainCategory &&
+          item.section.slug === section &&
+          item.subSection.slug === subSection &&
+          item.subCategory.slug === subCategories
+        );
+      });
       setProjects(filiteredProjectsData);
     }
     fetchData();
