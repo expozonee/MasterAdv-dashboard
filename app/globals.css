@@ -224,7 +224,3 @@ footer {
 .burger-button-icon {
   @apply md:hidden;
 }
-
-.height-lvh {
-  @apply h-lvh;
-}
