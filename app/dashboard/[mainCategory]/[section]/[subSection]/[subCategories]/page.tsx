@@ -8,6 +8,7 @@ import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import { getCategories } from "@/utils/data";
 import type { Category } from "@/types/categories";
+import { Projects } from "@/components/Projects/Projects";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -114,8 +115,9 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
+      <Projects params={params} />
 
-      <ImagesGrid>
+      {/* <ImagesGrid>
         {projects.map((project) => (
           <div
             key={project.itemId}
@@ -135,7 +137,7 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
             </Link>
           </div>
         ))}
-      </ImagesGrid>
+      </ImagesGrid> */}
     </div>
   );
 };
