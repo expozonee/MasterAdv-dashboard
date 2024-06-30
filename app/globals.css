@@ -4,6 +4,10 @@ html {
   overflow: hidden;
 }
 
+body {
+  overflow: auto;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -219,4 +223,8 @@ footer {
 
 .burger-button-icon {
   @apply md:hidden;
+}
+
+.height-lvh {
+  @apply h-lvh;
 }
