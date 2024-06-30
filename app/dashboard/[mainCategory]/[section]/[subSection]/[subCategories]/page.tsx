@@ -2,27 +2,14 @@ import React, { cache } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Rubik } from "next/font/google";
-// import { usePathname } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import PageData from "@/app/dashboard/PageData";
-// import { getPortfolioSections } from "@/utils/data";
 import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import { getCategories } from "@/utils/data";
 import type { Category } from "@/types/categories";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
-
-// interface Data {
-//   names: [{ name: string }];
-//   urls: string[];
-// }
-
-// interface PortfolioData {
-//   id: number;
-//   title: string;
-//   imageUrl: string;
-// }
 
 type SubCategoryProps = {
   params: {
@@ -76,8 +63,6 @@ export async function generateStaticParams() {
       });
     });
   });
-
-  // console.log(paths);
 
   return paths;
 }
@@ -151,20 +136,8 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
           </div>
         ))}
       </ImagesGrid>
-      {/* </div> */}
     </div>
   );
 };
 
 export default SubCategory;
-
-// {
-//   params,
-// }: {
-//   params: {
-//     mainCategory: string;
-//     section: string;
-//     subSection: string;
-//     subCategories: string;
-//   };
-// }
