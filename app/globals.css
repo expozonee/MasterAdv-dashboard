@@ -216,8 +216,8 @@ footer {
 }
 
 .height-lvh {
-  height: 100lvh;
   height: 100vh;
+  height: 100lvh;
 }
 
 /* my custom tailwind css styles */
