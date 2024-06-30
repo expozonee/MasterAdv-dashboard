@@ -37,18 +37,20 @@ export function Projects({ params }: ProjectsProps) {
   useEffect(() => {
     async function fetchData() {
       //   const projectsData = await getProjectsDashboard(params);
-      const filiteredProjectsData = projectsData.filter((item: Project) => {
-        return (
-          item.mainCategory.slug === mainCategory &&
-          item.section.slug === section &&
-          item.subSection.slug === subSection &&
-          item.subCategory.slug === subCategories
-        );
-      });
+      const filiteredProjectsData = (projectsData as Project[]).filter(
+        (item: Project) => {
+          return (
+            item.mainCategory.slug === mainCategory &&
+            item.section.slug === section &&
+            item.subSection.slug === subSection &&
+            item.subCategory.slug === subCategories
+          );
+        }
+      );
       setProjects(filiteredProjectsData);
     }
     fetchData();
-  }, [mainCategory, section, subSection, subCategories, params]);
+  }, [mainCategory, section, subSection, subCategories, projectsData, params]);
 
   if (isError)
     return (
