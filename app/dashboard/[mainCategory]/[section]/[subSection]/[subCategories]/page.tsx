@@ -55,8 +55,12 @@ type Project = {
   isSpecial: string;
 };
 
+const fetchCategories = cache(async () => {
+  return await getCategories();
+});
+
 export async function generateStaticParams() {
-  const categories: Category[] = cache(await getCategories());
+  const categories: Category[] = await fetchCategories();
 
   const paths = categories.flatMap((category) => {
     return category.sections.flatMap((section) => {
