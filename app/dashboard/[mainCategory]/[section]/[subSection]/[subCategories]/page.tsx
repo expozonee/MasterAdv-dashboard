@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cache } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Rubik } from "next/font/google";
@@ -56,7 +56,7 @@ type Project = {
 };
 
 export async function generateStaticParams() {
-  const categories: Category[] = await getCategories();
+  const categories: Category[] = cache(await getCategories());
 
   const paths = categories.flatMap((category) => {
     return category.sections.flatMap((section) => {
