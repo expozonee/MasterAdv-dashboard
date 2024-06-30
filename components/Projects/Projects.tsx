@@ -58,7 +58,7 @@ export function Projects({ params }: ProjectsProps) {
   }, []);
 
   if (isError) return <div>שגיאה בטעינת פרויקטים</div>;
-  if (isLoading_Test) return <ProjectSkeleton />;
+  if (isLoading_Test) return <ProjectSkeleton location="dashboard" />;
 
   return (
     <>

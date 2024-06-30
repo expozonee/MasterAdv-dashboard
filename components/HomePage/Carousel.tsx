@@ -108,7 +108,7 @@ export default function CarouselComponent({ title }: CarouselProps) {
           className="max-w-[1500px] mx-20 xl:mx-auto"
         >
           <CarouselContent>
-            {isLoading && <ProjectSkeleton />}
+            {isLoading && <ProjectSkeleton location="home" />}
 
             {projects.map((project, index) => (
               <CarouselItem
