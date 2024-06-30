@@ -69,19 +69,19 @@ export async function generateStaticParams() {
 }
 
 const SubCategory = async ({ params }: SubCategoryProps) => {
-  const { mainCategory, section, subSection, subCategories } = params;
+  // const { mainCategory, section, subSection, subCategories } = params;
 
   // new
-  const projectsData = await getProjectsDashboard(params);
-  const filiteredProjectsData = projectsData.filter((item: Project) => {
-    return (
-      item.mainCategory.slug === mainCategory &&
-      item.section.slug === section &&
-      item.subSection.slug === subSection &&
-      item.subCategory.slug === subCategories
-    );
-  });
-  const projects: Project[] = filiteredProjectsData;
+  // const projectsData = await getProjectsDashboard(params);
+  // const filiteredProjectsData = projectsData.filter((item: Project) => {
+  //   return (
+  //     item.mainCategory.slug === mainCategory &&
+  //     item.section.slug === section &&
+  //     item.subSection.slug === subSection &&
+  //     item.subCategory.slug === subCategories
+  //   );
+  // });
+  // const projects: Project[] = filiteredProjectsData;
 
   // end of new
 
