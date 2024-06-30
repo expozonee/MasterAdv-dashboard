@@ -66,6 +66,7 @@ export default function DashboardCard({
           <Link
             href={`${pathname}/${section?.slug}`}
             className="w-full lg:w-2/6 h-2/3 bg-white btn text-xl"
+            scroll={false}
           >
             לחץ כאן
           </Link>
