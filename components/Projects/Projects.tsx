@@ -7,6 +7,7 @@ import ImagesGrid from "../PortfolioImage/ImagesGrid";
 import { useQuery } from "@tanstack/react-query";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import ProjectSkeleton from "../Skeletons/ProjectSkeleton";
+import { Rubik } from "next/font/google";
 
 type ProjectsProps = {
   params: {
@@ -16,6 +17,8 @@ type ProjectsProps = {
     subCategories: string;
   };
 };
+
+const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 export function Projects({ params }: ProjectsProps) {
   const { mainCategory, section, subSection, subCategories } = params;
@@ -59,9 +62,9 @@ export function Projects({ params }: ProjectsProps) {
 
   return (
     <>
-      <ImagesGrid>
-        {projects.length > 0 ? (
-          projects.map((project) => (
+      {projects.length > 0 ? (
+        <ImagesGrid>
+          {projects.map((project) => (
             <div
               key={project.itemId}
               className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
@@ -79,11 +82,15 @@ export function Projects({ params }: ProjectsProps) {
                 />
               </Link>
             </div>
-          ))
-        ) : (
-          <div>אין פרויקטים להצגה</div>
-        )}
-      </ImagesGrid>
+          ))}
+        </ImagesGrid>
+      ) : (
+        <div
+          className={`text-gold ${titleRubik.className} text-2xl text-center mx-auto`}
+        >
+          אין פרויקטים להצגה
+        </div>
+      )}
     </>
   );
 }
