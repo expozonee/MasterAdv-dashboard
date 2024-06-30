@@ -215,6 +215,11 @@ footer {
   content: "";
 }
 
+.height-lvh {
+  height: 100lvh;
+  height: 100vh;
+}
+
 /* my custom tailwind css styles */
 
 .button {
