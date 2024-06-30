@@ -10,6 +10,7 @@ import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import { getCategories } from "@/utils/data";
 import type { Category } from "@/types/categories";
+import TestDelay from "./TestDelay";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -129,6 +130,7 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
+      <TestDelay />
 
       <ImagesGrid>
         {projects.map((project) => (
