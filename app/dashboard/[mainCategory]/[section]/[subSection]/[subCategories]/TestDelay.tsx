@@ -9,5 +9,5 @@ export default function TestDelay() {
     }, 5000);
   }, []);
 
-  return <div>is Delay? {isDelay}</div>;
+  return <div>{`is Delay? ${isDelay}`}</div>;
 }
