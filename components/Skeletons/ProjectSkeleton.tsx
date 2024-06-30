@@ -1,15 +1,25 @@
 import { Skeleton } from "@mui/material";
 
-export default function ProjectSkeleton() {
+type ProjectSkeletonProps = {
+  location: "home" | "dashboard";
+};
+
+export default function ProjectSkeleton({ location }: ProjectSkeletonProps) {
   return (
     <div
-      style={{
-        display: "grid",
-        gridAutoFlow: "dense",
-        gap: "1rem",
-        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 400px))",
-      }}
-      className="justify-items-center "
+      style={
+        location === "home"
+          ? undefined
+          : {
+              display: "grid",
+              gridAutoFlow: "dense",
+              gap: "1rem",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 400px))",
+            }
+      }
+      className={`${
+        location === "home" ? "flex gap-3" : "justify-items-center"
+      }`}
     >
       <Skeleton
         height={400}
