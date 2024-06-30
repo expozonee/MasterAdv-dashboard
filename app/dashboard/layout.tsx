@@ -16,7 +16,7 @@ export default function RootLayout({
           {/* {loading ? (
           <Loader />
         ) : ( */}
-          <div className="flex h-screen overflow-hidden">
+          <div className="flex h-full overflow-hidden">
             {/* <!-- ===== Sidebar Start ===== --> */}
             <Sidebar />
             <SidebarBackdrop />
