@@ -215,9 +215,9 @@ footer {
   content: "";
 }
 
-.height-lvh {
+.height-dvh {
   height: 100vh;
-  height: 100lvh;
+  height: 100dvh;
 }
 
 /* my custom tailwind css styles */
