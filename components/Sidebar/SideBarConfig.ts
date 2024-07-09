@@ -1,5 +1,6 @@
 import { getCategories } from "@/utils/data";
 import Type from "./Types";
+import { BusinessType } from "@/types/categories";
 
 export interface Category {
   mainCategoryId: number;
@@ -29,7 +30,7 @@ interface OpenStateConfig {
 }
 
 export async function initializeOpenState() {
-  const mainCategory: Category[] = await getCategories();
+  const businessTypes: BusinessType[] = await getCategories();
 
   const initializeOpenState: OpenStateConfig = {
     [Type.mainCategory.name]: {},
@@ -37,24 +38,24 @@ export async function initializeOpenState() {
     [Type.subSection.name]: {},
   };
 
-  mainCategory.forEach((category) => {
+  businessTypes.forEach((businessType) => {
     initializeOpenState[Type.mainCategory.name] = {
       ...initializeOpenState[Type.mainCategory.name],
-      [category.mainCategoryId]: true,
+      [businessType.businessTypeId]: true,
     };
 
-    category.sections.forEach((section) => {
+    businessType.businessCategories.forEach((busincessCategory) => {
       initializeOpenState[Type.section.name] = {
         ...initializeOpenState[Type.section.name],
-        [section.sectionId]: true,
+        [busincessCategory.businessCategoryId]: true,
       };
 
-      section.subSections.forEach((subSection) => {
-        initializeOpenState[Type.subSection.name] = {
-          ...initializeOpenState[Type.subSection.name],
-          [subSection.subSectionId]: true,
-        };
-      });
+      // busincessCategory.subSections.forEach((subSection) => {
+      //   initializeOpenState[Type.subSection.name] = {
+      //     ...initializeOpenState[Type.subSection.name],
+      //     [subSection.subSectionId]: true,
+      //   };
+      // });
     });
   });
   return initializeOpenState;

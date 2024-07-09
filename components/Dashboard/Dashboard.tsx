@@ -34,7 +34,10 @@ const Dashboard: React.FC = () => {
         return (
           <DashboardCard
             key={mainCategory.name}
-            section={{ name: mainCategory.name, slug: mainCategory.slug }}
+            businessCategory={{
+              name: mainCategory.name,
+              slug: mainCategory.slug,
+            }}
           />
         );
       })}

@@ -9,39 +9,12 @@ import SubCategoryItem from "./SubCategoryItem";
 import { initializeOpenState } from "./SideBarConfig";
 import SideBarSkeleton from "../Skeletons/SideBarSkeleton";
 import { useCategories } from "@/components/Query/CategoriesQuery";
-import type { Category } from "@/types/categories";
+import type { BusinessType } from "@/types/categories";
 import getTitles from "@/utils/getTitles";
 
 const rubikHeader = Rubik({ weight: "800", subsets: ["hebrew"] });
 const rubikSubHeader = Rubik({ weight: "500", subsets: ["hebrew"] });
 const rubikBody = Rubik({ weight: "400", subsets: ["hebrew"] });
-
-// interface Category {
-//   mainCategoryId: number;
-//   name: string;
-//   slug: string;
-//   sections: Sections[];
-// }
-
-// interface Sections {
-//   sectionId: number;
-//   name: string;
-//   slug: string;
-//   subSections: SubSection[];
-// }
-
-// interface SubSection {
-//   subSectionId: number;
-//   name: string;
-//   slug: string;
-//   subCategories: SubCategory[];
-// }
-
-// interface SubCategory {
-//   subCategoryId: number;
-//   name: string;
-//   slug: string;
-// }
 
 interface OpenStateConfig {
   [type: string]: {
@@ -78,15 +51,14 @@ const Menu = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState<OpenStateConfig>({});
   const [activeItem, setActiveItem] = useState<string | undefined>(undefined);
-  const [categories, setCategories] = useState<Category[]>([]);
-  // console.log("this is the categoriesData: ", categoriesData);
+  const [businessTypes, setCategories] = useState<BusinessType[]>([]);
 
   useEffect(() => {
     if (categoriesData) {
       setCategories(categoriesData);
-      console.log(categories);
+      console.log(businessTypes);
     }
-  }, [isLoading, categoriesData, categories]);
+  }, [isLoading, categoriesData, businessTypes]);
 
   useEffect(() => {
     const openStateInitializeData = async () => {
@@ -133,22 +105,6 @@ const Menu = () => {
     console.log(open);
   };
 
-  // useEffect(() => {
-  //   setCategories(categoriesData);
-  //   const interval = setInterval(() => {
-  //     setIsLoading(false);
-  //   }, 300);
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
-
-  // this was in the class name of the main category div at line 114
-  // ${
-  //   (pathname === "/" || pathname.includes("dashboard")) &&
-  //   "bg-graydark dark:bg-meta-4"
-  // }
-
   return (
     <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
       {/* <!-- Sidebar Menu --> */}
@@ -174,11 +130,11 @@ const Menu = () => {
               }`}
             >
               {/* <!-- Menu Item Dashboard --> */}
-              {categories.map((category) => {
+              {businessTypes.map((businessType) => {
                 return (
                   <li
                     className={`${rubikBody.className}`}
-                    key={category.mainCategoryId}
+                    key={businessType.businessTypeId}
                   >
                     <div
                       className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 cursor-pointer font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 `}
@@ -186,7 +142,7 @@ const Menu = () => {
                         e.preventDefault();
                         ToggleOpen(
                           Type.mainCategory.name,
-                          category.mainCategoryId
+                          businessType.businessTypeId
                         );
                       }}
                     >
@@ -216,13 +172,13 @@ const Menu = () => {
                         />
                       </svg>
                       <h4 className={`${rubikSubHeader.className} text-xl`}>
-                        {category.name}
+                        {businessType.name}
                       </h4>
                       <svg
                         className={`absolute left-4 top-1/2 -translate-y-1/2 fill-current ${
                           open[Type.mainCategory.name] &&
                           open[Type.mainCategory.name][
-                            category.mainCategoryId
+                            businessType.businessTypeId
                           ] &&
                           "rotate-180"
                         }`}
@@ -245,91 +201,109 @@ const Menu = () => {
                       className={`translate transform overflow-hidden ${
                         !(
                           open[Type.mainCategory.name] &&
-                          open[Type.mainCategory.name][category.mainCategoryId]
+                          open[Type.mainCategory.name][
+                            businessType.businessTypeId
+                          ]
                         ) && "hidden"
                       }`}
                     >
                       <ul
                         id="sections"
-                        key={65814651564}
+                        key={businessType.businessTypeId}
                         className="py-3 mb-5.5 flex flex-col gap-2.5 pr-4 relative"
                       >
-                        {category.sections.map((section) => {
-                          return (
-                            <li key={section.sectionId}>
-                              <MenuSection
-                                id={section.sectionId}
-                                title={section.name}
-                                type={Type.section.name}
-                                ToggleOpen={ToggleOpen}
-                                open={open}
-                              />
-                              <div
-                                className={`py-3 translate transform overflow-hidden ${
-                                  !(
-                                    open[Type.section.name] &&
-                                    open[Type.section.name][section.sectionId]
-                                  ) && "hidden"
-                                }`}
-                              >
-                                <ul
-                                  id="sub-sections"
-                                  className="mb-5.5 flex flex-col gap-2.5 pr-5 relative"
+                        {businessType.businessCategories.map(
+                          (businessCategory) => {
+                            return (
+                              <li key={businessCategory.businessCategoryId}>
+                                <MenuSection
+                                  id={businessCategory.businessCategoryId}
+                                  title={businessCategory.name}
+                                  type={Type.section.name}
+                                  ToggleOpen={ToggleOpen}
+                                  open={open}
+                                />
+                                <div
+                                  className={`py-3 translate transform overflow-hidden ${
+                                    !(
+                                      open[Type.section.name] &&
+                                      open[Type.section.name][
+                                        businessCategory.businessCategoryId
+                                      ]
+                                    ) && "hidden"
+                                  }`}
                                 >
-                                  {section.subSections.map(
-                                    (subSection, index) => {
-                                      return (
-                                        <li key={index}>
-                                          <MenuSection
-                                            id={subSection.subSectionId}
-                                            title={subSection.name}
-                                            type={Type.subSection.name}
-                                            ToggleOpen={ToggleOpen}
-                                            open={open}
-                                          />
-                                          <div
-                                            className={`py-3 translate transform overflow-hidden ${
-                                              !(
-                                                open[Type.subSection.name] &&
-                                                open[Type.subSection.name][
-                                                  subSection.subSectionId
-                                                ]
-                                              ) && "hidden"
-                                            }`}
-                                          >
-                                            <ul
-                                              id="sub-category"
-                                              className="flex flex-col gap-1.5 pr-3 relative"
+                                  <ul
+                                    id="sub-sections"
+                                    className="mb-5.5 flex flex-col gap-2.5 pr-5 relative"
+                                  >
+                                    {businessCategory.projectTypes.map(
+                                      (projectType, index) => {
+                                        return (
+                                          <li key={index}>
+                                            {/* <MenuSection
+                                              id={projectType.projectTypeId}
+                                              title={projectType.name}
+                                              type={Type.subSection.name}
+                                              ToggleOpen={ToggleOpen}
+                                              open={open}
+                                            /> */}
+                                            <SubCategoryItem
+                                              key={projectType.projectTypeId}
+                                              href={`/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}`}
+                                              isActive={
+                                                activeItem ===
+                                                `/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}}`
+                                              }
+                                              onClick={handleItemClick}
+                                              title={projectType.name}
+                                            />
+                                            {/* <div
+                                              className={`py-3 translate transform overflow-hidden ${
+                                                !(
+                                                  open[Type.subSection.name] &&
+                                                  open[Type.subSection.name][
+                                                    projectType.projectTypeId
+                                                  ]
+                                                ) && "hidden"
+                                              }`}
                                             >
-                                              {subSection.subCategories.map(
-                                                (subCategory, index) => {
-                                                  return (
-                                                    <SubCategoryItem
-                                                      key={
-                                                        subCategory.subCategoryId
-                                                      }
-                                                      href={`/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`}
-                                                      isActive={
-                                                        activeItem ===
-                                                        `/dashboard/${category.slug}/${section.slug}/${subSection.slug}/${subCategory.slug}`
-                                                      }
-                                                      onClick={handleItemClick}
-                                                      title={subCategory.name}
-                                                    />
-                                                  );
-                                                }
-                                              )}
-                                            </ul>
-                                          </div>
-                                        </li>
-                                      );
-                                    }
-                                  )}
-                                </ul>
-                              </div>
-                            </li>
-                          );
-                        })}
+                                              <ul
+                                                id="sub-category"
+                                                className="flex flex-col gap-1.5 pr-3 relative"
+                                              >
+                                                {projectType.subCategories.map(
+                                                  (subCategory, index) => {
+                                                    return (
+                                                      <SubCategoryItem
+                                                        key={
+                                                          subCategory.subCategoryId
+                                                        }
+                                                        href={`/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}/${subCategory.slug}`}
+                                                        isActive={
+                                                          activeItem ===
+                                                          `/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}/${subCategory.slug}`
+                                                        }
+                                                        onClick={
+                                                          handleItemClick
+                                                        }
+                                                        title={subCategory.name}
+                                                      />
+                                                    );
+                                                  }
+                                                )}
+                                              </ul>
+                                            </div> */}
+                                          </li>
+                                        );
+                                      }
+                                    )}
+                                  </ul>
+                                </div>
+                              </li>
+                            );
+                          }
+                        )}
                       </ul>
                     </div>
                     {/* <!-- Dropdown Menu End --> */}

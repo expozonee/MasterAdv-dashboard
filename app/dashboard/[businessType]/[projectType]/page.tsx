@@ -7,17 +7,15 @@ import PageData from "@/app/dashboard/PageData";
 import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import { getCategories } from "@/utils/data";
-import type { Category } from "@/types/categories";
+import type { BusinessType } from "@/types/categories";
 import { Projects } from "@/components/Projects/Projects";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 type SubCategoryProps = {
   params: {
-    mainCategory: string;
-    section: string;
-    subSection: string;
-    subCategories: string;
+    businessType: string;
+    projectType: string;
   };
 };
 
@@ -48,19 +46,15 @@ const fetchCategories = cache(async () => {
 });
 
 export async function generateStaticParams() {
-  const categories: Category[] = await fetchCategories();
+  const businessTypes: BusinessType[] = await fetchCategories();
 
-  const paths = categories.flatMap((category) => {
-    return category.sections.flatMap((section) => {
-      return section.subSections.flatMap((subSection) => {
-        return subSection.subCategories.map((subCategory) => {
-          return {
-            mainCategory: category.slug,
-            section: section.slug,
-            subSection: subSection.slug,
-            subCategories: subCategory.slug,
-          };
-        });
+  const paths = businessTypes.flatMap((businessType) => {
+    return businessType.businessCategories.flatMap((businessCategory) => {
+      return businessCategory.projectTypes.map((projectType) => {
+        return {
+          businessType: businessType.slug,
+          projectType: projectType.slug,
+        };
       });
     });
   });
@@ -68,7 +62,7 @@ export async function generateStaticParams() {
   return paths;
 }
 
-const SubCategory = async ({ params }: SubCategoryProps) => {
+const ProjectTypePage = async ({ params }: SubCategoryProps) => {
   // const { mainCategory, section, subSection, subCategories } = params;
 
   // new
@@ -142,4 +136,4 @@ const SubCategory = async ({ params }: SubCategoryProps) => {
   );
 };
 
-export default SubCategory;
+export default ProjectTypePage;

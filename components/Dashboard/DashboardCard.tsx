@@ -30,19 +30,18 @@ const IMAGES = [
 ];
 
 type DashboardCardProps = {
-  mainCategory?: string;
-  section?: {
+  businessType?: string;
+  businessCategory?: {
     name: string;
     slug: string;
   };
 };
 
 export default function DashboardCard({
-  section,
-  mainCategory,
+  businessCategory,
 }: DashboardCardProps) {
   const pathname = usePathname();
-  const image = IMAGES.find((image) => image.title === section?.name);
+  const image = IMAGES.find((image) => image.title === businessCategory?.name);
 
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl h-[200px] rounded-md">
@@ -56,7 +55,9 @@ export default function DashboardCard({
           alt="section image"
         /> */}
         <div className="bg-white grid justify-center items-center">
-          <h1 className="card-title text-4xl text-black">{section?.name}</h1>
+          <h1 className="card-title text-4xl text-black">
+            {businessCategory?.name}
+          </h1>
         </div>
       </figure>
       <div
@@ -64,7 +65,7 @@ export default function DashboardCard({
       >
         <div className="card-actions rounded-md justify-end h-2/3 items-center">
           <Link
-            href={`${pathname}/${section?.slug}`}
+            href={`${pathname}/${businessCategory?.slug}`}
             className="w-full lg:w-2/6 h-2/3 bg-white btn text-xl"
           >
             לחץ כאן

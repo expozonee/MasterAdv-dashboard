@@ -1,21 +1,23 @@
 import axios from "axios";
 
 export async function GET(request: Request) {
-  const mainCategory = new URL(request.url).searchParams.get("mainCategory");
-  const section = new URL(request.url).searchParams.get("section");
-  const subSection = new URL(request.url).searchParams.get("subSection");
-  const subCategory = new URL(request.url).searchParams.get("subCategories");
+  const businessType = new URL(request.url).searchParams.get("businessType");
+  const projectType = new URL(request.url).searchParams.get("projectType");
+  console.log("the request is: ", request);
 
   // if (!subCategory) {
-  console.log("from get", mainCategory, section, subSection, subCategory);
+  // console.log("from get", mainCategory, section, subSection, subCategory);
   const response = await axios
-    .get("https://masteradv-backend.vercel.app/getProjects", {
+    .get("http://localhost:4000/getProjects", {
       headers: {
         "Cache-Control": "no-cache",
       },
+      params: {
+        businessType: businessType,
+        projectType: projectType,
+      },
     })
     .then((res) => res.data);
-  // console.log(response);
   return new Response(JSON.stringify(response));
   // }
 
