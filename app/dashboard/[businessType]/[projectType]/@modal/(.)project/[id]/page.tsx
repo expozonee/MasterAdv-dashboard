@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 import WhatsappShareButton from "@/components/shareButtons/WhatsappShareButton";
 import { useQuery } from "@tanstack/react-query";
 import getProjects from "@/utils/getProjects";
+import { Project } from "@/types/project/Project";
 
 // type ImageOwnProps<T extends React.ElementType> = {
 //   className: string;
@@ -22,25 +23,33 @@ import getProjects from "@/utils/getProjects";
 // type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
 //   Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
 
-type Project = {
-  itemId: string;
-  mainCategory: {
-    name: string;
+// type Project = {
+//   itemId: string;
+//   mainCategory: {
+//     name: string;
+//   };
+//   section: {
+//     name: string;
+//   };
+//   subSection: {
+//     name: string;
+//   };
+//   subCategory: {
+//     name: string;
+//   };
+//   imageUrl: string;
+//   isSpecial: string;
+// };
+
+type ProjectModalProps = {
+  params: {
+    businessType: string;
+    projectType: string;
+    id: string;
   };
-  section: {
-    name: string;
-  };
-  subSection: {
-    name: string;
-  };
-  subCategory: {
-    name: string;
-  };
-  imageUrl: string;
-  isSpecial: string;
 };
 
-export default function ProjectModal() {
+export default function ProjectModal({ params }: ProjectModalProps) {
   const router = useRouter();
   const pathname = usePathname();
   pathname.split("/");
@@ -52,13 +61,11 @@ export default function ProjectModal() {
 
   const [, , ...restPath] = pathname.split("/");
   const [mainCategory, section, subSection, subCategory, , id] = restPath;
-  // console.log(mainCategory, section, subSection, subCategory, id);
-  // console.log(restPath);
 
   const { isError, isLoading, data } = useQuery({
     queryKey: ["project", id],
     queryFn: getProjects,
-    enabled: !!id,
+    enabled: !!params.id, // only fetch when id is available
   });
 
   const onDismiss = useCallback(() => {
@@ -84,12 +91,13 @@ export default function ProjectModal() {
   useEffect(() => {
     if (data) {
       const imageUrl = (data as Project[]).find(
-        (item) => item.itemId === id
+        (item) => item.projectId === params.id
       )?.imageUrl;
+      console.log("imageUrl : ", imageUrl);
 
       setImageUrl(imageUrl!);
     }
-  }, [id, isLoading, isError]);
+  }, [id, isLoading, isError, params.id, data]);
 
   useEffect(() => {
     function handleResize() {
