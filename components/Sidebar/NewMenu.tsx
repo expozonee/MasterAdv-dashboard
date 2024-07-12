@@ -250,10 +250,10 @@ const Menu = () => {
                                             /> */}
                                             <SubCategoryItem
                                               key={projectType.projectTypeId}
-                                              href={`/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}`}
+                                              href={`/dashboard/${businessType.slug}/${projectType.slug}`}
                                               isActive={
                                                 activeItem ===
-                                                `/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}}`
+                                                `/dashboard/${businessType.slug}/${projectType.slug}}`
                                               }
                                               onClick={handleItemClick}
                                               title={projectType.name}
