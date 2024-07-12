@@ -24,10 +24,9 @@ const rubikText = Rubik({ subsets: ["hebrew"], weight: ["500"] });
 export type ImageData = {
   imageFile: File;
   imageName: string;
-  mainCategory: string;
-  section: string;
-  subSection: string;
-  subCategory: string;
+  businessType: string;
+  businessCategory: string;
+  projectType: string;
   isSpecial: string;
 };
 
@@ -139,24 +138,19 @@ const AdminPage = () => {
       const data = {
         imageFile: image,
         imageName: image.name,
-        mainCategory: (
+        businessType: (
           form.elements.namedItem(
-            `${image.name}_${OptionsType.MAIN_CATEGORY}`
+            `${image.name}_${OptionsType.BUSINESS_TYPE}`
           ) as HTMLSelectElement
         ).value,
-        section: (
+        businessCategory: (
           form.elements.namedItem(
-            `${image.name}_${OptionsType.SECTION}`
+            `${image.name}_${OptionsType.BUSINESS_CATEGORY}`
           ) as HTMLSelectElement
         ).value,
-        subSection: (
+        projectType: (
           form.elements.namedItem(
-            `${image.name}_${OptionsType.SUB_SECTION}`
-          ) as HTMLSelectElement
-        ).value,
-        subCategory: (
-          form.elements.namedItem(
-            `${image.name}_${OptionsType.SUB_CATEGORY}`
+            `${image.name}_${OptionsType.PROJECT_TYPE}`
           ) as HTMLSelectElement
         ).value,
         isSpecial: (
@@ -173,10 +167,13 @@ const AdminPage = () => {
       formData.append(`${item.imageName}`, item.imageFile, item.imageFile.name);
       // formData.append(`images[${index}][id]`, uuidv4());
       formData.append(`images[${index}][imageName]`, item.imageName);
-      formData.append(`images[${index}][mainCategory]`, item.mainCategory);
-      formData.append(`images[${index}][section]`, item.section);
-      formData.append(`images[${index}][subSection]`, item.subSection);
-      formData.append(`images[${index}][subCategory]`, item.subCategory);
+      formData.append(`images[${index}][businessType]`, item.businessType);
+      formData.append(
+        `images[${index}][businessCategory]`,
+        item.businessCategory
+      );
+      formData.append(`images[${index}][projectType]`, item.projectType);
+      // formData.append(`images[${index}][subCategory]`, item.subCategory);
       formData.append(`images[${index}][isSpecial]`, item.isSpecial);
     });
 
@@ -304,7 +301,7 @@ const AdminPage = () => {
           </h2>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
             {!isError &&
-              uploadedImages.map((image, index) => (
+              uploadedImages.map((image) => (
                 <UploadedImage
                   key={image.name}
                   name={image.name}

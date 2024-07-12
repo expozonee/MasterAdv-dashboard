@@ -16,10 +16,10 @@ const UploadedImage = ({
 }: UploadedImagesProps) => {
   const title = name.split(".")[0];
 
-  const [mainCategory, setMainCategory] = useState<string>("");
-  const [section, setSection] = useState<string>("");
-  const [subSection, setSubSection] = useState<string>("");
-  const [subCategory, setSubCategory] = useState<string>("");
+  const [businessType, setBusinessType] = useState<string>("");
+  const [businessCategory, setBusinessCategory] = useState<string>("");
+  const [projectType, setProjectType] = useState<string>("");
+  // const [subCategory, setSubCategory] = useState<string>("");
   const [isSpecial, setIsSpecial] = useState<string>("");
 
   return (
@@ -43,43 +43,31 @@ const UploadedImage = ({
         />
         <Options
           imageName={name}
-          key={`${name}_${OptionsType.MAIN_CATEGORY}`}
-          type="MAIN_CATEGORY"
-          onChange={setMainCategory}
-          value={mainCategory}
+          key={`${name}_${OptionsType.BUSINESS_TYPE}`}
+          type="BUSINESS_TYPE"
+          onChange={setBusinessType}
+          value={businessType}
         />
 
-        {mainCategory && (
+        {businessType && (
           <Options
             imageName={name}
-            key={`${name}_${OptionsType.SECTION}`}
-            type="SECTION"
-            onChange={setSection}
-            value={section}
-            mainCategory={mainCategory}
+            key={`${name}_${OptionsType.BUSINESS_CATEGORY}`}
+            type="BUSINESS_CATEGORY"
+            onChange={setBusinessCategory}
+            value={businessCategory}
+            businessType={businessType}
           />
         )}
-        {section && (
+        {businessCategory && (
           <Options
             imageName={name}
-            key={`${name}_${OptionsType.SUB_SECTION}`}
-            type="SUB_SECTION"
-            onChange={setSubSection}
-            value={subSection}
-            mainCategory={mainCategory}
-            sectionName={section}
-          />
-        )}
-        {subSection && (
-          <Options
-            imageName={name}
-            key={`${name}_${OptionsType.SUB_CATEGORY}`}
-            type="SUB_CATEGORY"
-            onChange={setSubCategory}
-            value={subCategory}
-            mainCategory={mainCategory}
-            sectionName={section}
-            subSectionName={subSection}
+            key={`${name}_${OptionsType.PROJECT_TYPE}`}
+            type="PROJECT_TYPE"
+            onChange={setProjectType}
+            value={projectType}
+            businessType={businessType}
+            businessCategory={businessCategory}
           />
         )}
 

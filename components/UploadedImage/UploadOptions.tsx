@@ -8,17 +8,25 @@ type OptionsProps = {
   type: keyof typeof OptionsType;
   onChange: React.Dispatch<React.SetStateAction<string>>;
   value: string | null;
-  mainCategory?: string | null;
-  sectionName?: string | null;
-  subSectionName?: string | null;
-  subCategoryName?: string | null;
+  businessType?: string | null;
+  businessCategory?: string | null;
+  projectType?: string | null;
+};
+
+type BusinessType = {
+  name: string;
+  businessCategories: {
+    name: string;
+    projectTypes: {
+      name: string;
+    }[];
+  }[];
 };
 
 export const OptionsType = {
-  MAIN_CATEGORY: "קטגוריה ראשית",
-  SECTION: "סעיף",
-  SUB_SECTION: "תת סעיף",
-  SUB_CATEGORY: "תת קטגוריה",
+  BUSINESS_TYPE: "סוג עסק",
+  BUSINESS_CATEGORY: "קטגורית עסק",
+  PROJECT_TYPE: "סוג פרויקט",
   IS_SPECIAL: "מיוחד",
 };
 
@@ -29,18 +37,21 @@ const Options = ({
   type,
   onChange,
   value,
-  mainCategory,
-  sectionName,
-  subSectionName,
-  subCategoryName,
+  businessType,
+  businessCategory,
+  projectType,
 }: OptionsProps) => {
-  const [categories, setCategories] = useState<Categories[]>([
+  const [businessTypes, setBusinessTypes] = useState<BusinessType[]>([
     {
       name: "",
-      sections: [
+      businessCategories: [
         {
           name: "",
-          subSections: [{ name: "", subCategories: [{ name: "" }] }],
+          projectTypes: [
+            {
+              name: "",
+            },
+          ],
         },
       ],
     },
@@ -48,44 +59,44 @@ const Options = ({
 
   useEffect(() => {
     async function fetchCategories() {
-      const categories = await getAllCategories();
-      setCategories(categories);
+      const businessTypes = await getAllCategories();
+      setBusinessTypes(businessTypes);
     }
     fetchCategories();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
-    // console.log(OptionsType[type as keyof typeof OptionsType]);
   };
 
   let options: any = [];
   switch (type) {
-    case "SECTION":
+    case "BUSINESS_CATEGORY":
       options =
-        categories.find((category) => category.name === mainCategory)
-          ?.sections || [];
+        businessTypes.find((b_type) => b_type.name === businessType)
+          ?.businessCategories || [];
       break;
-    case "SUB_SECTION":
+    case "PROJECT_TYPE":
       options =
-        categories
-          .find((category) => category.name === mainCategory)
-          ?.sections.find((section) => section.name === sectionName)
-          ?.subSections || [];
+        businessTypes
+          .find((b_type) => b_type.name === businessType)
+          ?.businessCategories.find(
+            (b_category) => b_category.name === businessCategory
+          )?.projectTypes || [];
       break;
-    case "SUB_CATEGORY":
-      options =
-        categories
-          .find((category) => category.name === mainCategory)
-          ?.sections.find((section) => section.name === sectionName)
-          ?.subSections.find((subSection) => subSection.name === subSectionName)
-          ?.subCategories || [];
-      break;
+    // case "SUB_CATEGORY":
+    //   options =
+    //     categories
+    //       .find((category) => category.name === mainCategory)
+    //       ?.sections.find((section) => section.name === sectionName)
+    //       ?.subSections.find((subSection) => subSection.name === subSectionName)
+    //       ?.subCategories || [];
+    //   break;
     case "IS_SPECIAL":
       options = isSpecial;
       break;
     default:
-      options = categories;
+      options = businessTypes;
   }
 
   return (
