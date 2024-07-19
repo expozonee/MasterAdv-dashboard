@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Rubik } from "next/font/google";
-import { getCategories } from "@/utils/data";
 import Type from "./Types";
-import MenuSection from "./MenuSection";
 import SubCategoryItem from "./SubCategoryItem";
 import { initializeOpenState } from "./SideBarConfig";
 import SideBarSkeleton from "../Skeletons/SideBarSkeleton";
-import { useCategories } from "@/components/Query/CategoriesQuery";
-import type { BusinessType } from "@/types/categories";
+import { useBusinessTypes } from "@/components/Query/CategoriesQuery";
 import getTitles from "@/utils/getTitles";
+import { filterBusinessTypes } from "@/utils/filterBusinessTypes";
+import { FilteredBusinessType } from "@/types/filiteredBusinessTypes";
+import { isAborted } from "zod";
 
 const rubikHeader = Rubik({ weight: "800", subsets: ["hebrew"] });
 const rubikSubHeader = Rubik({ weight: "500", subsets: ["hebrew"] });
@@ -23,12 +23,8 @@ interface OpenStateConfig {
   };
 }
 
-type MenuProps = {
-  categoriesData: any;
-};
-
 const Menu = () => {
-  const { isLoading, isError, categoriesData } = useCategories();
+  const { isLoading, isError, businessTypesData } = useBusinessTypes();
 
   useEffect(() => {
     async function fetchData() {
@@ -37,38 +33,29 @@ const Menu = () => {
     fetchData();
   }, []);
 
-  // console.log("this is the categoriesData: ", categoriesData);
-
-  // const { isLoading, isError, data, status } = useQuery({
-  //   queryKey: ["categories"],
-  //   queryFn: getCategories,
-  //   onSuccess: (data) => {
-  //     // console.log("this is the data: ", data);
-  //     setCategories(data);
-  //   },
-  // });
-
   const pathname = usePathname();
   const [open, setOpen] = useState<OpenStateConfig>({});
   const [activeItem, setActiveItem] = useState<string | undefined>(undefined);
-  const [businessTypes, setCategories] = useState<BusinessType[]>([]);
+  const [businessTypes, setBusinessTypes] = useState<FilteredBusinessType>([]);
 
+  // setting the business types
   useEffect(() => {
-    if (categoriesData) {
-      setCategories(categoriesData);
-      console.log(businessTypes);
+    if (businessTypesData) {
+      const filteredBusinessTypes = filterBusinessTypes(businessTypesData);
+      setBusinessTypes(filteredBusinessTypes);
     }
-  }, [isLoading, categoriesData, businessTypes]);
+  }, [isLoading, businessTypesData]);
 
+  // setting the open state
   useEffect(() => {
     const openStateInitializeData = async () => {
-      const result = await initializeOpenState();
+      const result = await initializeOpenState(businessTypes);
       setOpen(result);
     };
 
     openStateInitializeData();
-    console.log(open);
-  }, []);
+    // console.log(open);
+  }, [businessTypes]);
 
   useEffect(() => {
     const savedActiveItem = sessionStorage.getItem("activeItem");
@@ -102,7 +89,6 @@ const Menu = () => {
 
       return newState;
     });
-    console.log(open);
   };
 
   return (
@@ -141,7 +127,7 @@ const Menu = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         ToggleOpen(
-                          Type.mainCategory.name,
+                          Type.businessType.name,
                           businessType.businessTypeId
                         );
                       }}
@@ -176,8 +162,8 @@ const Menu = () => {
                       </h4>
                       <svg
                         className={`absolute left-4 top-1/2 -translate-y-1/2 fill-current ${
-                          open[Type.mainCategory.name] &&
-                          open[Type.mainCategory.name][
+                          open[Type.businessType.name] &&
+                          open[Type.businessType.name][
                             businessType.businessTypeId
                           ] &&
                           "rotate-180"
@@ -200,109 +186,126 @@ const Menu = () => {
                     <div
                       className={`translate transform overflow-hidden ${
                         !(
-                          open[Type.mainCategory.name] &&
-                          open[Type.mainCategory.name][
+                          open[Type.businessType.name] &&
+                          open[Type.businessType.name][
                             businessType.businessTypeId
                           ]
                         ) && "hidden"
                       }`}
                     >
                       <ul
-                        id="sections"
+                        id="project-types"
                         key={businessType.businessTypeId}
                         className="py-3 mb-5.5 flex flex-col gap-2.5 pr-4 relative"
                       >
-                        {businessType.businessCategories.map(
-                          (businessCategory) => {
+                        {businessType.projectTypes.map(
+                          (projectType) => {
+                            console.log(activeItem);
+                            console.log(
+                              `/dashboard/${businessType.slug}/${projectType.slug}`
+                            );
                             return (
-                              <li key={businessCategory.businessCategoryId}>
-                                <MenuSection
-                                  id={businessCategory.businessCategoryId}
-                                  title={businessCategory.name}
-                                  type={Type.section.name}
-                                  ToggleOpen={ToggleOpen}
-                                  open={open}
+                              <div key={projectType.projectTypeId}>
+                                <SubCategoryItem
+                                  key={projectType.projectTypeId}
+                                  href={`/dashboard/${businessType.slug}/${projectType.slug}`}
+                                  isActive={
+                                    activeItem ===
+                                    `/dashboard/${businessType.slug}/${projectType.slug}`
+                                  }
+                                  onClick={handleItemClick}
+                                  title={projectType.name}
                                 />
-                                <div
-                                  className={`py-3 translate transform overflow-hidden ${
-                                    !(
-                                      open[Type.section.name] &&
-                                      open[Type.section.name][
-                                        businessCategory.businessCategoryId
-                                      ]
-                                    ) && "hidden"
-                                  }`}
-                                >
-                                  <ul
-                                    id="sub-sections"
-                                    className="mb-5.5 flex flex-col gap-2.5 pr-5 relative"
-                                  >
-                                    {businessCategory.projectTypes.map(
-                                      (projectType, index) => {
-                                        return (
-                                          <li key={index}>
-                                            {/* <MenuSection
-                                              id={projectType.projectTypeId}
-                                              title={projectType.name}
-                                              type={Type.subSection.name}
-                                              ToggleOpen={ToggleOpen}
-                                              open={open}
-                                            /> */}
-                                            <SubCategoryItem
-                                              key={projectType.projectTypeId}
-                                              href={`/dashboard/${businessType.slug}/${projectType.slug}`}
-                                              isActive={
-                                                activeItem ===
-                                                `/dashboard/${businessType.slug}/${projectType.slug}}`
-                                              }
-                                              onClick={handleItemClick}
-                                              title={projectType.name}
-                                            />
-                                            {/* <div
-                                              className={`py-3 translate transform overflow-hidden ${
-                                                !(
-                                                  open[Type.subSection.name] &&
-                                                  open[Type.subSection.name][
-                                                    projectType.projectTypeId
-                                                  ]
-                                                ) && "hidden"
-                                              }`}
-                                            >
-                                              <ul
-                                                id="sub-category"
-                                                className="flex flex-col gap-1.5 pr-3 relative"
-                                              >
-                                                {projectType.subCategories.map(
-                                                  (subCategory, index) => {
-                                                    return (
-                                                      <SubCategoryItem
-                                                        key={
-                                                          subCategory.subCategoryId
-                                                        }
-                                                        href={`/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}/${subCategory.slug}`}
-                                                        isActive={
-                                                          activeItem ===
-                                                          `/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}/${subCategory.slug}`
-                                                        }
-                                                        onClick={
-                                                          handleItemClick
-                                                        }
-                                                        title={subCategory.name}
-                                                      />
-                                                    );
-                                                  }
-                                                )}
-                                              </ul>
-                                            </div> */}
-                                          </li>
-                                        );
-                                      }
-                                    )}
-                                  </ul>
-                                </div>
-                              </li>
+                              </div>
                             );
                           }
+
+                          // <li key={businessCategory.businessCategoryId}>
+                          //   <MenuSection
+                          //     id={businessCategory.businessCategoryId}
+                          //     title={businessCategory.name}
+                          //     type={Type.section.name}
+                          //     ToggleOpen={ToggleOpen}
+                          //     open={open}
+                          //   />
+                          //   <div
+                          //     className={`py-3 translate transform overflow-hidden ${
+                          //       !(
+                          //         open[Type.section.name] &&
+                          //         open[Type.section.name][
+                          //           businessCategory.businessCategoryId
+                          //         ]
+                          //       ) && "hidden"
+                          //     }`}
+                          //   >
+                          //     <ul
+                          //       id="sub-sections"
+                          //       className="mb-5.5 flex flex-col gap-2.5 pr-5 relative"
+                          //     >
+                          //       {businessCategory.projectTypes.map(
+                          //         (projectType, index) => {
+                          //           return (
+                          //             <li key={index}>
+                          //               {/* <MenuSection
+                          //                 id={projectType.projectTypeId}
+                          //                 title={projectType.name}
+                          //                 type={Type.subSection.name}
+                          //                 ToggleOpen={ToggleOpen}
+                          //                 open={open}
+                          //               /> */}
+                          //               <SubCategoryItem
+                          //                 key={projectType.projectTypeId}
+                          //                 href={`/dashboard/${businessType.slug}/${projectType.slug}`}
+                          //                 isActive={
+                          //                   activeItem ===
+                          //                   `/dashboard/${businessType.slug}/${projectType.slug}}`
+                          //                 }
+                          //                 onClick={handleItemClick}
+                          //                 title={projectType.name}
+                          //               />
+                          //               {/* <div
+                          //                 className={`py-3 translate transform overflow-hidden ${
+                          //                   !(
+                          //                     open[Type.subSection.name] &&
+                          //                     open[Type.subSection.name][
+                          //                       projectType.projectTypeId
+                          //                     ]
+                          //                   ) && "hidden"
+                          //                 }`}
+                          //               >
+                          //                 <ul
+                          //                   id="sub-category"
+                          //                   className="flex flex-col gap-1.5 pr-3 relative"
+                          //                 >
+                          //                   {projectType.subCategories.map(
+                          //                     (subCategory, index) => {
+                          //                       return (
+                          //                         <SubCategoryItem
+                          //                           key={
+                          //                             subCategory.subCategoryId
+                          //                           }
+                          //                           href={`/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}/${subCategory.slug}`}
+                          //                           isActive={
+                          //                             activeItem ===
+                          //                             `/dashboard/${businessType.slug}/${businessCategory.slug}/${projectType.slug}/${subCategory.slug}`
+                          //                           }
+                          //                           onClick={
+                          //                             handleItemClick
+                          //                           }
+                          //                           title={subCategory.name}
+                          //                         />
+                          //                       );
+                          //                     }
+                          //                   )}
+                          //                 </ul>
+                          //               </div> */}
+                          //             </li>
+                          //           );
+                          //         }
+                          //       )}
+                          //     </ul>
+                          //   </div>
+                          // </li>
                         )}
                       </ul>
                     </div>
