@@ -38,19 +38,7 @@ const MenuSection = ({
   const typeSettings: TypeSettings = {
     mainCategory: {
       fontSize: "text-xl",
-      type: Type.mainCategory.name,
-    },
-    section: {
-      fontSize: "text-lg",
-      type: Type.section.name,
-    },
-    subSection: {
-      fontSize: "text-md",
-      type: Type.subSection.name,
-    },
-    subCategory: {
-      fontSize: "text-base",
-      type: Type.subCategory.name,
+      type: Type.businessType.name,
     },
   };
 
