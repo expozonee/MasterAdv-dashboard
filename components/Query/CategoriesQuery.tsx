@@ -2,12 +2,12 @@
 import { getCategories } from "@/utils/data";
 import React, { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import type { Category } from "@/types/categories";
+import type { BusinessType } from "@/types/categories";
 
 type CategoriesData = {
   isLoading: boolean;
   isError: boolean;
-  categoriesData: Category[];
+  businessTypesData: BusinessType[];
 };
 
 const CategoriesContext = createContext<CategoriesData | undefined>(undefined);
@@ -20,17 +20,19 @@ export function CategoriesProvider({
   const {
     isLoading,
     isError,
-    data: categoriesData,
+    data: businessTypesData,
   } = useQuery({ queryKey: ["categories"], queryFn: getCategories });
 
   return (
-    <CategoriesContext.Provider value={{ isLoading, isError, categoriesData }}>
+    <CategoriesContext.Provider
+      value={{ isLoading, isError, businessTypesData }}
+    >
       {children}
     </CategoriesContext.Provider>
   );
 }
 
-export function useCategories() {
+export function useBusinessTypes() {
   const context = useContext(CategoriesContext);
   if (context === undefined) {
     throw new Error("useCategories must be used within a CategoriesProvider");

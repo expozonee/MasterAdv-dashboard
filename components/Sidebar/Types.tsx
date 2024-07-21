@@ -1,16 +1,16 @@
 const Type = {
-  mainCategory: {
-    name: "mainCategory",
+  businessType: {
+    name: "businessType",
   },
-  section: {
-    name: "section",
-  },
-  subSection: {
-    name: "subSection",
-  },
-  subCategory: {
-    name: "subCategory",
-  },
+  // section: {
+  //   name: "section",
+  // },
+  // subSection: {
+  //   name: "subSection",
+  // },
+  // subCategory: {
+  //   name: "subCategory",
+  // },
 };
 
 export default Type;

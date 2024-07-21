@@ -4,7 +4,7 @@ import { getPortfolioSections } from "@/utils/data";
 import DashboardCard from "./DashboardCard";
 import { usePathname } from "next/navigation";
 import DashboardQuery from "../Query/DashboardQuery";
-import { useCategories } from "../Query/CategoriesQuery";
+import { useBusinessTypes } from "../Query/CategoriesQuery";
 
 // without this the component renders on server and throws an error
 import dynamic from "next/dynamic";
@@ -24,17 +24,20 @@ const Dashboard: React.FC = () => {
   // const currentCategory = pathname[pathname.length - 1];
   console.log(pathname);
 
-  const { categoriesData: categories, isLoading, isError } = useCategories();
+  const { businessTypesData, isLoading, isError } = useBusinessTypes();
 
   return (
     <div className="grid gap-3">
       {isLoading && <DashboardSkeleton />}
       {isError && <div>Error...</div>}
-      {categories?.map((mainCategory) => {
+      {businessTypesData?.map((businessType) => {
         return (
           <DashboardCard
-            key={mainCategory.name}
-            section={{ name: mainCategory.name, slug: mainCategory.slug }}
+            key={businessType.name}
+            businessCategory={{
+              name: businessType.name,
+              slug: businessType.slug,
+            }}
           />
         );
       })}

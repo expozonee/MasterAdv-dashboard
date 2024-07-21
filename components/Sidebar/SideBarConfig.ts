@@ -1,5 +1,5 @@
-import { getCategories } from "@/utils/data";
 import Type from "./Types";
+import { FilteredBusinessType } from "@/types/filiteredBusinessTypes";
 
 export interface Category {
   mainCategoryId: number;
@@ -28,34 +28,33 @@ interface OpenStateConfig {
   };
 }
 
-export async function initializeOpenState() {
-  const mainCategory: Category[] = await getCategories();
-
+export async function initializeOpenState(businessTypes: FilteredBusinessType) {
   const initializeOpenState: OpenStateConfig = {
-    [Type.mainCategory.name]: {},
-    [Type.section.name]: {},
-    [Type.subSection.name]: {},
+    [Type.businessType.name]: {},
+    // [Type.section.name]: {},
+    // [Type.subSection.name]: {},
   };
 
-  mainCategory.forEach((category) => {
-    initializeOpenState[Type.mainCategory.name] = {
-      ...initializeOpenState[Type.mainCategory.name],
-      [category.mainCategoryId]: true,
+  businessTypes.forEach((businessType) => {
+    initializeOpenState[Type.businessType.name] = {
+      ...initializeOpenState[Type.businessType.name],
+      [businessType.businessTypeId]: true,
     };
 
-    category.sections.forEach((section) => {
-      initializeOpenState[Type.section.name] = {
-        ...initializeOpenState[Type.section.name],
-        [section.sectionId]: true,
-      };
+    // businessType.projectTypes.forEach((projectType) => {
+    //   initializeOpenState[Type.section.name] = {
+    //     ...initializeOpenState[Type.section.name],
+    //     [projectType.projectTypeId]: true,
+    //   };
 
-      section.subSections.forEach((subSection) => {
-        initializeOpenState[Type.subSection.name] = {
-          ...initializeOpenState[Type.subSection.name],
-          [subSection.subSectionId]: true,
-        };
-      });
-    });
+    // busincessCategory.subSections.forEach((subSection) => {
+    //   initializeOpenState[Type.subSection.name] = {
+    //     ...initializeOpenState[Type.subSection.name],
+    //     [subSection.subSectionId]: true,
+    //   };
+    // });
+    // });
   });
+  console.log("initializeOpenState", initializeOpenState);
   return initializeOpenState;
 }

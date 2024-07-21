@@ -39,3 +39,19 @@ export type Category = {
     }[];
   }[];
 };
+
+export type BusinessType = {
+  name: string;
+  slug: string;
+  businessTypeId: string;
+  businessCategories: {
+    name: string;
+    slug: string;
+    businessCategoryId: string;
+    projectTypes: {
+      name: string;
+      slug: string;
+      projectTypeId: string;
+    }[];
+  }[];
+};

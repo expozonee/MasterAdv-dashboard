@@ -11,17 +11,15 @@ import { Rubik } from "next/font/google";
 
 type ProjectsProps = {
   params: {
-    mainCategory: string;
-    section: string;
-    subSection: string;
-    subCategories: string;
+    businessType: string;
+    projectType: string;
   };
 };
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 export function Projects({ params }: ProjectsProps) {
-  const { mainCategory, section, subSection, subCategories } = params;
+  const { businessType, projectType } = params;
   const [projects, setProjects] = useState<Project[]>([]);
   const {
     data: projectsData,
@@ -30,26 +28,31 @@ export function Projects({ params }: ProjectsProps) {
   } = useQuery<Project[]>({
     queryKey: ["projects", params],
     queryFn: async () => {
-      return await getProjectsDashboard(params);
+      const data = await getProjectsDashboard(params);
+      setProjects(data);
+      console.log("data : ", data);
+      return data;
     },
   });
 
-  useEffect(() => {
-    async function fetchData() {
-      //   const projectsData = await getProjectsDashboard(params);
-      if (!projectsData || projectsData?.length === 0) return;
-      const filiteredProjectsData = projectsData.filter((item: Project) => {
-        return (
-          item.mainCategory.slug === mainCategory &&
-          item.section.slug === section &&
-          item.subSection.slug === subSection &&
-          item.subCategory.slug === subCategories
-        );
-      });
-      setProjects(filiteredProjectsData);
-    }
-    fetchData();
-  }, [mainCategory, section, subSection, subCategories, projectsData, params]);
+  // console.log("projectData : ", projectsData);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     //   const projectsData = await getProjectsDashboard(params);
+  //     // if (!projectsData || projectsData?.length === 0) return;
+  //     // const filiteredProjectsData = projectsData.filter((item: Project) => {
+  //     //   return (
+  //     //     item.mainCategory.slug === mainCategory &&
+  //     //     item.section.slug === section &&
+  //     //     item.subSection.slug === subSection &&
+  //     //     item.subCategory.slug === subCategories
+  //     //   );
+  //     // });
+  //     setProjects([]);
+  //   }
+  //   fetchData();
+  // }, []);
 
   if (isError)
     return (
@@ -67,11 +70,11 @@ export function Projects({ params }: ProjectsProps) {
         <ImagesGrid>
           {projects.map((project) => (
             <div
-              key={project.itemId}
+              key={project.projectId}
               className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
             >
               <Link
-                href={`${subCategories}/project/${project.itemId}`}
+                href={`${projectType}/project/${project.projectId}`}
                 className="w-full h-full"
               >
                 <Image

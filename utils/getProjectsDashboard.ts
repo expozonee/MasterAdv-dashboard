@@ -1,27 +1,21 @@
 import axios from "axios";
 
 type getProjectsDashboardProps = {
-  mainCategory: string;
-  section: string;
-  subSection: string;
-  subCategories: string;
+  businessType: string;
+  projectType: string;
 };
 
 export default async function getProjectsDashboard({
-  mainCategory,
-  section,
-  subSection,
-  subCategories,
+  businessType,
+  projectType,
 }: getProjectsDashboardProps) {
-  const result = await axios.get(`https://www.masteradv.vip/api/projects`, {
+  const result = await axios.get(`http://localhost:3000/api/projects`, {
     headers: {
-      "Cache-Control": "no-cache",
+      // "Cache-Control": "no-cache",
     },
     params: {
-      mainCategory: mainCategory,
-      section: section,
-      subSection: subSection,
-      subCategories: subCategories,
+      businessType: businessType,
+      projectType: projectType,
     },
   });
   return result.data;
