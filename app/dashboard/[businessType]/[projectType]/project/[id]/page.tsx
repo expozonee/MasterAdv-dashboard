@@ -16,10 +16,8 @@ import DashboardProjectSkeleton from "@/components/Skeletons/DashboardProjectSke
 type ProjectPageProps = {
   params: {
     id: string;
-    mainCategory: string;
-    section: string;
-    subSection: string;
-    subCategories: string;
+    businessType: string;
+    projectType: string;
   };
 };
 
@@ -39,7 +37,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   useEffect(() => {
     const projectData: Project[] = data as Project[];
     if (projectData) {
-      setProject(projectData.find((project) => project.itemId == params.id));
+      setProject(projectData.find((project) => project.projectId == params.id));
     }
   }, [params.id, data]);
 

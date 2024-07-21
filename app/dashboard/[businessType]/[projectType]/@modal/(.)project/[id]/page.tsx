@@ -60,7 +60,7 @@ export default function ProjectModal({ params }: ProjectModalProps) {
   const [imageUrl, setImageUrl] = useState<string>("");
 
   const [, , ...restPath] = pathname.split("/");
-  const [mainCategory, section, subSection, subCategory, , id] = restPath;
+  const [businessType, projectType, id] = restPath;
 
   const { isError, isLoading, data } = useQuery({
     queryKey: ["project", id],
@@ -204,10 +204,8 @@ export default function ProjectModal({ params }: ProjectModalProps) {
                 <WhatsappShareButton
                   categories={{
                     id: id,
-                    mainCategory: mainCategory,
-                    section: section,
-                    subSection: subSection,
-                    subCategories: subCategory,
+                    projectType: projectType,
+                    businessType: businessType,
                   }}
                   isMobile
                 />

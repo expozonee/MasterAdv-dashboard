@@ -6,10 +6,8 @@ import { Divider } from "@mui/material";
 type WhatsappShareButtonProps = {
   categories: {
     id: string;
-    mainCategory: string;
-    section: string;
-    subSection: string;
-    subCategories: string;
+    businessType: string;
+    projectType: string;
   };
   isMobile?: boolean;
 };
@@ -18,7 +16,7 @@ const BASE_URL = "https://masteradv.vip/";
 
 export default function WhatsappShareButton({
   isMobile,
-  categories: { mainCategory, section, subSection, subCategories, id },
+  categories: { businessType, projectType, id },
 }: WhatsappShareButtonProps) {
   return isMobile ? (
     <>
@@ -43,7 +41,7 @@ export default function WhatsappShareButton({
         }`}
       >
         <Link
-          href={`https://wa.me/972526453088?text=${BASE_URL}/dashboard/${mainCategory}/${section}/${subSection}/${subCategories}/project/${id}`}
+          href={`https://wa.me/972526453088?text=${BASE_URL}/dashboard/${projectType}/project/${id}`}
           target="_blank"
         >
           <Image
@@ -78,7 +76,7 @@ export default function WhatsappShareButton({
       </Divider>
       <div className={`flex justify-center py-4 `}>
         <Link
-          href={`https://wa.me/972526453088?text=${BASE_URL}${mainCategory}/${section}/${subSection}/${subCategories}/project/${id}`}
+          href={`https://wa.me/972526453088?text=${BASE_URL}/dashboard/${projectType}/project/${id}`}
           target="_blank"
         >
           <Image src={WhatsappButton} alt="Whatsapp share button" width={350} />
