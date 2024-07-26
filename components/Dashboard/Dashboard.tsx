@@ -21,13 +21,11 @@ const Dashboard: React.FC = () => {
   const pathname = usePathname()
     .split("/")
     .filter((path) => path !== "");
-  // const currentCategory = pathname[pathname.length - 1];
-  console.log(pathname);
 
   const { businessTypesData, isLoading, isError } = useBusinessTypes();
 
   return (
-    <div className="grid gap-3">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full justify-center gap-3">
       {isLoading && <DashboardSkeleton />}
       {isError && <div>Error...</div>}
       {businessTypesData?.map((businessType) => {
