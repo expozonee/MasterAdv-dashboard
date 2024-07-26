@@ -80,8 +80,6 @@ export default function Login() {
         callbackUrl: "/dashboard/admin",
       });
     } catch (error: any) {
-      console.log(error);
-
       setSubmitError({
         isError: true,
         message: error.message,

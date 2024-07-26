@@ -200,10 +200,6 @@ const Menu = () => {
                       >
                         {businessType.projectTypes.map(
                           (projectType) => {
-                            console.log(activeItem);
-                            console.log(
-                              `/dashboard/${businessType.slug}/${projectType.slug}`
-                            );
                             return (
                               <div key={projectType.projectTypeId}>
                                 <SubCategoryItem

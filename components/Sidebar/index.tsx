@@ -49,7 +49,6 @@ const Sidebar = () => {
       ...prevOpen,
       [id]: !prevOpen[id as keyof typeof prevOpen],
     }));
-    console.log(open);
   };
 
   // const [categories, setCategories] = useState<Category[]>([]);

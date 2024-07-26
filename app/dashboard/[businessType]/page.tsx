@@ -25,7 +25,6 @@ const fetchCategories = cache(async () => {
 });
 
 function filterDuplicates(array: BusinessType[]) {
-  console.log("array:", array);
   const data = array.flatMap((businessType) => {
     return businessType.businessCategories.flatMap((businessCategory) => {
       return businessCategory.projectTypes;
@@ -68,7 +67,7 @@ const BusinessTypePage = async ({ params }: BusinessPageProps) => {
         <BreadCrumbs titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {filteredBusinessTypes.map((projectType) => {
           return (
             <DashboardCard

@@ -30,7 +30,6 @@ export function Projects({ params }: ProjectsProps) {
     queryFn: async () => {
       const data = await getProjectsDashboard(params);
       setProjects(data);
-      console.log("data : ", data);
       return data;
     },
   });
