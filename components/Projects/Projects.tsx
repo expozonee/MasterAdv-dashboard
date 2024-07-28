@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import ProjectSkeleton from "../Skeletons/ProjectSkeleton";
 import { Rubik } from "next/font/google";
+import { useSearchParams } from "next/navigation";
 
 type ProjectsProps = {
   params: {
@@ -20,15 +21,23 @@ const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
 export function Projects({ params }: ProjectsProps) {
   const { businessType, projectType } = params;
+  const searchParams = useSearchParams();
+  const businessCategories = searchParams.get("businessCategory");
   const [projects, setProjects] = useState<Project[]>([]);
+
+  console.log("from projects : ", businessCategories);
+
   const {
     data: projectsData,
     isError,
     isLoading,
   } = useQuery<Project[]>({
-    queryKey: ["projects", params],
+    queryKey: ["projects", params, businessCategories],
     queryFn: async () => {
-      const data = await getProjectsDashboard(params);
+      const data = await getProjectsDashboard({
+        ...params,
+        businessCategories,
+      });
       setProjects(data);
       return data;
     },
