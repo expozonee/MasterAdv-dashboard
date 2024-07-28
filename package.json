@@ -22,6 +22,7 @@
     "@mui/icons-material": "^5.14.19",
     "@mui/joy": "^5.0.0-beta.20",
     "@mui/material": "^5.14.20",
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-jvectormap/core": "^1.0.4",
     "@react-jvectormap/unitedstates": "^1.0.1",
