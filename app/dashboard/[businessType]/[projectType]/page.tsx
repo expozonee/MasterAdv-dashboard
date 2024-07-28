@@ -9,6 +9,7 @@ import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import { getCategories } from "@/utils/data";
 import type { BusinessType } from "@/types/categories";
 import { Projects } from "@/components/Projects/Projects";
+import { Filter } from "@/components/Dashboard/Filter";
 
 const titleRubik = Rubik({ weight: "700", subsets: ["hebrew"] });
 
@@ -109,6 +110,10 @@ const ProjectTypePage = async ({ params }: SubCategoryProps) => {
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
+      <Filter
+        businessType={params.businessType}
+        projectType={params.projectType}
+      />
       <Projects params={params} />
 
       {/* <ImagesGrid>
