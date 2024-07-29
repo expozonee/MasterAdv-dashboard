@@ -26,7 +26,19 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full justify-center gap-3">
-      {isLoading && <DashboardSkeleton />}
+      {isLoading && (
+        <>
+          <div>
+            <DashboardSkeleton />
+          </div>
+          <div>
+            <DashboardSkeleton />
+          </div>
+          <div>
+            <DashboardSkeleton />
+          </div>
+        </>
+      )}
       {isError && <div>Error...</div>}
       {businessTypesData?.map((businessType) => {
         return (
