@@ -110,7 +110,7 @@ const ProjectTypePage = async ({ params }: SubCategoryProps) => {
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
-      <Suspense>
+      <Suspense fallback={<p>Loading...</p>}>
         <Filter
           businessType={params.businessType}
           projectType={params.projectType}
