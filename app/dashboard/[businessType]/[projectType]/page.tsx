@@ -1,11 +1,7 @@
 import React, { cache, Suspense } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { Rubik } from "next/font/google";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import PageData from "@/app/dashboard/PageData";
-import ImagesGrid from "@/components/PortfolioImage/ImagesGrid";
-import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import { getCategories } from "@/utils/data";
 import type { BusinessType } from "@/types/categories";
 import { Projects } from "@/components/Projects/Projects";
@@ -64,45 +60,8 @@ export async function generateStaticParams() {
 }
 
 const ProjectTypePage = async ({ params }: SubCategoryProps) => {
-  // const { mainCategory, section, subSection, subCategories } = params;
-
-  // new
-  // const projectsData = await getProjectsDashboard(params);
-  // const filiteredProjectsData = projectsData.filter((item: Project) => {
-  //   return (
-  //     item.mainCategory.slug === mainCategory &&
-  //     item.section.slug === section &&
-  //     item.subSection.slug === subSection &&
-  //     item.subCategory.slug === subCategories
-  //   );
-  // });
-  // const projects: Project[] = filiteredProjectsData;
-
-  // end of new
-
-  // old
-  // const [projects, setProjects] = useState<Project[]>([]);
-
   const [titleNames, titlesUrls] = await PageData(params);
   const title = titleNames[titleNames.length - 1];
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const projectsData = await getProjectsDashboard(params);
-  //     const filiteredProjectsData = projectsData.filter((item: Project) => {
-  //       return (
-  //         item.mainCategory.slug === mainCategory &&
-  //         item.section.slug === section &&
-  //         item.subSection.slug === subSection &&
-  //         item.subCategory.slug === subCategories
-  //       );
-  //     });
-  //     // console.log(projectsData);
-  //     // console.log(filiteredProjectsData);
-  //     // setProjects(filiteredProjectsData);
-  //   }
-  //   fetchData();
-  // }, [mainCategory, section, subSection, subCategories, params]);
 
   return (
     <div>
@@ -110,35 +69,13 @@ const ProjectTypePage = async ({ params }: SubCategoryProps) => {
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense>
         <Filter
           businessType={params.businessType}
           projectType={params.projectType}
         />
+        <Projects params={params} />
       </Suspense>
-      <Projects params={params} />
-
-      {/* <ImagesGrid>
-        {projects.map((project) => (
-          <div
-            key={project.itemId}
-            className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
-          >
-            <Link
-              href={`${subCategories}/project/${project.itemId}`}
-              className="w-full h-full"
-            >
-              <Image
-                src={project.imageUrl}
-                alt={project.imageUrl}
-                width={400}
-                height={400}
-                className="rounded-lg w-full h-full"
-              />
-            </Link>
-          </div>
-        ))}
-      </ImagesGrid> */}
     </div>
   );
 };
