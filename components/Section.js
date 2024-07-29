@@ -29,7 +29,6 @@ const Sections = ({ isMobile }) => {
   useEffect(() => {
     async function fetchData() {
       const [print, digital] = await getCategories();
-      console.log(digital.name, print.name);
       setCategories([digital, print]);
     }
     fetchData();

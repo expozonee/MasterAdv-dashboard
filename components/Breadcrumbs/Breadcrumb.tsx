@@ -25,7 +25,6 @@ const Breadcrumb = ({ titleNames, titleUrls }: BreadcrumbProps) => {
             </Link>
           </li>
           {titleNames.map((name, index) => {
-            console.log(titleUrls[index]);
             return (
               index < titleNames.length - 1 && (
                 <li key={index}>
@@ -37,7 +36,7 @@ const Breadcrumb = ({ titleNames, titleUrls }: BreadcrumbProps) => {
             );
           })}
 
-          <li className="font-medium text-primary">
+          <li className="font-medium text-gold">
             {titleNames[titleNames.length - 1]}
           </li>
         </ol>

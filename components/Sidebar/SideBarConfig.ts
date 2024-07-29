@@ -55,6 +55,5 @@ export async function initializeOpenState(businessTypes: FilteredBusinessType) {
     // });
     // });
   });
-  console.log("initializeOpenState", initializeOpenState);
   return initializeOpenState;
 }

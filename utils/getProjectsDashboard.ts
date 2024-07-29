@@ -3,11 +3,13 @@ import axios from "axios";
 type getProjectsDashboardProps = {
   businessType: string;
   projectType: string;
+  businessCategories?: string | null;
 };
 
 export default async function getProjectsDashboard({
   businessType,
   projectType,
+  businessCategories,
 }: getProjectsDashboardProps) {
   const result = await axios
     .get(`https://www.masteradv.vip/api/projects`, {
@@ -17,6 +19,7 @@ export default async function getProjectsDashboard({
       params: {
         businessType: businessType,
         projectType: projectType,
+        businessCategories: businessCategories,
       },
     })
     .then((res) => res.data);

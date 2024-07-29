@@ -3,31 +3,8 @@ import { Rubik } from "next/font/google";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import cardStyles from "./Card.module.css";
-
-const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["700"] });
-const rubik = Rubik({ subsets: ["hebrew"], weight: ["400"] });
-
-const IMAGES = [
-  {
-    id: 1,
-    title: "עסקים",
-    imageUrl:
-      "https://img.freepik.com/free-photo/downtown-restaurant-shopfront_53876-75135.jpg?t=st=1715358532~exp=1715362132~hmac=12db5eb9f2d767b0600ec2818c020eca8200392605567535ba9cbe16afbd0db9&w=1380",
-  },
-  {
-    id: 2,
-    title: "מוסדות",
-    imageUrl:
-      "https://img.freepik.com/free-photo/national-bank-romania_1268-14718.jpg?t=st=1715358563~exp=1715362163~hmac=0efda3970e4a10947c5909c4cc3863bb8375643874d02b2043df1607cdccefe1&w=1380",
-  },
-  {
-    id: 3,
-    title: "בתי ספר",
-    imageUrl:
-      "https://img.freepik.com/premium-photo/school-classroom-with-chairsdesks-chalkboard_258219-254.jpg?w=1380",
-  },
-];
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { ICONS } from "@/utils/icons";
 
 type DashboardCardProps = {
   businessType?: string;
@@ -41,37 +18,75 @@ export default function DashboardCard({
   businessCategory,
 }: DashboardCardProps) {
   const pathname = usePathname();
-  const image = IMAGES.find((image) => image.title === businessCategory?.name);
 
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl h-[200px] rounded-md">
-      <figure className="w-full lg:w-2/6 xl:w-1/6 h-1/2 md:h-full">
-        {/* <Image
-          src={
-            "https://img.freepik.com/free-photo/downtown-restaurant-shopfront_53876-75135.jpg?t=st=1715358532~exp=1715362132~hmac=12db5eb9f2d767b0600ec2818c020eca8200392605567535ba9cbe16afbd0db9&w=1380"
-          }
-          width={400}
-          height={200}
-          alt="section image"
-        /> */}
-        <div className="bg-white grid justify-center items-center">
-          <h1 className="card-title text-4xl text-black">
-            {businessCategory?.name}
-          </h1>
-        </div>
-      </figure>
-      <div
-        className={`card-body rounded-md bg-main2 ${cardStyles.background} justify-center`}
-      >
-        <div className="card-actions rounded-md justify-end h-2/3 items-center">
-          <Link
-            href={`${pathname}/${businessCategory?.slug}`}
-            className="w-full lg:w-2/6 h-2/3 bg-white btn text-xl"
-          >
-            לחץ כאן
-          </Link>
-        </div>
-      </div>
+    // <div className="card lg:card-side bg-base-100 shadow-xl h-[200px] rounded-md">
+    //   <figure className="w-full lg:w-2/6 xl:w-1/6 h-1/2 md:h-full">
+    //     {/* <Image
+    //       src={
+    //         "https://img.freepik.com/free-photo/downtown-restaurant-shopfront_53876-75135.jpg?t=st=1715358532~exp=1715362132~hmac=12db5eb9f2d767b0600ec2818c020eca8200392605567535ba9cbe16afbd0db9&w=1380"
+    //       }
+    //       width={400}
+    //       height={200}
+    //       alt="section image"
+    //     /> */}
+    //     <div className="bg-white grid justify-center items-center">
+    //       <h1 className="card-title text-4xl text-black">
+    //         {businessCategory?.name}
+    //       </h1>
+    //     </div>
+    //   </figure>
+    //   <div
+    //     className={`card-body rounded-md bg-main2 ${cardStyles.background} justify-center`}
+    //   >
+    //     <div className="card-actions rounded-md justify-end h-2/3 items-center">
+    //       <Link
+    //         href={`${pathname}/${businessCategory?.slug}`}
+    //         className="w-full lg:w-2/6 h-2/3 bg-white btn text-xl"
+    //       >
+    //         לחץ כאן
+    //       </Link>
+    //     </div>
+    //   </div>
+    // </div>
+    <Link
+      href={`${pathname}/${businessCategory?.slug}`}
+      className="w-full flex justify-center items-center h-[400px] hover:border-gold/100 hover:border-2 border-gold/0 rounded-md transition-all duration-150 ease-in-out"
+    >
+      <Card className="flex justify-center bg-transparent border-none">
+        <CardHeader className="text-center grid gap-6">
+          <Icon name={businessCategory?.name as keyof typeof ICONS} />
+          <CardTitle className="">{businessCategory?.name}</CardTitle>
+        </CardHeader>
+      </Card>
+    </Link>
+  );
+}
+
+type IconProps = {
+  name: keyof typeof ICONS;
+};
+
+function Icon({ name }: IconProps) {
+  let isHomeIcon = false;
+
+  if (name === "עסקים" || name === "מוסדות" || name === "בתי ספר") {
+    isHomeIcon = true;
+  }
+
+  return (
+    <div
+      className={`h-[${
+        isHomeIcon ? "200" : "100"
+      }px] flex items-center justify-center`}
+    >
+      <Image
+        src={ICONS[name]}
+        width={isHomeIcon ? 200 : 100}
+        height={isHomeIcon ? 200 : 100}
+        alt="icon"
+        className="max-w-none"
+      />
     </div>
   );
 }

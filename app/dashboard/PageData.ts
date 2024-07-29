@@ -71,9 +71,6 @@ const PageData = async ({
   // console.log("titlesNames", titlesNames);
   // }, [isLoading, isSuccess, mainCategory, section, subSection, subCategories]);
 
-  console.log("titlesNames", titlesNames);
-  console.log("titleUrls", titleUrls);
-
   return [titlesNames, titleUrls];
 };
 

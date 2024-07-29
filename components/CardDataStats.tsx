@@ -21,7 +21,6 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
 }) => {
   useEffect(() => {
     const data = getPortfolioSections();
-    console.log(data);
   }, []);
 
   return (

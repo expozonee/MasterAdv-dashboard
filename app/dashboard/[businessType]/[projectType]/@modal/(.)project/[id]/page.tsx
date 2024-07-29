@@ -93,7 +93,6 @@ export default function ProjectModal({ params }: ProjectModalProps) {
       const imageUrl = (data as Project[]).find(
         (item) => item.projectId === params.id
       )?.imageUrl;
-      console.log("imageUrl : ", imageUrl);
 
       setImageUrl(imageUrl!);
     }

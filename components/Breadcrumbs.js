@@ -14,8 +14,6 @@ function handleClick(event) {
 }
 
 export default function StandardBreadcrumbs() {
-  console.log(usePathname());
-
   const pathName = usePathname();
   const segments = pathName.split("/");
   let url = "";
