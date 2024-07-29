@@ -1,4 +1,4 @@
-import React, { cache } from "react";
+import React, { cache, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Rubik } from "next/font/google";
@@ -110,10 +110,12 @@ const ProjectTypePage = async ({ params }: SubCategoryProps) => {
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
       </div>
-      <Filter
-        businessType={params.businessType}
-        projectType={params.projectType}
-      />
+      <Suspense>
+        <Filter
+          businessType={params.businessType}
+          projectType={params.projectType}
+        />
+      </Suspense>
       <Projects params={params} />
 
       {/* <ImagesGrid>
