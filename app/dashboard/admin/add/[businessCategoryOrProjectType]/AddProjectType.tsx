@@ -40,7 +40,7 @@ const BUSINESS_CATEGORIES: {
   slug: string;
 }[] = [];
 
-type BusinessTypesWithProjectTypeData = {
+type BusinessTypesWithBusinessCategoriesData = {
   name: string;
   slug: string;
   businessCategories: {
@@ -61,7 +61,7 @@ export function AddProjectType() {
   } = useQuery({
     queryKey: ["businessTypes", "projectTypes"],
     queryFn: async () => {
-      const response: BusinessTypesWithProjectTypeData[] = await axios
+      const response: BusinessTypesWithBusinessCategoriesData[] = await axios
         .get("http://localhost:3000/api/categories", {
           headers: {
             "Cache-Control": "no-cache",
