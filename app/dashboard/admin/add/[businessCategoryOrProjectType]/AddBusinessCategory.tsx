@@ -23,6 +23,7 @@ import {
 import { Rubik } from "next/font/google";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { add } from "@/utils/add";
 
 const rubikText = Rubik({ weight: ["500"], subsets: ["hebrew"] });
 
@@ -31,14 +32,6 @@ const formSchema = z.object({
   slug: z.string().min(1, { message: "שם באנגלית חובה" }).max(15),
   businessType: z.string().min(1, { message: "סוג חובה" }),
 });
-
-// const formSchema = z.object({
-//   email: z
-//     .string({
-//       required_error: "Please select an email to display.",
-//     })
-//     .email(),
-// });
 
 const BUSINESS_CATEGORIES: {
   name: string;
@@ -86,9 +79,15 @@ export function AddBusinessCategory() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    const result = await add({
+      name: values.name,
+      slug: values.slug,
+      categoryOrType: "businessCategory",
+      businessCategory: values.businessType,
+    });
     console.log(values);
   }
 
