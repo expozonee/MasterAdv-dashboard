@@ -10,7 +10,6 @@ import { useBusinessTypes } from "@/components/Query/CategoriesQuery";
 import getTitles from "@/utils/getTitles";
 import { filterBusinessTypes } from "@/utils/filterBusinessTypes";
 import { FilteredBusinessType } from "@/types/filiteredBusinessTypes";
-import { isAborted } from "zod";
 
 const rubikHeader = Rubik({ weight: "800", subsets: ["hebrew"] });
 const rubikSubHeader = Rubik({ weight: "500", subsets: ["hebrew"] });
