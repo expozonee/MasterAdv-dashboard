@@ -215,6 +215,25 @@ footer {
   content: "";
 }
 
+.menuDesignAdmin :where(div ul) {
+  position: relative;
+  white-space: nowrap;
+  margin-inline-start: 1rem;
+  padding-inline-start: 0.5rem;
+}
+
+.menuDesignAdmin :where(div ul)::before {
+  position: absolute;
+  bottom: 0.75rem;
+  inset-inline-start: 0;
+  top: 0.75rem;
+  width: 1px;
+  --tw-bg-opacity: 1;
+  background-color: white;
+  opacity: 0.1;
+  content: "";
+}
+
 .height-dvh {
   height: 100vh;
   height: 100dvh;
