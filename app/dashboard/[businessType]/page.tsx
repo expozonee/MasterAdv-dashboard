@@ -61,7 +61,7 @@ const BusinessTypePage = async ({ params }: BusinessPageProps) => {
   const filteredBusinessTypes = filterDuplicates(businessTypes);
 
   return (
-    <div>
+    <div className="text-white">
       <div>
         <h1 className={`text-3xl ${titleRubik.className}`}>{title}</h1>
         <BreadCrumbs titleNames={titleNames} titleUrls={titlesUrls} />
