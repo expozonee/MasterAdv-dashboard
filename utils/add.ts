@@ -1,12 +1,16 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 type AddProps = {
   name: string;
   slug: string;
-  categoryOrType: "businessCategory" | "projectType";
+  // categoryOrType: "businessCategory" | "projectType";
 } & (
-  | { categoryOrType: "businessCategory"; businessCategory: string }
-  | { categoryOrType: "projectType"; projectType: string }
+  | { categoryOrType: "businessCategory"; businessTypeName: string }
+  | {
+      categoryOrType: "projectType";
+      businessTypeName: string;
+      businessCategoryName: string;
+    }
 );
 
 export async function add(data: AddProps) {
@@ -14,16 +18,52 @@ export async function add(data: AddProps) {
     const dataToSend = {
       name: data.name,
       slug: data.slug,
-      category: data.businessCategory,
+      businessType: data.businessTypeName,
     };
 
-    const response = await axios
-      .post("http://localhost:3000/api/add", dataToSend, {
-        headers: {
-          "Cache-Control": "no-cache",
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => response.data);
+    try {
+      const response = await axios
+        .post("http://localhost:3000/api/add", dataToSend, {
+          headers: {
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/json",
+          },
+          params: {
+            type: data.categoryOrType,
+          },
+        })
+        .then((response) => response.data);
+
+      return response;
+    } catch (error: any) {
+      const errorResponse = error as AxiosError;
+      return errorResponse.message;
+    }
+  } else if (data.categoryOrType === "projectType") {
+    const dataToSend = {
+      name: data.name,
+      slug: data.slug,
+      businessType: data.businessTypeName,
+      businessCategory: data.businessCategoryName,
+    };
+
+    try {
+      const response = await axios
+        .post("http://localhost:3000/api/add", dataToSend, {
+          headers: {
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/json",
+          },
+          params: {
+            type: data.categoryOrType,
+          },
+        })
+        .then((response) => response.data);
+
+      return response;
+    } catch (error) {
+      const errorResponse = error as AxiosError;
+      return errorResponse.message;
+    }
   }
 }
