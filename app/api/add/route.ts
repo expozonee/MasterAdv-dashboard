@@ -10,14 +10,16 @@ export async function POST(req: NextRequest) {
   })) as JWTWithToken;
 
   const data = await req.json();
+  const type = new URL(req.url).searchParams.get("type");
 
   const response = await axios.post("http://localhost:4000/add", data, {
     headers: {
       Authorization: `Bearer ${token.accessToken}`,
     },
+    params: {
+      type: type,
+    },
   });
 
-  console.log(data);
-
-  return NextResponse.json({ message: "Hello" });
+  return NextResponse.json(response.data);
 }
