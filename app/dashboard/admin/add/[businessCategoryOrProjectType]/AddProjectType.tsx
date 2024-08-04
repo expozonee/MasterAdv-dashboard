@@ -203,16 +203,22 @@ export function AddProjectType() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {businessCategory?.map((businessCategory) => (
-                      <SelectItem
-                        dir="rtl"
-                        className={`${rubikText.className}`}
-                        key={businessCategory.slug}
-                        value={businessCategory.name}
-                      >
-                        {businessCategory.name}
+                    {businessCategory && businessCategory.length > 0 ? (
+                      businessCategory.map((businessCategory) => (
+                        <SelectItem
+                          dir="rtl"
+                          className={`${rubikText.className}`}
+                          key={businessCategory.slug}
+                          value={businessCategory.name}
+                        >
+                          {businessCategory.name}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem disabled value={"null"} dir="rtl">
+                        בחר סוג עסק קודם
                       </SelectItem>
-                    ))}
+                    )}
                   </SelectContent>
                 </Select>
 
