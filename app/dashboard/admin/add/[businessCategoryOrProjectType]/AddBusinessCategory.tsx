@@ -3,7 +3,6 @@ import axios from "axios";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,6 +23,9 @@ import { Rubik } from "next/font/google";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { add } from "@/utils/add";
+import type { Alert } from "../../page";
+import { useState } from "react";
+import ErrorAlert from "../../ErrorAlert";
 
 const rubikText = Rubik({ weight: ["500"], subsets: ["hebrew"] });
 
@@ -44,6 +46,8 @@ type BusinessTypesData = {
 };
 
 export function AddBusinessCategory() {
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+
   const {
     isLoading,
     isError,
@@ -86,9 +90,14 @@ export function AddBusinessCategory() {
       name: values.name,
       slug: values.slug,
       categoryOrType: "businessCategory",
-      businessCategory: values.businessType,
+      businessTypeName: values.businessType,
     });
-    console.log(values);
+
+    if (result.isError) {
+      setAlerts([{ type: "error", text: result.message }]);
+    } else {
+      setAlerts((prev) => [...prev, { type: "success", text: result.message }]);
+    }
   }
 
   return (
@@ -166,6 +175,7 @@ export function AddBusinessCategory() {
           </Button>
         </form>
       </Form>
+      {alerts.length > 0 && <ErrorAlert key={Math.random()} alerts={alerts} />}
     </div>
   );
 }

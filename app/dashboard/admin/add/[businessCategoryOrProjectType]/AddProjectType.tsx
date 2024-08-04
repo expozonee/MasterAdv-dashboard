@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { z } from "zod";
+import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -25,6 +25,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { add } from "@/utils/add";
 import { useState } from "react";
+import { Alert } from "../../page";
+import ErrorAlert from "../../ErrorAlert";
 
 const rubikText = Rubik({ weight: ["500"], subsets: ["hebrew"] });
 
@@ -50,6 +52,8 @@ type BusinessTypesWithBusinessCategoriesData = {
 };
 
 export function AddProjectType() {
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+
   const [businessCategory, setBusinessCategory] = useState<
     { name: string; slug: string }[] | undefined
   >(undefined);
@@ -101,13 +105,19 @@ export function AddProjectType() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    // const result = await add({
-    //   name: values.name,
-    //   slug: values.slug,
-    //   categoryOrType: "businessCategory",
-    //   businessCategory: values.businessCategory,
-    // });
-    console.log(values);
+    const result = await add({
+      name: values.name,
+      slug: values.slug,
+      categoryOrType: "projectType",
+      businessTypeName: values.businessType,
+      businessCategoryName: values.businessCategory,
+    });
+
+    if (result.isError) {
+      setAlerts([{ type: "error", text: result.message }]);
+    } else {
+      setAlerts((prev) => [...prev, { type: "success", text: result.message }]);
+    }
   }
 
   return (
@@ -218,6 +228,7 @@ export function AddProjectType() {
           </Button>
         </form>
       </Form>
+      {alerts.length > 0 && <ErrorAlert key={Math.random()} alerts={alerts} />}
     </div>
   );
 }
