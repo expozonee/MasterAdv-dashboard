@@ -64,7 +64,7 @@ const ProjectTypePage = async ({ params }: SubCategoryProps) => {
   const title = titleNames[titleNames.length - 1];
 
   return (
-    <div>
+    <div className="text-white">
       <div>
         <h1 className={`${titleRubik.className} text-4xl`}>{title}</h1>
         <Breadcrumb titleNames={titleNames} titleUrls={titlesUrls} />
