@@ -56,7 +56,7 @@ export default function DashboardCard({
       <Card className="flex justify-center bg-transparent border-none">
         <CardHeader className="text-center grid gap-6">
           <Icon name={businessCategory?.name as keyof typeof ICONS} />
-          <CardTitle className="">{businessCategory?.name}</CardTitle>
+          <CardTitle className="text-white">{businessCategory?.name}</CardTitle>
         </CardHeader>
       </Card>
     </Link>
