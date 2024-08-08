@@ -3,14 +3,13 @@ import axios from "axios";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { set, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -21,18 +20,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Rubik } from "next/font/google";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { add } from "@/utils/add";
 import { useState } from "react";
 import { Alert } from "../../page";
 import ErrorAlert from "../../ErrorAlert";
+import { queryClient } from "@/contexts/QueryClient";
 
 const rubikText = Rubik({ weight: ["500"], subsets: ["hebrew"] });
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "שם חובה" }).max(15),
-  slug: z.string().min(1, { message: "שם באנגלית חובה" }).max(15),
+  slug: z.string().min(1, { message: "שם באנגלית חובה" }).max(20),
   businessType: z.string().min(1, { message: "סוג חובה" }),
   businessCategory: z.string().min(1, { message: "סוג חובה" }),
 });
@@ -53,10 +53,33 @@ type BusinessTypesWithBusinessCategoriesData = {
 
 export function AddProjectType() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
-
   const [businessCategory, setBusinessCategory] = useState<
     { name: string; slug: string }[] | undefined
   >(undefined);
+
+  const {
+    isPending,
+    isError: mutateError,
+    mutate,
+  } = useMutation({
+    mutationKey: ["addProjectType"],
+    mutationFn: async (data: {
+      name: string;
+      slug: string;
+      categoryOrType: "projectType";
+      businessTypeName: string;
+      businessCategoryName: string;
+    }) => {
+      return await add({
+        name: data.name,
+        slug: data.slug,
+        categoryOrType: data.categoryOrType,
+        businessTypeName: data.businessTypeName,
+        businessCategoryName: data.businessCategoryName,
+      });
+    },
+  });
+
   const {
     isLoading,
     isError,
@@ -102,22 +125,36 @@ export function AddProjectType() {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(
+    values: z.infer<typeof formSchema>,
+    e?: React.BaseSyntheticEvent
+  ) {
+    e?.preventDefault();
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    const result = await add({
-      name: values.name,
-      slug: values.slug,
-      categoryOrType: "projectType",
-      businessTypeName: values.businessType,
-      businessCategoryName: values.businessCategory,
-    });
 
-    if (result.isError) {
-      setAlerts([{ type: "error", text: result.message }]);
-    } else {
-      setAlerts((prev) => [...prev, { type: "success", text: result.message }]);
-    }
+    mutate(
+      {
+        name: values.name,
+        slug: values.slug,
+        categoryOrType: "projectType",
+        businessTypeName: values.businessType,
+        businessCategoryName: values.businessCategory,
+      },
+      {
+        onSuccess: async (data: { isError?: boolean; message: string }) => {
+          if (data.isError) {
+            setAlerts([{ type: "error", text: data.message }]);
+          } else {
+            setAlerts((prev) => [
+              ...prev,
+              { type: "success", text: data.message },
+            ]);
+            queryClient.invalidateQueries({ queryKey: ["categories"] });
+          }
+        },
+      }
+    );
   }
 
   return (
