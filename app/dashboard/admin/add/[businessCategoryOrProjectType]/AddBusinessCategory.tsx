@@ -134,86 +134,84 @@ export function AddBusinessCategory() {
         },
       }
     );
-
-    return (
-      <div
-        className={`w-2/5 mx-auto mt-20 ${rubikText.className} border-2 border-gold p-8 rounded-lg`}
-      >
-        <h1 className="text-white text-center text-xl">הוספת קטגוריה</h1>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg">שם</FormLabel>
-                  <FormControl>
-                    <Input placeholder="שם" {...field} />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="slug"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg">שם באנגלית</FormLabel>
-                  <FormControl>
-                    <Input placeholder="שם באנגלית" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="businessType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg">סוג</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger dir="rtl">
-                        <SelectValue placeholder="בחר סוג" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {businessTypes?.map((businessType) => (
-                        <SelectItem
-                          dir="rtl"
-                          className={`${rubikText.className}`}
-                          key={businessType.slug}
-                          value={businessType.name}
-                        >
-                          {businessType.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              className="w-full text-lg bg-gold hover:bg-red-500"
-              type="submit"
-            >
-              הוספת קטגוריה
-            </Button>
-          </form>
-        </Form>
-        {alerts.length > 0 && (
-          <ErrorAlert key={Math.random()} alerts={alerts} />
-        )}
-      </div>
-    );
   }
+
+  return (
+    <div
+      className={`w-2/5 mx-auto mt-20 ${rubikText.className} border-2 border-gold p-8 rounded-lg`}
+    >
+      <h1 className="text-white text-center text-xl">הוספת קטגוריה</h1>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg">שם</FormLabel>
+                <FormControl>
+                  <Input placeholder="שם" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg">שם באנגלית</FormLabel>
+                <FormControl>
+                  <Input placeholder="שם באנגלית" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="businessType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg">סוג</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger dir="rtl">
+                      <SelectValue placeholder="בחר סוג" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {businessTypes?.map((businessType) => (
+                      <SelectItem
+                        dir="rtl"
+                        className={`${rubikText.className}`}
+                        key={businessType.slug}
+                        value={businessType.name}
+                      >
+                        {businessType.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            className="w-full text-lg bg-gold hover:bg-red-500"
+            type="submit"
+          >
+            הוספת קטגוריה
+          </Button>
+        </form>
+      </Form>
+      {alerts.length > 0 && <ErrorAlert key={Math.random()} alerts={alerts} />}
+    </div>
+  );
 }
