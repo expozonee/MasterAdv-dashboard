@@ -5,13 +5,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useEffect } from "react";
 
+export const queryClient = new QueryClient();
 export default function QueryProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const queryClient = new QueryClient();
-
   useEffect(() => {
     async function fetchCategories() {
       await queryClient.prefetchQuery({
@@ -27,18 +26,7 @@ export default function QueryProvider({
     }
     fetchCategories();
     fetchTitles();
-  }, [queryClient]);
-
-  // async () => {
-  //   await queryClient.prefetchQuery({
-  //     queryKey: ["categories"],
-  //     queryFn: getCategories,
-  //   });
-  //   await queryClient.prefetchQuery({
-  //     queryKey: ["titles"],
-  //     queryFn: getTitles,
-  //   });
-  // };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
