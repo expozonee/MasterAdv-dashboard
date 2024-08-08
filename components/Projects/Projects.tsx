@@ -25,8 +25,6 @@ export function Projects({ params }: ProjectsProps) {
   const businessCategories = searchParams.get("businessCategory");
   const [projects, setProjects] = useState<Project[]>([]);
 
-  console.log("from projects : ", businessCategories);
-
   const {
     data: projectsData,
     isError,
