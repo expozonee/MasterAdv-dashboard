@@ -9,7 +9,7 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      <div>
+      <div className="mt-6">
         <h2
           className={`text-center text-white text-4xl ${rubikTitle.className}`}
         >
