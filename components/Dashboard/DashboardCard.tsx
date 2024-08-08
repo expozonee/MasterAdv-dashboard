@@ -74,19 +74,23 @@ function Icon({ name }: IconProps) {
     isHomeIcon = true;
   }
 
+  const source = ICONS[name];
+
   return (
     <div
       className={`h-[${
         isHomeIcon ? "200" : "100"
       }px] flex items-center justify-center`}
     >
-      <Image
-        src={ICONS[name]}
-        width={isHomeIcon ? 200 : 100}
-        height={isHomeIcon ? 200 : 100}
-        alt="icon"
-        className="max-w-none"
-      />
+      {source && (
+        <Image
+          src={ICONS[name]}
+          width={isHomeIcon ? 200 : 100}
+          height={isHomeIcon ? 200 : 100}
+          alt="icon"
+          className="max-w-none"
+        />
+      )}
     </div>
   );
 }
