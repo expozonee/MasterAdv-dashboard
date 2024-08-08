@@ -12,7 +12,7 @@ export default function RootLayout({
   return (
     <CategoriesProvider>
       <SideBarProvider>
-        <div className="bg-main text-white">
+        <div className="bg-main">
           {/* {loading ? (
           <Loader />
         ) : ( */}

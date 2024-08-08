@@ -6,6 +6,7 @@ import Image from "next/image";
 import NewMenu from "./NewMenu";
 import Logo from "@/assets/masterAdv-Logo.svg";
 import { useSidebar } from "@/contexts/SideBarContext";
+import { AdminSideBar } from "./AdminSideBar";
 
 interface Category {
   mainCategoryId: number;
@@ -137,7 +138,7 @@ const Sidebar = () => {
       {/* <!-- SIDEBAR HEADER --> */}
       {/* "latest commented item" was here */}
 
-      <NewMenu />
+      {pathname.includes("admin") ? <AdminSideBar /> : <NewMenu />}
     </aside>
   );
 };

@@ -56,7 +56,7 @@ export default function DashboardCard({
       <Card className="flex justify-center bg-transparent border-none">
         <CardHeader className="text-center grid gap-6">
           <Icon name={businessCategory?.name as keyof typeof ICONS} />
-          <CardTitle className="">{businessCategory?.name}</CardTitle>
+          <CardTitle className="text-white">{businessCategory?.name}</CardTitle>
         </CardHeader>
       </Card>
     </Link>
@@ -74,19 +74,23 @@ function Icon({ name }: IconProps) {
     isHomeIcon = true;
   }
 
+  const source = ICONS[name];
+
   return (
     <div
       className={`h-[${
         isHomeIcon ? "200" : "100"
       }px] flex items-center justify-center`}
     >
-      <Image
-        src={ICONS[name]}
-        width={isHomeIcon ? 200 : 100}
-        height={isHomeIcon ? 200 : 100}
-        alt="icon"
-        className="max-w-none"
-      />
+      {source && (
+        <Image
+          src={ICONS[name]}
+          width={isHomeIcon ? 200 : 100}
+          height={isHomeIcon ? 200 : 100}
+          alt="icon"
+          className="max-w-none"
+        />
+      )}
     </div>
   );
 }

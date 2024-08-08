@@ -23,7 +23,7 @@ const UploadedImage = ({
   const [isSpecial, setIsSpecial] = useState<string>("");
 
   return (
-    <div className="bg-gray pb-4 rounded-md drop-shadow-md">
+    <div className="bg-gray pb-4 rounded-md drop-shadow-md bg-white">
       <Image
         key={name}
         className="w-full rounded-t-md"

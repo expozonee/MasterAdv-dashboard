@@ -2,7 +2,6 @@ import ProviderSession from "@/components/Providers/Providers";
 import design from "./page.module.css";
 import { MobileProvider } from "@/contexts/MobileContext";
 import { Metadata } from "next";
-import ProjectsQueryProvider from "@/contexts/ProjectsQuery";
 import QueryProvider from "@/contexts/QueryClient";
 import EmotionCacheProvider from "@/components/Providers/EmotionCacheProvider";
 
@@ -28,7 +27,6 @@ export default function RootLayout({
     >
       <EmotionCacheProvider>
         <QueryProvider>
-          {/* <ProjectsQueryProvider> */}
           <ProviderSession>
             <body
               className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
@@ -37,7 +35,6 @@ export default function RootLayout({
               <MobileProvider>{children}</MobileProvider>
             </body>
           </ProviderSession>
-          {/* </ProjectsQueryProvider> */}
         </QueryProvider>
       </EmotionCacheProvider>
     </html>

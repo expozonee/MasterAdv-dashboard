@@ -261,7 +261,7 @@ module.exports = {
         "spin-3": "spin 3s linear infinite",
       },
       colors: {
-        // ...colors,
+        ...colors,
         red: colors.red,
         purple: "#3d1149",
         reddish: "#d13534",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import getAllCategories from "@/lib/getAllCategories";
-import type { Categories } from "@/lib/getAllCategories";
+import { useQuery } from "@tanstack/react-query";
 import "./selectStyle.css";
 
 type OptionsProps = {
@@ -57,13 +57,14 @@ const Options = ({
     },
   ]);
 
+  const { isSuccess, data: businessTypesData } = useQuery({
+    queryKey: ["categoriesOptions"],
+    queryFn: getAllCategories,
+  });
+
   useEffect(() => {
-    async function fetchCategories() {
-      const businessTypes = await getAllCategories();
-      setBusinessTypes(businessTypes);
-    }
-    fetchCategories();
-  }, []);
+    setBusinessTypes(businessTypesData);
+  }, [isSuccess, businessTypesData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
@@ -84,20 +85,15 @@ const Options = ({
             (b_category) => b_category.name === businessCategory
           )?.projectTypes || [];
       break;
-    // case "SUB_CATEGORY":
-    //   options =
-    //     categories
-    //       .find((category) => category.name === mainCategory)
-    //       ?.sections.find((section) => section.name === sectionName)
-    //       ?.subSections.find((subSection) => subSection.name === subSectionName)
-    //       ?.subCategories || [];
-    //   break;
+
     case "IS_SPECIAL":
       options = isSpecial;
       break;
     default:
       options = businessTypes;
   }
+
+  console.log("options", options);
 
   return (
     <>
@@ -118,11 +114,13 @@ const Options = ({
               ? `האם מיוחד?`
               : `-- בחר ${OptionsType[type as keyof typeof OptionsType]} --`}
           </option>
-          {options.map((option: { name: string }) => (
-            <option key={option.name} value={option.name}>
-              {option.name}
-            </option>
-          ))}
+          {isSuccess &&
+            options &&
+            options.map((option: { name: string }) => (
+              <option key={option.name} value={option.name}>
+                {option.name}
+              </option>
+            ))}
         </select>
         <div className="select-arrow"></div>
       </div>

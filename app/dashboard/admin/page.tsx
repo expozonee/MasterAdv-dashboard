@@ -30,7 +30,7 @@ export type ImageData = {
   isSpecial: string;
 };
 
-type Alert = {
+export type Alert = {
   text: string;
   type: "error" | "success";
 };
@@ -208,11 +208,15 @@ const AdminPage = () => {
       <div
         className={`text-center my-3 text-4xl font-black ${rubikTitle.className}`}
       >
-        מערכת מנהל
+        {/* מערכת מנהל */}
         <h1 className="text-gold">{`שלום ${session?.user?.name}`}</h1>
       </div>
 
-      <form onSubmit={onSubmit} encType="multipart/form-data">
+      <form
+        onSubmit={onSubmit}
+        encType="multipart/form-data"
+        className="text-white"
+      >
         <div
           id="FileUpload"
           className="relative mb-5.5 block w-1/2 mx-auto max-w-[1200px] cursor-pointer appearance-none rounded border-2 border-dashed border-white bg-transparent py-4 px-4 dark:bg-meta-4 sm:py-7.5"
