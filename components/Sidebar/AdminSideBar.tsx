@@ -13,7 +13,6 @@ export function AdminSideBar() {
 
   useEffect(() => {
     const savedActiveItem = sessionStorage.getItem("adminActiveItem");
-    console.log("savedActiveItem", savedActiveItem);
     if (savedActiveItem !== null) setActiveItem(savedActiveItem);
   }, []);
 
