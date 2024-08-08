@@ -2,17 +2,23 @@ import Link from "next/link";
 import { Rubik } from "next/font/google";
 import { AdminLink } from "./AdminLink";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const rubikHeader = Rubik({ subsets: ["hebrew"], weight: ["900"] });
 const rubikSubHeader = Rubik({ weight: "500", subsets: ["hebrew"] });
 
 export function AdminSideBar() {
   const [activeItem, setActiveItem] = useState<string | undefined>(undefined);
+  const pathname = usePathname();
 
   useEffect(() => {
     const savedActiveItem = sessionStorage.getItem("adminActiveItem");
     if (savedActiveItem !== null) setActiveItem(savedActiveItem);
   }, []);
+
+  useEffect(() => {
+    handleItemClick(pathname);
+  }, [pathname]);
 
   const handleItemClick = (url: string) => {
     sessionStorage.setItem("adminActiveItem", url);
