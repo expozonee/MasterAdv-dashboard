@@ -138,7 +138,11 @@ const Sidebar = () => {
       {/* <!-- SIDEBAR HEADER --> */}
       {/* "latest commented item" was here */}
 
-      {pathname.includes("admin") ? <AdminSideBar /> : <NewMenu />}
+      {pathname.includes("admin") ? (
+        <AdminSideBar />
+      ) : (
+        <NewMenu toggleSidebar={toggleSidebar} />
+      )}
     </aside>
   );
 };
