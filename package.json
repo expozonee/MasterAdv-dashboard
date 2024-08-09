@@ -48,6 +48,7 @@
     "framer-motion-3d": "^10.16.16",
     "jsonwebtoken": "^9.0.2",
     "jsvectormap": "^1.5.3",
+    "ldrs": "^1.0.2",
     "lucide-react": "^0.378.0",
     "next": "^14.2.5",
     "next-auth": "^4.24.7",

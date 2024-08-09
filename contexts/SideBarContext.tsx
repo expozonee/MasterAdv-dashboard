@@ -12,7 +12,6 @@ export function SideBarProvider({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   function toggleSidebar(arg: boolean) {
-    console.log(arg);
     setSidebarOpen(arg);
   }
 

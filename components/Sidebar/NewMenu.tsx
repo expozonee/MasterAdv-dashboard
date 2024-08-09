@@ -22,7 +22,11 @@ interface OpenStateConfig {
   };
 }
 
-const Menu = () => {
+type MenuProps = {
+  toggleSidebar: (arg: boolean) => void;
+};
+
+const Menu = ({ toggleSidebar }: MenuProps) => {
   const { isLoading, isError, businessTypesData } = useBusinessTypes();
 
   useEffect(() => {
@@ -209,6 +213,7 @@ const Menu = () => {
                                     `/dashboard/${businessType.slug}/${projectType.slug}`
                                   }
                                   onClick={handleItemClick}
+                                  toggleSidebar={toggleSidebar}
                                   title={projectType.name}
                                 />
                               </div>
