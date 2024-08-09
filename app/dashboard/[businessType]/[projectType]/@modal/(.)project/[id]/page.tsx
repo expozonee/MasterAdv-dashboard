@@ -11,6 +11,7 @@ import WhatsappShareButton from "@/components/shareButtons/WhatsappShareButton";
 import { useQuery } from "@tanstack/react-query";
 import getProjects from "@/utils/getProjects";
 import { Project } from "@/types/project/Project";
+import { SpinnerLoader } from "@/components/Loaders/SpinnerLoader";
 
 // type ImageOwnProps<T extends React.ElementType> = {
 //   className: string;
@@ -186,11 +187,9 @@ export default function ProjectModal({ params }: ProjectModalProps) {
                 />
               ) : (
                 <div
-                  className={`aspect-square ${
-                    isMobile ? "w-full" : "w-[80vh]"
-                  }  flex justify-center items-center`}
+                  className={`aspect-square w-full flex justify-center items-center`}
                 >
-                  Loading...
+                  <SpinnerLoader />
                 </div>
               )}
             </div>
