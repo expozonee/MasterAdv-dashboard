@@ -9,6 +9,7 @@ interface SubCategoryItemProps {
   title: string;
   isActive: boolean;
   onClick: (url: string) => void;
+  toggleSidebar: (arg: boolean) => void;
 }
 
 const SubCategoryItem = ({
@@ -16,6 +17,7 @@ const SubCategoryItem = ({
   title,
   onClick,
   isActive,
+  toggleSidebar,
 }: SubCategoryItemProps) => {
   return (
     <li>
@@ -24,7 +26,10 @@ const SubCategoryItem = ({
         className={`group relative flex items-center gap-2.5 rounded-xl py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
           isActive && "bg-gold text-white"
         }`}
-        onClick={() => onClick(href)}
+        onClick={() => {
+          onClick(href);
+          toggleSidebar(false);
+        }}
       >
         <h4 className={`${rubikBody.className} text-md`}>{title}</h4>
       </Link>
