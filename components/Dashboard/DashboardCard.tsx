@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { ICONS } from "@/utils/icons";
+import { usePathname } from "next/navigation";
 
 type DashboardCardProps = {
   businessType?: string;
@@ -18,6 +20,8 @@ export default function DashboardCard({
   width,
   height,
 }: DashboardCardProps) {
+  const pathname = usePathname();
+
   return (
     // <div className="card lg:card-side bg-base-100 shadow-xl h-[200px] rounded-md">
     //   <figure className="w-full lg:w-2/6 xl:w-1/6 h-1/2 md:h-full">
@@ -49,7 +53,7 @@ export default function DashboardCard({
     //   </div>
     // </div>
     <Link
-      href={`dashboard/${businessCategory?.slug}`}
+      href={`${pathname}/${businessCategory?.slug}`}
       className="w-full flex justify-center items-center h-[400px] hover:border-gold/100 hover:border-2 border-gold/0 rounded-md transition-all duration-150 ease-in-out"
     >
       <Card className="flex justify-center bg-transparent border-none">
