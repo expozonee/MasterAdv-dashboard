@@ -9,6 +9,7 @@ import Logo from "@/assets/masterAdv-Logo.svg";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import { HomePageButton } from "./Banners/HomePageButton";
 import { useMobile } from "@/contexts/MobileContext";
+import { BiSolidPhoneCall } from "react-icons/bi";
 
 const rubikButton = Rubik({ subsets: ["hebrew"], weight: ["500"] });
 
@@ -38,8 +39,8 @@ const LogoBanner = () => {
         <BurgerMenuNew />
         <Link className="hidden md:block" href="tel:+972526453088">
           <button className="bg-gold text-white px-6 py-3 rounded-lg flex gap-3">
-            <PhoneIphoneIcon />
             052-645-3088
+            <BiSolidPhoneCall size={22} className="" />
           </button>
         </Link>
       </div>
