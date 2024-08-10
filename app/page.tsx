@@ -4,6 +4,7 @@ import LogoBanner from "@/components/LogoBanner";
 import HomeBanner from "@/components/HomeBanner";
 import DesignerInfo from "@/components/HomePage/DesignerInfo";
 import ProjectCarousel from "@/components/HomePage/Carousel";
+import { DashboardSections } from "@/components/HomePage/DashboardSections";
 
 export default function Home() {
   return (
@@ -17,9 +18,10 @@ export default function Home() {
     >
       <LogoBanner />
       <HomeBanner />
-      <ProjectCarousel title="מה חדש" type="normal" />
+      <DashboardSections />
+      <ProjectCarousel title="פרויקטים חדשים" type="normal" />
       <DesignerInfo />
-      <ProjectCarousel title="עבודות נבחרות" type="special" />
+      <ProjectCarousel title="פרויקטים מיוחדים" type="special" />
       <Footer />
     </main>
   );
