@@ -3,12 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/assets/masterAdv-Logo.svg";
 import { Noto_Kufi_Arabic } from "next/font/google";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSquareFacebook,
-  faSquareInstagram,
-  faSquareWhatsapp,
-} from "@fortawesome/free-brands-svg-icons";
+
+import { FaFacebookSquare } from "react-icons/fa";
+import { FaSquareInstagram } from "react-icons/fa6";
+import { FaSquareWhatsapp } from "react-icons/fa6";
 
 const notoFooter = Noto_Kufi_Arabic({ subsets: ["arabic"], weight: ["400"] });
 
@@ -30,15 +28,15 @@ const Footer = () => {
           כל הזכויות שמורות - MasterAdv © {currentYear}
         </p>
       </div>
-      <div className="flex gap-3">
+      <div className="flex gap-1">
         <Link href={"/"}>
-          <FontAwesomeIcon icon={faSquareFacebook} size="3x" />
+          <FaFacebookSquare size={40} />
         </Link>
         <Link href={"/about-us"}>
-          <FontAwesomeIcon icon={faSquareInstagram} size="3x" />
+          <FaSquareInstagram size={40} />
         </Link>
         <Link href={"/dashboard"}>
-          <FontAwesomeIcon icon={faSquareWhatsapp} size="3x" />
+          <FaSquareWhatsapp size={40} />
         </Link>
       </div>
     </footer>
