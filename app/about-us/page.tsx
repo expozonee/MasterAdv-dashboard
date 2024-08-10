@@ -7,7 +7,7 @@ const rubikText = Rubik({ subsets: ["hebrew"], weight: ["400"] });
 
 export default function AboutUs() {
   return (
-    <section className="flex flex-col min-h-screen">
+    <section className="flex flex-col min-h-screen justify-between">
       <div className="w-full">
         <LogoBanner />
       </div>
@@ -35,7 +35,9 @@ export default function AboutUs() {
           consequatur distinctio debitis deleniti quae voluptatem.
         </p>
       </div>
-      <Footer />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </section>
   );
 }
