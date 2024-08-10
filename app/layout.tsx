@@ -6,6 +6,7 @@ import QueryProvider from "@/contexts/QueryClient";
 import EmotionCacheProvider from "@/components/Providers/EmotionCacheProvider";
 
 import "./globals.css";
+import { SideBarProvider } from "@/contexts/SideBarContext";
 
 export const metadata: Metadata = {
   title: "Master Adv",
@@ -28,12 +29,14 @@ export default function RootLayout({
       <EmotionCacheProvider>
         <QueryProvider>
           <ProviderSession>
-            <body
-              className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
-              suppressHydrationWarning={true}
-            >
-              <MobileProvider>{children}</MobileProvider>
-            </body>
+            <SideBarProvider>
+              <body
+                className={`h-full ${design.gradientWrapper} `} // Added the className to the body tag on 9/4/2024
+                suppressHydrationWarning={true}
+              >
+                <MobileProvider>{children}</MobileProvider>
+              </body>
+            </SideBarProvider>
           </ProviderSession>
         </QueryProvider>
       </EmotionCacheProvider>
