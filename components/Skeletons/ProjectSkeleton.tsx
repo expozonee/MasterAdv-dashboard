@@ -23,7 +23,7 @@ export default function ProjectSkeleton({ location }: ProjectSkeletonProps) {
     >
       <Skeleton
         height={400}
-        animation="wave"
+        animation={"wave"}
         sx={{
           background: "white",
           opacity: 0.2,
@@ -36,7 +36,7 @@ export default function ProjectSkeleton({ location }: ProjectSkeletonProps) {
       </Skeleton>
       <Skeleton
         height={400}
-        animation="wave"
+        animation={"wave"}
         sx={{
           background: "white",
           opacity: 0.2,
@@ -49,7 +49,7 @@ export default function ProjectSkeleton({ location }: ProjectSkeletonProps) {
       </Skeleton>
       <Skeleton
         height={400}
-        animation="wave"
+        animation={"wave"}
         sx={{
           background: "white",
           opacity: 0.2,
@@ -60,6 +60,43 @@ export default function ProjectSkeleton({ location }: ProjectSkeletonProps) {
       >
         <div className="" style={{ width: 400, height: 400 }} />
       </Skeleton>
+    </div>
+  );
+}
+
+function ErrorDiv() {
+  return (
+    <div className="flex flex-col justify-center items-center w-[400px] h-[400px] border-[1px] border-gold rounded-md">
+      <p className="text-2xl text-white">שגיאה בטעינת הנתונים</p>
+      <p className="text-white">נסה שוב מאוחר יותר</p>
+    </div>
+  );
+}
+
+type ErrorSkeletonProps = {
+  location: "home" | "dashboard";
+};
+
+export function ErrorSkeleton({ location }: ErrorSkeletonProps) {
+  return (
+    <div
+      style={
+        location === "home"
+          ? undefined
+          : {
+              display: "grid",
+              gridAutoFlow: "dense",
+              gap: "1rem",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 400px))",
+            }
+      }
+      className={`${
+        location === "home" ? "flex gap-3" : "justify-items-center"
+      }`}
+    >
+      <ErrorDiv />
+      <ErrorDiv />
+      <ErrorDiv />
     </div>
   );
 }
