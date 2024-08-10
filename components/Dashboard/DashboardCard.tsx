@@ -1,6 +1,3 @@
-"use client";
-import { Rubik } from "next/font/google";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,13 +9,15 @@ type DashboardCardProps = {
     name: string;
     slug: string;
   };
+  width?: number;
+  height?: number;
 };
 
 export default function DashboardCard({
   businessCategory,
+  width,
+  height,
 }: DashboardCardProps) {
-  const pathname = usePathname();
-
   return (
     // <div className="card lg:card-side bg-base-100 shadow-xl h-[200px] rounded-md">
     //   <figure className="w-full lg:w-2/6 xl:w-1/6 h-1/2 md:h-full">
@@ -50,12 +49,15 @@ export default function DashboardCard({
     //   </div>
     // </div>
     <Link
-      href={`${pathname}/${businessCategory?.slug}`}
+      href={`dashboard/${businessCategory?.slug}`}
       className="w-full flex justify-center items-center h-[400px] hover:border-gold/100 hover:border-2 border-gold/0 rounded-md transition-all duration-150 ease-in-out"
     >
       <Card className="flex justify-center bg-transparent border-none">
         <CardHeader className="text-center grid gap-6">
-          <Icon name={businessCategory?.name as keyof typeof ICONS} />
+          <Icon
+            width={width}
+            name={businessCategory?.name as keyof typeof ICONS}
+          />
           <CardTitle className="text-white">{businessCategory?.name}</CardTitle>
         </CardHeader>
       </Card>
@@ -65,9 +67,11 @@ export default function DashboardCard({
 
 type IconProps = {
   name: keyof typeof ICONS;
+  width?: number;
+  height?: number;
 };
 
-function Icon({ name }: IconProps) {
+function Icon({ name, width, height }: IconProps) {
   let isHomeIcon = false;
 
   if (name === "עסקים" || name === "מוסדות" || name === "בתי ספר") {
@@ -85,8 +89,8 @@ function Icon({ name }: IconProps) {
       {source && (
         <Image
           src={ICONS[name]}
-          width={isHomeIcon ? 200 : 100}
-          height={isHomeIcon ? 200 : 100}
+          width={isHomeIcon ? width ?? 200 : 100}
+          height={isHomeIcon ? height ?? 200 : 100}
           alt="icon"
           className="max-w-none"
         />

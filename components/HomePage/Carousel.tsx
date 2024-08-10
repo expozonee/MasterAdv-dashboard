@@ -10,7 +10,10 @@ import {
 } from "@/components/ui/carousel";
 import { useQuery } from "@tanstack/react-query";
 import getProjects from "@/utils/getProjects";
-import ProjectSkeleton from "../Skeletons/ProjectSkeleton";
+import ProjectSkeleton, { ErrorSkeleton } from "../Skeletons/ProjectSkeleton";
+import { Rubik } from "next/font/google";
+
+const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["700"] });
 
 type CarouselProps = {
   title: string;
@@ -49,66 +52,24 @@ export default function CarouselComponent({ title }: CarouselProps) {
     }
   }, [data]);
 
-  const images = [
-    {
-      id: 1,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 2,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 3,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 4,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 5,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 6,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 7,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 8,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 9,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-    {
-      id: 10,
-      url: "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380",
-    },
-  ];
-
   return (
     <section className="w-full">
       <div className="flex flex-col justify-center">
-        <h2 className="text-white text-5xl mx-auto max-w-[1500px] py-10 pt-0">
+        <h2
+          className={`text-white text-3xl md:text-5xl mx-auto max-w-[1500px] py-10 pt-0 ${rubikTitle.className}`}
+        >
           {title}
         </h2>
-        {isError && <p>Error</p>}
         <Carousel
           opts={{
             direction: "rtl",
             align: "center",
-            //   loop: true,
           }}
           className="max-w-[1500px] mx-20 xl:mx-auto"
         >
           <CarouselContent>
             {isLoading && <ProjectSkeleton location="home" />}
+            {isError && <ErrorSkeleton location="home" />}
 
             {projects.map((project, index) => (
               <CarouselItem

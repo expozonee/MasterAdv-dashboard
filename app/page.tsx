@@ -4,29 +4,9 @@ import LogoBanner from "@/components/LogoBanner";
 import HomeBanner from "@/components/HomeBanner";
 import DesignerInfo from "@/components/HomePage/DesignerInfo";
 import ProjectCarousel from "@/components/HomePage/Carousel";
+import { DashboardSections } from "@/components/HomePage/DashboardSections";
 
 export default function Home() {
-  // const [isMobile, setIsMobile] = useState(false);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     const width = window.innerWidth;
-  //     if (width <= 460) {
-  //       setIsMobile(true);
-  //     } else {
-  //       setIsMobile(false);
-  //     }
-  //   };
-
-  //   handleResize();
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
   return (
     <main
       style={{
@@ -38,9 +18,10 @@ export default function Home() {
     >
       <LogoBanner />
       <HomeBanner />
-      <ProjectCarousel title="מה חדש" type="normal" />
+      <DashboardSections />
+      <ProjectCarousel title="פרויקטים חדשים" type="normal" />
       <DesignerInfo />
-      <ProjectCarousel title="עבודות נבחרות" type="special" />
+      <ProjectCarousel title="פרויקטים מיוחדים" type="special" />
       <Footer />
     </main>
   );
