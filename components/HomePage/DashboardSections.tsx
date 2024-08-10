@@ -19,6 +19,7 @@ export async function DashboardSections() {
         {businessTypesData.map((category) => {
           return (
             <DashboardCard
+              home
               key={category.name}
               businessCategory={{
                 name: category.name,

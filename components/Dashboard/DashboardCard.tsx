@@ -13,12 +13,14 @@ type DashboardCardProps = {
   };
   width?: number;
   height?: number;
+  home?: boolean;
 };
 
 export default function DashboardCard({
   businessCategory,
   width,
   height,
+  home,
 }: DashboardCardProps) {
   const pathname = usePathname();
 
@@ -53,7 +55,11 @@ export default function DashboardCard({
     //   </div>
     // </div>
     <Link
-      href={`${pathname}/${businessCategory?.slug}`}
+      href={
+        home
+          ? `/dashboard/${businessCategory?.slug}`
+          : `${pathname}/${businessCategory?.slug}`
+      }
       className="w-full flex justify-center items-center h-[400px] hover:border-gold/100 hover:border-2 border-gold/0 rounded-md transition-all duration-150 ease-in-out"
     >
       <Card className="flex justify-center bg-transparent border-none">
