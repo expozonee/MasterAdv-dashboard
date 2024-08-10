@@ -13,7 +13,8 @@ export function MobileProvider({ children }: MobileProviderProps) {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width <= 460) {
+      // if (width <= 460) {
+      if (width <= 767) {
         setIsMobile(true);
       } else {
         setIsMobile(false);
