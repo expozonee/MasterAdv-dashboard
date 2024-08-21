@@ -1,17 +1,12 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import { Arimo } from "next/font/google";
-import { getPortfolioSections } from "@/utils/data";
-import { Divider } from "@mui/material";
-import { usePathname } from "next/navigation";
 import WhatsappShareButton from "@/components/shareButtons/WhatsappShareButton";
 import { useEffect, useState } from "react";
 import getProjectsDashboard from "@/utils/getProjectsDashboard";
 import type { Project } from "@/types/project/Project";
 import { useQuery } from "@tanstack/react-query";
-import ProjectSkeleton from "@/components/Skeletons/ProjectSkeleton";
 import DashboardProjectSkeleton from "@/components/Skeletons/DashboardProjectSkeleton";
+import { ProjectDataUpdateForm } from "@/components/Projects/ProjectsDataUpdateForm";
 
 type ProjectPageProps = {
   params: {
@@ -20,9 +15,6 @@ type ProjectPageProps = {
     projectType: string;
   };
 };
-
-const ArimoFontTitle = Arimo({ subsets: ["hebrew"], weight: ["700"] });
-const ArimoFontText = Arimo({ subsets: ["hebrew"], weight: ["400"] });
 
 export default function ProjectPage({ params }: ProjectPageProps) {
   const [project, setProject] = useState<Project | undefined>(undefined);
@@ -43,7 +35,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <>
-      {/* {isLoading && <p>Loading...</p>} */}
       {isError && <p>Error</p>}
       {isLoading ? (
         <DashboardProjectSkeleton />
@@ -63,15 +54,10 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               )}
             </div>
             <div>
-              {/* <h1 className={`text-6xl ${ArimoFontTitle.className}`}>
-            {project.title}
-          </h1> */}
               <WhatsappShareButton categories={params} />
+              {project && <ProjectDataUpdateForm projectData={project} />}
             </div>
           </div>
-          {/* <p className="flex justify-center items-center my-25">
-            Design is Fun
-          </p> */}
         </div>
       )}
     </>
