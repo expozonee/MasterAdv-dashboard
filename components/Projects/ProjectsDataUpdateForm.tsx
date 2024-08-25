@@ -25,6 +25,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import { Project } from "@/types/project/Project";
 import ErrorAlert from "@/app/dashboard/admin/ErrorAlert";
+import { usePathname, useRouter } from "next/navigation";
 
 const rubikText = Rubik({ weight: ["500"], subsets: ["hebrew"] });
 
@@ -67,6 +68,8 @@ type ProjectDataUpdateForm = {
 };
 
 export function ProjectDataUpdateForm({ projectData }: ProjectDataUpdateForm) {
+  const pathname = usePathname();
+  const router = useRouter();
   const { data: session, status } = useSession();
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [businessCategories, setBusinessCategories] = useState<
@@ -160,6 +163,7 @@ export function ProjectDataUpdateForm({ projectData }: ProjectDataUpdateForm) {
     }
   }, [alerts]);
 
+  // handle click on business type
   function handleClickBusinessType(
     businessType: string,
     onChange: (...event: any[]) => void
@@ -172,6 +176,7 @@ export function ProjectDataUpdateForm({ projectData }: ProjectDataUpdateForm) {
     setBusinessCategories(businessCategories);
   }
 
+  // handle click on business category
   function handleClickBusinessCategory(
     businessCategory: string,
     onChange: (...event: any[]) => void
@@ -182,6 +187,38 @@ export function ProjectDataUpdateForm({ projectData }: ProjectDataUpdateForm) {
     })?.projectTypes;
 
     setProjectTypes(projectTypes);
+  }
+
+  // delete project
+  async function handleDelete(projectId: string, imageUrl: string) {
+    const response = await axios
+      .delete("http://localhost:3000/api/projects", {
+        data: {
+          projectId,
+          imageUrl,
+        },
+      })
+      .then((res) => res.data);
+
+    if (response.success) {
+      setAlerts([
+        {
+          type: "success",
+          text: "הפרוייקט נמחק בהצלחה",
+        },
+      ]);
+
+      const path = pathname.split("project")[0];
+      console.log(path);
+      router.push(`${path}`);
+    } else {
+      setAlerts([
+        {
+          type: "error",
+          text: response.error,
+        },
+      ]);
+    }
   }
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -360,7 +397,17 @@ export function ProjectDataUpdateForm({ projectData }: ProjectDataUpdateForm) {
             className="w-full text-lg bg-gold hover:bg-red-500"
             type="submit"
           >
-            הוספת סוג פרוייקט
+            עדכון פרוייקט
+          </Button>
+          <Button
+            type="button"
+            color="red"
+            onClick={async () =>
+              await handleDelete(projectData.projectId, projectData.imageUrl)
+            }
+            className="w-full text-lg bg-red-500 hover:bg-red-800"
+          >
+            מחיקת פרוייקט
           </Button>
         </form>
       </Form>
