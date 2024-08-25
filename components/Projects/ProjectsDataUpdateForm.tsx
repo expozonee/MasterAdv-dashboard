@@ -89,7 +89,7 @@ export function ProjectDataUpdateForm({ projectData }: ProjectDataUpdateForm) {
     queryKey: ["businessTypes", "projectTypes"],
     queryFn: async () => {
       const response: CategoriesData[] = await axios
-        .get("http://localhost:3000/api/categories", {
+        .get("https://www.masteradv.vip/api/categories", {
           headers: {
             "Cache-Control": "no-cache",
             "Content-Type": "application/json",
@@ -124,13 +124,16 @@ export function ProjectDataUpdateForm({ projectData }: ProjectDataUpdateForm) {
       businessCategory: string;
       projectType: string;
     }) => {
-      const response = await axios.post("http://localhost:3000/api/projects", {
-        projectId: data.projectId,
-        isSpecial: data.isSpecial,
-        businessType: data.businessType,
-        businessCategory: data.businessCategory,
-        projectType: data.projectType,
-      });
+      const response = await axios.post(
+        "https://www.masteradv.vip/api/projects",
+        {
+          projectId: data.projectId,
+          isSpecial: data.isSpecial,
+          businessType: data.businessType,
+          businessCategory: data.businessCategory,
+          projectType: data.projectType,
+        }
+      );
 
       if (response.data.error) {
         setAlerts([

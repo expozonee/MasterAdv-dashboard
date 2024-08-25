@@ -89,7 +89,7 @@ export function AddProjectType() {
     queryKey: ["businessTypes", "projectTypes"],
     queryFn: async () => {
       const response: BusinessTypesWithBusinessCategoriesData[] = await axios
-        .get("http://localhost:3000/api/categories", {
+        .get("https://www.masteradv.vip/api/categories", {
           headers: {
             "Cache-Control": "no-cache",
             "Content-Type": "application/json",

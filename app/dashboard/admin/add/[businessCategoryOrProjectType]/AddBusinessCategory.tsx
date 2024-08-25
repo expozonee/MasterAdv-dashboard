@@ -79,7 +79,7 @@ export function AddBusinessCategory() {
     queryKey: ["businessTypes"],
     queryFn: async () => {
       const response: BusinessTypesData[] = await axios
-        .get("http://localhost:3000/api/categories", {
+        .get("https://www.masteradv.vip/api/categories", {
           headers: {
             "Cache-Control": "no-cache",
             "Content-Type": "application/json",
