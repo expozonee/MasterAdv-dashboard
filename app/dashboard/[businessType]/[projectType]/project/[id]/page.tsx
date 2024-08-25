@@ -7,6 +7,7 @@ import type { Project } from "@/types/project/Project";
 import { useQuery } from "@tanstack/react-query";
 import DashboardProjectSkeleton from "@/components/Skeletons/DashboardProjectSkeleton";
 import { ProjectDataUpdateForm } from "@/components/Projects/ProjectsDataUpdateForm";
+import { notFound } from "next/navigation";
 
 type ProjectPageProps = {
   params: {
@@ -28,10 +29,18 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
   useEffect(() => {
     const projectData: Project[] = data as Project[];
+
     if (projectData) {
-      setProject(projectData.find((project) => project.projectId == params.id));
+      const desiredProject = projectData.find(
+        (project) => project.projectId == params.id
+      );
+
+      if (!desiredProject) {
+        notFound();
+      }
+      setProject(desiredProject);
     }
-  }, [params.id, data]);
+  }, [params.id, data, isLoading, project]);
 
   return (
     <>
