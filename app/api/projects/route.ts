@@ -46,3 +46,25 @@ export async function POST(req: NextRequest) {
   const message = await response;
   return new Response(JSON.stringify(message.data));
 }
+
+export async function DELETE(req: NextRequest) {
+  const token = (await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+  })) as JWTWithToken;
+
+  const body = await req.json();
+  console.log(body);
+  const response = axios
+    .delete("http://localhost:4000/deleteProject", {
+      headers: {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.accessToken}`,
+      },
+      data: body,
+    })
+    .then((res) => res);
+  const message = await response;
+  return new Response(JSON.stringify(message.data));
+}
