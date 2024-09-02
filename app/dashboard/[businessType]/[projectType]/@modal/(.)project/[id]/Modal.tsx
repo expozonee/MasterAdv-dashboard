@@ -1,15 +1,34 @@
 "use client";
-import { useCallback, useRef, useEffect, MouseEventHandler } from "react";
+import {
+  useCallback,
+  useRef,
+  useEffect,
+  MouseEventHandler,
+  useState,
+} from "react";
 import { useRouter } from "next/navigation";
 
 export default function Modal({ children }: { children: React.ReactNode }) {
   const overlay = useRef(null);
   const wrapper = useRef(null);
   const router = useRouter();
+  const [scrollY, setScrollY] = useState(0);
 
   const onDismiss = useCallback(() => {
+    setScrollY(window.scrollY);
     router.back();
   }, [router]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setTimeout(() => {
+        window.scrollTo(0, scrollY);
+      }, 0);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [scrollY]);
 
   const onClick: MouseEventHandler = useCallback(
     (e) => {
