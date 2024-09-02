@@ -8,7 +8,10 @@ const rubikText = Rubik({ subsets: ["hebrew"], weight: ["400"] });
 
 export default function DesignerInfo() {
   return (
-    <section className="designer-info overflow-hidden bg-white my-10 px-10 py-25 flex items-center relative z-10">
+    <section
+      id="about-us"
+      className="designer-info overflow-hidden bg-white my-10 px-10 py-25 flex items-center relative z-10"
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-[1500px] mx-auto relative">
         <h2
           className={`text-gold text-9xl ${rubikTitle.className} mb-4 lg:mr-auto lg:border-l-4 lg:border-gold pl-16`}
