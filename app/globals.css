@@ -6,6 +6,8 @@ html {
 
 body {
   overflow: auto;
+  --scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 @tailwind base;
