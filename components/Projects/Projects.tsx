@@ -82,6 +82,7 @@ export function Projects({ params }: ProjectsProps) {
               <Link
                 href={`${projectType}/project/${project.projectId}`}
                 className="w-full h-full"
+                scroll={false}
               >
                 <Image
                   src={project.imageUrl}
