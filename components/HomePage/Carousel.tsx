@@ -12,6 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 import getProjects from "@/utils/getProjects";
 import ProjectSkeleton, { ErrorSkeleton } from "../Skeletons/ProjectSkeleton";
 import { Rubik } from "next/font/google";
+import Link from "next/link";
+import { Project } from "@/types/project/Project";
 
 const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["700"] });
 
@@ -20,25 +22,7 @@ type CarouselProps = {
   type: "normal" | "special";
 };
 
-type Project = {
-  itemId: string;
-  mainCategory: {
-    name: string;
-  };
-  section: {
-    name: string;
-  };
-  subSection: {
-    name: string;
-  };
-  subCategory: {
-    name: string;
-  };
-  imageUrl: string;
-  isSpecial: string;
-};
-
-export default function CarouselComponent({ title }: CarouselProps) {
+export default function CarouselComponent({ title, type }: CarouselProps) {
   const [projects, setProjects] = useState<Project[]>([]);
   const { isLoading, isError, data } = useQuery({
     queryKey: ["projects"],
@@ -48,9 +32,16 @@ export default function CarouselComponent({ title }: CarouselProps) {
   useEffect(() => {
     const projectData: Project[] = data as Project[];
     if (projectData) {
-      setProjects(projectData);
+      if (type === "normal") {
+        setProjects(projectData);
+      } else {
+        const specialProjects = projectData.filter(
+          (project) => project.isSpecial
+        );
+        setProjects(specialProjects);
+      }
     }
-  }, [data]);
+  }, [data, type]);
 
   return (
     <section className="w-full">
@@ -71,20 +62,24 @@ export default function CarouselComponent({ title }: CarouselProps) {
             {isLoading && <ProjectSkeleton location="home" />}
             {isError && <ErrorSkeleton location="home" />}
 
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <CarouselItem
-                key={project.itemId}
+                key={project.projectId}
                 className=" md:basis-1/2 lg:basis-1/4"
               >
-                <div className="p-1">
-                  <Image
-                    className="rounded-md w-full"
-                    src={project.imageUrl}
-                    alt="Project image"
-                    width={400}
-                    height={400}
-                    priority
-                  />
+                <div className="p-1 hover:scale-90 transition-all">
+                  <Link
+                    href={`/dashboard/${project.businessType.slug}/${project.projectType.slug}/project/${project.projectId}`}
+                  >
+                    <Image
+                      className="rounded-md w-full"
+                      src={project.imageUrl}
+                      alt="Project image"
+                      width={400}
+                      height={400}
+                      priority
+                    />
+                  </Link>
                 </div>
               </CarouselItem>
             ))}
