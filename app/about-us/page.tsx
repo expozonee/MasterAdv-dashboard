@@ -1,11 +1,14 @@
 import Footer from "@/components/Footer";
 import LogoBanner from "@/components/LogoBanner";
 import { Rubik } from "next/font/google";
+import { notFound } from "next/navigation";
 
 const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["700"] });
 const rubikText = Rubik({ subsets: ["hebrew"], weight: ["400"] });
 
 export default function AboutUs() {
+  notFound();
+
   return (
     <section className="flex flex-col min-h-screen justify-between">
       <div className="w-full">
