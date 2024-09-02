@@ -49,8 +49,8 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <DashboardProjectSkeleton />
       ) : (
         <div>
-          <div className="grid gap-10 ms:grid-cols-1 xl:grid-cols-2">
-            <div className="w-full">
+          <div className="flex flex-wrap gap-10 ms:grid-cols-1 xl:grid-cols-2">
+            <div className="grow-[1.2]">
               {project && (
                 <Image
                   className="rounded-xl drop-shadow-lg"
@@ -58,11 +58,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   alt={project.imageUrl}
                   width={500}
                   height={500}
-                  style={{ height: "100%", width: "100%" }}
+                  style={{ width: "100%" }}
                 />
               )}
             </div>
-            <div>
+            <div className="grow-[1]">
               <WhatsappShareButton categories={params} />
               {project && <ProjectDataUpdateForm projectData={project} />}
             </div>
