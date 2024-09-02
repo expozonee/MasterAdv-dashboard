@@ -8,9 +8,9 @@ const rubikText = Rubik({ subsets: ["hebrew"], weight: ["400"] });
 
 export default function DesignerInfo() {
   return (
-    <section className="designer-info overflow-hidden bg-white my-10 px-10 py-15 flex items-center relative z-10">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center max-w-[1500px] mx-auto relative">
-        <div className="mx-auto xl:mr-auto">
+    <section className="designer-info overflow-hidden bg-white my-10 px-10 py-25 flex items-center relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-[1500px] mx-auto relative">
+        {/* <div className="mx-auto xl:mr-auto">
           <Image
             className="rounded-md"
             src={
@@ -20,24 +20,30 @@ export default function DesignerInfo() {
             width={400}
             height={400}
           />
-        </div>
+        </div> */}
+        <h2
+          className={`text-gold text-9xl ${rubikTitle.className} mb-4 mr-auto border-l-4 border-gold pl-16`}
+        >
+          מי
+          <br /> אנחנו
+        </h2>
         <div>
-          <h2 className={`text-gold text-5xl ${rubikTitle.className} mb-4`}>
-            מועתסם זערורה
-          </h2>
+          {/* <h2 className={`text-gold text-5xl ${rubikTitle.className} mb-4`}>
+            מי אנחנו
+          </h2> */}
           <p className={`text-black ${rubikText.className}`}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
-            atque nesciunt modi distinctio nihil a sunt alias magnam! Fuga
-            vitae, nobis quaerat illo a doloremque, laudantium delectus
-            voluptate nostrum in facilis consectetur ipsam eveniet hic est ullam
-            autem quas minus laboriosam fugiat asperiores beatae. In earum
-            consectetur velit, libero repellendus veniam possimus molestiae
-            perferendis quis doloribus nobis, optio sequi aperiam
-            exercitationem. Commodi minus atque quis veritatis eligendi. Sequi
-            nesciunt doloremque, magnam ratione fugiat qui architecto, molestias
-            ut accusantium nihil minima ipsum soluta nam aliquam!
-            Exercitationem, vitae tempora voluptates in sit non tempore at. Odit
-            nobis asperiores repellat, at quae minima.
+            החברה Master Adv לפרסום ושיווק היא חברת פרסום רב-שירותית שהוקמה בשנת
+            2009, ושואפת לתמוך באינטרסים הערביים באמצעות שיווקם בפלטפורמות שונות
+            לצורך פיתוחם וחשיפתם ללקוחות בצורה מודרנית, חכמה ויצירתית.
+            הפלטפורמות עליהן פועלת Master Adv רבות ומגוונות, ומציעות מגוון רחב
+            של אפשרויות לעסקים. החברה מתחילה בהגדרת הקווים המנחים לזהות הפרסום
+            של העסק לפי קריטריונים שונים וממשיכה לפרסום דיגיטלי וכל מה שקשור
+            לפרסום ברשתות החברתיות כמו פייסבוק ואינסטגרם. משרדנו מציע שירותים
+            בסיסיים כגון יצירת וניהול עמודי פייסבוק ואינסטגרם חדשים, עיצוב שבועי
+            להפעלת העמודים, עד לשיווק ויזואלי באמצעות סרטוני פרסום תקופתיים.
+            בנוסף, אנו עוסקים בבניית אתרים וחניות באינטרנט, רישום דומיין ודואר
+            אלקטרוני בשם העסק או החברה ועוד. כל זאת תוך התאמה לצרכים העסקיים של
+            הלקוח והתאמת חבילות שונות במחירים משתנים המתאימים ליכולת העסק.
           </p>
         </div>
       </div>
