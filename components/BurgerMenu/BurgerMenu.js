@@ -258,7 +258,7 @@ export function BurgerMenuNew() {
               </HomePageLinkSideBar>
               <HomePageLinkSideBar
                 icon={<InfoIcon fontSize="large" htmlColor="white" />}
-                href={"/about-us"}
+                href={"#about-us"}
                 handleClick={() => setOpen(false)}
               >
                 מי אנחנו
