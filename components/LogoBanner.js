@@ -33,7 +33,7 @@ const LogoBanner = () => {
         </Link>
 
         <HomePageButton href="/dashboard">העבודות שלנו</HomePageButton>
-        {/* <HomePageButton href="/about-us">מי אנחנו</HomePageButton> */}
+        <HomePageButton href="#about-us">מי אנחנו</HomePageButton>
       </div>
       <div className="text-white flex ">
         <BurgerMenuNew />
