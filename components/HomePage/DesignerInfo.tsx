@@ -10,17 +10,6 @@ export default function DesignerInfo() {
   return (
     <section className="designer-info overflow-hidden bg-white my-10 px-10 py-25 flex items-center relative z-10">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-[1500px] mx-auto relative">
-        {/* <div className="mx-auto xl:mr-auto">
-          <Image
-            className="rounded-md"
-            src={
-              "https://img.freepik.com/free-photo/cat-kitten-ai-generated_268835-9255.jpg?t=st=1716129867~exp=1716133467~hmac=2a221f1826144e6359c1f3e90c6b14d6e8a49004e2c13dd6faf2402b73bef587&w=1380"
-            }
-            alt="picture"
-            width={400}
-            height={400}
-          />
-        </div> */}
         <h2
           className={`text-gold text-9xl ${rubikTitle.className} mb-4 mr-auto border-l-4 border-gold pl-16`}
         >
@@ -28,9 +17,6 @@ export default function DesignerInfo() {
           <br /> אנחנו
         </h2>
         <div>
-          {/* <h2 className={`text-gold text-5xl ${rubikTitle.className} mb-4`}>
-            מי אנחנו
-          </h2> */}
           <p className={`text-black ${rubikText.className}`}>
             החברה Master Adv לפרסום ושיווק היא חברת פרסום רב-שירותית שהוקמה בשנת
             2009, ושואפת לתמוך באינטרסים הערביים באמצעות שיווקם בפלטפורמות שונות
