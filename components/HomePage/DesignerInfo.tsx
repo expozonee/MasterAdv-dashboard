@@ -12,7 +12,7 @@ export default function DesignerInfo() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-[1500px] mx-auto relative">
         <h2
-          className={`text-gold text-6xl lg:text-9xl ${rubikTitle.className} mb-4 lg:mr-auto lg:border-l-4 lg:border-gold pl-16`}
+          className={`text-gold text-4xl lg:text-9xl ${rubikTitle.className} mb-4 lg:mr-auto lg:border-l-4 lg:border-gold pl-16`}
         >
           מי
           <br /> אנחנו
