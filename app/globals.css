@@ -244,7 +244,7 @@ footer {
 /* my custom tailwind css styles */
 
 .button {
-  @apply text-white text-xl text-white px-6 py-3;
+  @apply text-white text-xl px-6 py-3;
 }
 
 .burger-button-icon {
