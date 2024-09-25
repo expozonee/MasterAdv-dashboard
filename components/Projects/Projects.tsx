@@ -80,8 +80,14 @@ export function Projects({ params }: ProjectsProps) {
               className={`w-full aspect-square flex items-center justify-center cursor-pointer transition-all duration-200 rounded-lg shadow bg-gray-800 drop-shadow-xl`}
             >
               <Link
-                href={`${projectType}/project/${project.projectId}`}
+                href={{
+                  pathname: `${projectType}/project/${project.projectId}`,
+                  query: {
+                    businessCategory: businessCategories ?? null,
+                  },
+                }}
                 className="w-full h-full"
+                shallow
                 scroll={false}
               >
                 <Image
