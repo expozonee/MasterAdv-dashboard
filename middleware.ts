@@ -1,11 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
-import { withAuth } from "next-auth/middleware";
 import { getToken } from "next-auth/jwt";
 import { TokenWithRole } from "@/types/next-auth/jwtWithRole";
-
-// export default withAuth({
-//   secret: process.env.AUTH_SECRET,
-// });
 
 export default async function middleware(req: NextRequest) {
   const { nextUrl } = req;

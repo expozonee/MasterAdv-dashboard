@@ -111,7 +111,7 @@ export function AddBusinessCategory() {
   ) {
     e?.preventDefault();
     // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    // This will be type-safe and validated.
 
     mutate(
       {

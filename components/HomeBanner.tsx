@@ -40,19 +40,3 @@ export default function HomeBanner() {
     </div>
   );
 }
-
-{
-  /* <AspectRatio ratio={16 / 9} maxHeight={500}> */
-}
-
-{
-  /* <Image
-          src="/images/cover/cover-01.png"
-          alt="Home Banner"
-          width={720}
-          height={480}
-        /> */
-}
-{
-  /* </AspectRatio> */
-}
