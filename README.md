@@ -1,6 +1,6 @@
 # MasterADV Protfolio Website
 
-This repository showcases a **MasterADV Protfolio Website** built with a **Next.js** frontend and an **Express.js** (Node.js) backend. It leverages **Tailwind CSS** for styling and **validator.js** for input validation. The platform includes **CRUD (Create, Read, Update, Delete) operations restricted to Admin users only**, allowing easy management of projects and categories displayed on the site.
+This repository showcases a **MasterADV Protfolio Website** built with a **Next.js** frontend and an **Express.js** (Node.js) backend. It leverages **Tailwind CSS** for styling and **validator.js** and **zod** for input validation. The platform includes **CRUD (Create, Read, Update, Delete) operations restricted to Admin users only**, allowing easy management of projects and categories displayed on the site.
 
 ---
 
