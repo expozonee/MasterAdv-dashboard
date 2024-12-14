@@ -6,20 +6,10 @@ import { useSession } from "next-auth/react";
 import { OptionsType } from "@/components/UploadedImage/UploadOptions";
 import { Rubik } from "next/font/google";
 import { Button } from "@mui/material";
-// import { v4 as uuidv4 } from "uuid";
 import { useMutateUpload } from "@/utils/customHooks/useMutateUpload";
 
 const rubikTitle = Rubik({ subsets: ["hebrew"], weight: ["900"] });
 const rubikText = Rubik({ subsets: ["hebrew"], weight: ["500"] });
-
-// type UploadedImages = {
-//   name: string;
-//   size: number;
-//   type: string;
-//   lastModified: number;
-//   lastModifiedDate: Date;
-//   webkitRelativePath: string;
-// };
 
 export type ImageData = {
   imageFile: File;
@@ -36,7 +26,7 @@ export type Alert = {
 };
 
 const AdminPage = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const {
     isError: isErrorOnUpload,
@@ -165,7 +155,6 @@ const AdminPage = () => {
     const formData = new FormData();
     imageDataToSubmit.forEach((item, index) => {
       formData.append(`${item.imageName}`, item.imageFile, item.imageFile.name);
-      // formData.append(`images[${index}][id]`, uuidv4());
       formData.append(`images[${index}][imageName]`, item.imageName);
       formData.append(`images[${index}][businessType]`, item.businessType);
       formData.append(
@@ -173,14 +162,8 @@ const AdminPage = () => {
         item.businessCategory
       );
       formData.append(`images[${index}][projectType]`, item.projectType);
-      // formData.append(`images[${index}][subCategory]`, item.subCategory);
       formData.append(`images[${index}][isSpecial]`, item.isSpecial);
     });
-
-    // const uploadImages = await fetch("/api/upload-images", {
-    //   method: "POST",
-    //   body: formData,
-    // });
 
     mutate(formData, {
       onError: (error) => {
@@ -270,10 +253,6 @@ const AdminPage = () => {
         </div>
 
         <div className="flex justify-center gap-4.5">
-          {/* <button
-            className={`${rubikText.className} flex justify-center rounded border hover:bg-gold border-stroke py-2 px-6 font-medium text-white hover:shadow-1 dark:border-strokedark dark:text-white`}
-            // onClick={() => setUploadedImages([])}
-          > */}
           <Button
             classes={{ containedError: "bg-red-500" }}
             variant="contained"
@@ -289,7 +268,6 @@ const AdminPage = () => {
           >
             ביטול
           </Button>
-          {/* </button> */}
           <button
             className={`${rubikText.className} flex justify-center rounded bg-gold py-2 px-6 font-medium text-gray hover:bg-opacity-95`}
             type="submit"
@@ -299,7 +277,6 @@ const AdminPage = () => {
           </button>
         </div>
         <div className="mt-12">
-          {/* <h2 className="text-3xl pb-6">Recently Uploaded</h2> */}
           <h2 className="text-3xl pb-6">
             תמונות להעלאה {`(${uploadedImages.length})`}
           </h2>

@@ -1,7 +1,4 @@
 // "use client";
-import { useEffect, useMemo, useState } from "react";
-// import { getTitles } from "@/utils/data";
-import { useQuery } from "@tanstack/react-query";
 import getTitles from "@/utils/getTitles";
 
 interface Data {
@@ -12,8 +9,6 @@ interface Data {
 type PageDataProps = {
   businessType?: string;
   projectType?: string;
-  // subSection?: string;
-  // subCategories?: string;
 };
 
 type TitlesData = {
@@ -64,12 +59,8 @@ const PageData = async ({
       return titleName;
     });
 
-    // setTitlesNames(newTitlesNames);
     titlesNames = newTitlesNames;
   }
-
-  // console.log("titlesNames", titlesNames);
-  // }, [isLoading, isSuccess, mainCategory, section, subSection, subCategories]);
 
   return [titlesNames, titleUrls];
 };

@@ -13,35 +13,6 @@ import getProjects from "@/utils/getProjects";
 import { Project } from "@/types/project/Project";
 import { SpinnerLoader } from "@/components/Loaders/SpinnerLoader";
 
-// type ImageOwnProps<T extends React.ElementType> = {
-//   className: string;
-//   image: string;
-//   alt: string;
-//   objectCover?: string;
-//   as?: T;
-// };
-
-// type ImageProps<T extends React.ElementType> = ImageOwnProps<T> &
-//   Omit<React.ComponentProps<T>, keyof ImageOwnProps<T>>;
-
-// type Project = {
-//   itemId: string;
-//   mainCategory: {
-//     name: string;
-//   };
-//   section: {
-//     name: string;
-//   };
-//   subSection: {
-//     name: string;
-//   };
-//   subCategory: {
-//     name: string;
-//   };
-//   imageUrl: string;
-//   isSpecial: string;
-// };
-
 type ProjectModalProps = {
   params: {
     businessType: string;
@@ -110,7 +81,6 @@ export default function ProjectModal({ params }: ProjectModalProps) {
       const windowHeight = window.innerHeight;
 
       if (isMobile) {
-        // const mobileDesiredWidth = String(windowWidth * 0.85) + "px";
         setDesiredWidth("85%");
       } else {
         const boxSize = String(windowWidth * 0.85 * 0.6) + "px";
@@ -149,11 +119,9 @@ export default function ProjectModal({ params }: ProjectModalProps) {
         <Sheet
           variant="plain"
           sx={{
-            // position: "absolute",
             width: `85%`,
             maxWidth: "1600px",
             height: `${isMobile ? "min-content" : "auto"}`,
-            // maxHeight: `${!isMobile ? "960px" : ""}`,
             borderRadius: "md",
             boxShadow: "lg",
             backgroundColor: "#02061D",
@@ -208,20 +176,6 @@ export default function ProjectModal({ params }: ProjectModalProps) {
                   isMobile
                 />
               </div>
-              {/* <h2 className="project-title text-gold font-black px-2 text-3xl order-1">
-                Title
-              </h2>
-              <p className="project-description text-white pb-3 px-2 order-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                nec odio vitae odio pharetra. Integer non nunc vel odio
-                scelerisque. Lorem ipsum dolor sit amet, consectetur adipiscing
-                elit. Donec nec odio vitae odio pharetra. Integer non nunc vel
-                odio scelerisque. Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Donec nec odio vitae odio pharetra. Integer non
-                nunc vel odio scelerisque. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Donec nec odio vitae odio pharetra.
-                Integer non nunc vel odio scelerisque.
-              </p> */}
             </div>
             <ModalClose
               variant="plain"
@@ -240,17 +194,3 @@ export default function ProjectModal({ params }: ProjectModalProps) {
     </Modal>
   );
 }
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-// export default ProjectModal;
